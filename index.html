@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tristan Ray Agoilo — Systems Developer &amp; Tech Enthusiast</title>
+
+    <!-- Meta Description & SEO -->
+    <meta name="description"
+        content="Tristan Ray Agoilo — Systems developer and software engineer specializing in scalable architectures, interactive applications, and clean code.">
+    <meta name="author" content="Tristan Ray Agoilo">
+
+    <!-- Fonts: Plus Jakarta Sans for UI & JetBrains Mono for system elements -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/header.css">
+    <link rel="stylesheet" href="styles/sections.css">
+    <link rel="stylesheet" href="styles/components.css">
+</head>
+
+<body>
+    <!-- Fullscreen Interactive Background Particle Canvas -->
+    <canvas id="bg-canvas" class="bg-canvas"></canvas>
+
+    <!-- Custom Cursor HUD Elements -->
+    <div class="custom-cursor" id="custom-cursor"></div>
+    <div class="custom-cursor-follower" id="custom-cursor-follower"></div>
+
+    <div class="app-container">
+        <!-- Floating Top Navigation Bar with Hex-Style Interactive Popovers -->
+        <header class="top-header" id="top-header">
+            <div class="header-container">
+                <!-- Left Brand Logo -->
+                <a href="#home" class="header-brand">
+                    <div class="brand-box">T</div>
+                    <div class="brand-text">
+                        <span class="brand-name">TRISTAN RAY AGOILO</span>
+                        <span class="brand-title">SYSTEMS DEVELOPER</span>
+                    </div>
+                </a>
+
+                <!-- Center Navigation Menu with Popovers -->
+                <nav class="header-nav" id="header-nav">
+                    <ul class="nav-list">
+                        <!-- 01: HOME -->
+                        <li class="nav-item">
+                            <a href="#home" class="nav-link active" data-section="home">
+                                <span class="nav-bracket">[ </span>
+                                <span class="nav-number">01</span>
+                                <span class="nav-separator">//</span>
+                                <span class="nav-text">HOME</span>
+                                <span class="nav-bracket"> ]</span>
+                            </a>
+                        </li>
+
+                        <!-- 02: ABOUT -->
+                        <li class="nav-item">
+                            <a href="#about" class="nav-link" data-section="about">
+                                <span class="nav-bracket">[ </span>
+                                <span class="nav-number">02</span>
+                                <span class="nav-separator">//</span>
+                                <span class="nav-text">ABOUT</span>
+                                <span class="nav-bracket"> ]</span>
+                            </a>
+                        </li>
+
+                        <!-- 03: STACK (With Hex-Style Popover) -->
+                        <li class="nav-item has-popover">
+                            <a href="#stack" class="nav-link" data-section="stack">
+                                <span class="nav-bracket">[ </span>
+                                <span class="nav-number">03</span>
+                                <span class="nav-separator">//</span>
+                                <span class="nav-text">STACK</span>
+                                <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                                <span class="nav-bracket"> ]</span>
+                            </a>
+
+                            <!-- Stack Popover Card -->
+                            <div class="nav-popover">
+                                <div class="popover-grid">
+                                    <div class="popover-col">
+                                        <div class="popover-col-header font-mono">// CORE LANGUAGES</div>
+                                        <a href="#stack" class="popover-item">
+                                            <div class="popover-item-badge">C++</div>
+                                            <div class="popover-item-content">
+                                                <span class="popover-item-title">C++ Systems Execution</span>
+                                                <span class="popover-item-desc">Memory layouts, performance algorithms & low-level routines.</span>
+                                            </div>
+                                        </a>
+                                        <a href="#stack" class="popover-item">
+                                            <div class="popover-item-badge">JV</div>
+                                            <div class="popover-item-content">
+                                                <span class="popover-item-title">Java OOP & Desktop UI</span>
+                                                <span class="popover-item-desc">Swing POS structures, multi-threaded pipelines & JDBC.</span>
+                                            </div>
+                                        </a>
+                                        <a href="#stack" class="popover-item">
+                                            <div class="popover-item-badge">PY</div>
+                                            <div class="popover-item-content">
+                                                <span class="popover-item-title">Python Automation</span>
+                                                <span class="popover-item-desc">Data processing pipelines, statistical analysis & scripting.</span>
+                                            </div>
+                                        </a>
+                                        <a href="#stack" class="popover-item">
+                                            <div class="popover-item-badge">JS</div>
+                                            <div class="popover-item-content">
+                                                <span class="popover-item-title">JavaScript & UI Logic</span>
+                                                <span class="popover-item-desc">Reactive state, canvas animations & HUD components.</span>
+                                            </div>
+                                        </a>
+                                    </div>
+
+                                    <div class="popover-col">
+                                        <div class="popover-col-header font-mono">// WEB & DATABASE</div>
+                                        <a href="#stack" class="popover-item">
+                                            <div class="popover-item-badge">SQL</div>
+                                            <div class="popover-item-content">
+                                                <span class="popover-item-title">MySQL Relational Systems</span>
+                                                <span class="popover-item-desc">Schema engineering, index optimization & ACID integrity.</span>
+                                            </div>
+                                        </a>
+                                        <a href="#stack" class="popover-item">
+                                            <div class="popover-item-badge">VUE</div>
+                                            <div class="popover-item-content">
+                                                <span class="popover-item-title">Vue.js Components</span>
+                                                <span class="popover-item-desc">Component architecture, reactive state & modular views.</span>
+                                            </div>
+                                        </a>
+                                        <a href="#stack" class="popover-item">
+                                            <div class="popover-item-badge">PHP</div>
+                                            <div class="popover-item-content">
+                                                <span class="popover-item-title">PHP Server APIs</span>
+                                                <span class="popover-item-desc">Backend query execution & campus utility platforms.</span>
+                                            </div>
+                                        </a>
+                                        <a href="#stack" class="popover-item">
+                                            <div class="popover-item-badge">FIG</div>
+                                            <div class="popover-item-content">
+                                                <span class="popover-item-title">Figma Design Systems</span>
+                                                <span class="popover-item-desc">Vector geometry, monochrome tokens & UI prototypes.</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <div class="popover-footer-banner">
+                                    <div class="popover-banner-info">
+                                        <span class="popover-banner-tag font-mono">[ ARCHITECTURE ]</span>
+                                        <span class="popover-banner-text">Engineering reliable backend systems & clear interfaces.</span>
+                                    </div>
+                                    <a href="#stack" class="popover-banner-link font-mono">
+                                        <span>INSPECT MATRIX</span>
+                                        <span>↗</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+
+                        <!-- 04: PROJECTS (With Hex-Style Popover) -->
+                        <li class="nav-item has-popover">
+                            <a href="#projects" class="nav-link" data-section="projects">
+                                <span class="nav-bracket">[ </span>
+                                <span class="nav-number">04</span>
+                                <span class="nav-separator">//</span>
+                                <span class="nav-text">PROJECTS</span>
+                                <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                                <span class="nav-bracket"> ]</span>
+                            </a>
+
+                            <!-- Projects Popover Card -->
+                            <div class="nav-popover">
+                                <div class="popover-grid">
+                                    <div class="popover-col">
+                                        <div class="popover-col-header font-mono">// SYSTEMS & ENTERPRISE</div>
+                                        <a href="#projects" class="popover-item" data-project-trigger="p1">
+                                            <div class="popover-item-badge">01</div>
+                                            <div class="popover-item-content">
+                                                <span class="popover-item-title">Campus Lost & Found Portal</span>
+                                                <span class="popover-item-desc">PHP/MySQL web portal with claim verification & audit logs.</span>
+                                            </div>
+                                        </a>
+                                        <a href="#projects" class="popover-item" data-project-trigger="p2">
+                                            <div class="popover-item-badge">02</div>
+                                            <div class="popover-item-content">
+                                                <span class="popover-item-title">Campus Canteen Kiosk POS</span>
+                                                <span class="popover-item-desc">Java Swing automated transactional POS system with receipting.</span>
+                                            </div>
+                                        </a>
+                                        <a href="#projects" class="popover-item" data-project-trigger="p3">
+                                            <div class="popover-item-badge">03</div>
+                                            <div class="popover-item-content">
+                                                <span class="popover-item-title">Desktop Systems Utilities</span>
+                                                <span class="popover-item-desc">C++/Python multithreaded file organizers & encryption tools.</span>
+                                            </div>
+                                        </a>
+                                    </div>
+
+                                    <div class="popover-col">
+                                        <div class="popover-col-header font-mono">// RESEARCH & DESIGN</div>
+                                        <a href="#projects" class="popover-item" data-project-trigger="p4">
+                                            <div class="popover-item-badge">04</div>
+                                            <div class="popover-item-content">
+                                                <span class="popover-item-title">EdTech Engagement Research</span>
+                                                <span class="popover-item-desc">Python & Pandas quantitative statistical regression analysis.</span>
+                                            </div>
+                                        </a>
+                                        <a href="#projects" class="popover-item" data-project-trigger="p5">
+                                            <div class="popover-item-badge">05</div>
+                                            <div class="popover-item-content">
+                                                <span class="popover-item-title">Brand Identity & Digital Art</span>
+                                                <span class="popover-item-desc">Vector illustration sheets, typography & enamel pin designs.</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <div class="popover-footer-banner">
+                                    <div class="popover-banner-info">
+                                        <span class="popover-banner-tag font-mono">[ PORTFOLIO ]</span>
+                                        <span class="popover-banner-text">Explore technical architecture, specs & live demos.</span>
+                                    </div>
+                                    <a href="#projects" class="popover-banner-link font-mono">
+                                        <span>ALL PROJECTS</span>
+                                        <span>↗</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+
+                        <!-- 05: CONTACT -->
+                        <li class="nav-item">
+                            <a href="#contact" class="nav-link" data-section="contact">
+                                <span class="nav-bracket">[ </span>
+                                <span class="nav-number">05</span>
+                                <span class="nav-separator">//</span>
+                                <span class="nav-text">CONTACT</span>
+                                <span class="nav-bracket"> ]</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+
+                <!-- Right Action Controls -->
+                <div class="header-actions">
+                    <a href="#" class="btn-header-resume" id="resume-button">
+                        <span>[Resume PDF ↗]</span>
+                    </a>
+
+                    <button class="theme-toggle-btn" id="theme-toggle-desktop" aria-label="Toggle Theme" title="Toggle dark/light mode">
+                        <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="4" />
+                            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+                        </svg>
+                        <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 3a6 6 0 0 0 9 9 9 0 1 1-9-9Z" />
+                        </svg>
+                    </button>
+
+                    <button class="menu-toggle" id="menu-toggle" aria-label="Toggle Navigation Menu">
+                        <span class="hamburger-line"></span>
+                        <span class="hamburger-line"></span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Dropdown Drawer -->
+            <div class="mobile-drawer" id="mobile-drawer">
+                <ul class="mobile-nav-list">
+                    <li><a href="#home" class="mobile-nav-link" data-section="home">[ 01 // HOME ]</a></li>
+                    <li><a href="#about" class="mobile-nav-link" data-section="about">[ 02 // ABOUT ]</a></li>
+                    <li><a href="#stack" class="mobile-nav-link" data-section="stack">[ 03 // STACK ]</a></li>
+                    <li><a href="#projects" class="mobile-nav-link" data-section="projects">[ 04 // PROJECTS ]</a></li>
+                    <li><a href="#contact" class="mobile-nav-link" data-section="contact">[ 05 // CONTACT ]</a></li>
+                </ul>
+                <div class="mobile-drawer-actions">
+                    <a href="#" class="btn btn-outline" id="resume-button-mobile" style="justify-content: center;">[RESUME PDF ↗]</a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Centered Main Content Area Wrapper -->
+        <div class="main-content-wrapper">
+            <main class="main-content">
+                <!-- 01: Hero Section (Enhanced Systems HUD) -->
+                <section id="home" class="content-section reveal-section">
+                    <!-- Live System Status Header -->
+                    <div class="hero-status-row font-mono">
+                        <div class="status-pill">
+                            <span class="status-indicator-dot"></span>
+                            <span class="status-text">SYS_ONLINE // RUNNING</span>
+                        </div>
+                        <div class="status-meta">
+                            <span class="meta-item">ARCH: x86_64</span>
+                            <span class="meta-separator">//</span>
+                            <span class="meta-item">LOCAL: MANILA [UTC+8]</span>
+                            <span class="meta-separator">//</span>
+                            <span class="meta-item status-avail">STATUS: READY_FOR_DEPLOYMENT</span>
+                        </div>
+                    </div>
+
+                    <!-- Main Headline -->
+                    <h1 class="hero-headline">
+                        Tristan Ray Agoilo
+                    </h1>
+
+                    <p class="hero-description">
+                        I design, develop, and maintain clean software architectures. My focus lies at the intersection
+                        of robust backend programming, high-efficiency system structures, and functional, creative design.
+                    </p>
+
+                    <!-- Core Competency Chips -->
+                    <div class="hero-specialties font-mono">
+                        <span class="hero-spec-chip">[ C++ SYSTEMS ]</span>
+                        <span class="hero-spec-chip">[ JAVA OOP / POS ]</span>
+                        <span class="hero-spec-chip">[ PYTHON AUTOMATION ]</span>
+                        <span class="hero-spec-chip">[ MYSQL RELATIONAL ]</span>
+                        <span class="hero-spec-chip">[ FIGMA DESIGN TOKENS ]</span>
+                    </div>
+
+                    <!-- Custom High-Tech Interactive Terminal Window (Main Attraction) -->
+                    <div class="terminal-container" id="terminal-container">
+                        <div class="terminal-header">
+                            <div class="terminal-header-left">
+                                <div class="terminal-dots">
+                                    <span class="terminal-dot"></span>
+                                    <span class="terminal-dot"></span>
+                                    <span class="terminal-dot"></span>
+                                </div>
+                                <div class="terminal-title">system_info.sh</div>
+                                <div class="terminal-tabs" id="terminal-tabs">
+                                    <button type="button" class="terminal-tab active" data-tab="profile">[ 01: PROFILE ]</button>
+                                    <button type="button" class="terminal-tab" data-tab="telemetry">[ 02: TELEMETRY ]</button>
+                                    <button type="button" class="terminal-tab" data-tab="stack">[ 03: STACK_SPECS ]</button>
+                                    <button type="button" class="terminal-tab" data-tab="philosophy">[ 04: CORE_PHILOSOPHY ]</button>
+                                </div>
+                            </div>
+                            <div class="terminal-badge">STABLE // v2.6</div>
+                        </div>
+
+                        <div class="terminal-body font-mono" id="terminal-body">
+                            <!-- Dynamic Content Populated by Terminal Engine -->
+                        </div>
+
+                        <!-- Terminal Quick Command Chips Toolbar -->
+                        <div class="terminal-toolbar">
+                            <div class="terminal-toolbar-left">
+                                <span class="terminal-quick-label">QUICK CMDS:</span>
+                                <div class="cmd-chips">
+                                    <button type="button" class="cmd-chip" data-cmd="fetch">[fetch]</button>
+                                    <button type="button" class="cmd-chip" data-cmd="stack">[stack]</button>
+                                    <button type="button" class="cmd-chip" data-cmd="projects">[projects]</button>
+                                    <button type="button" class="cmd-chip" data-cmd="contact">[contact]</button>
+                                    <button type="button" class="cmd-chip" data-cmd="clear">[clear]</button>
+                                </div>
+                            </div>
+                            <div class="terminal-status-info">UPTIME: 99.98% | LATENCY: 12ms</div>
+                        </div>
+                    </div>
+
+                    <!-- 3-Card Systems Telemetry Highlights Grid -->
+                    <div class="hero-telemetry-grid">
+                        <div class="telemetry-card stagger-item">
+                            <div class="telemetry-card-header">
+                                <span>[ 01 // ARCHITECTURE ]</span>
+                                <span>SYSTEMS</span>
+                            </div>
+                            <h3 class="telemetry-card-title">Reliable Backend Logic</h3>
+                            <p class="telemetry-card-desc">
+                                ACID-compliant relational schemas, multi-threaded Java Swing POS clients, and robust C++ algorithmic memory routines.
+                            </p>
+                        </div>
+
+                        <div class="telemetry-card stagger-item">
+                            <div class="telemetry-card-header">
+                                <span>[ 02 // DATA PIPELINES ]</span>
+                                <span>AUTOMATION</span>
+                            </div>
+                            <h3 class="telemetry-card-title">Python Analytics & Tools</h3>
+                            <p class="telemetry-card-desc">
+                                Quantitative research modeling, regression analytics on student software data, and batch filesystem automation scripts.
+                            </p>
+                        </div>
+
+                        <div class="telemetry-card stagger-item">
+                            <div class="telemetry-card-header">
+                                <span>[ 03 // UI INTEGRITY ]</span>
+                                <span>CREATIVE</span>
+                            </div>
+                            <h3 class="telemetry-card-title">Precision Design Systems</h3>
+                            <p class="telemetry-card-desc">
+                                High-contrast monochrome typography, vector geometry tokens in Figma, and reactive interactive canvas animations.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 02: About Section -->
+                <section id="about" class="content-section reveal-section">
+                    <div class="section-header">
+                        <span class="section-num">02</span>
+                        <h2 class="section-title">ABOUT ME</h2>
+                    </div>
+
+                    <div class="about-prose">
+                        <p>
+                            I am a systems developer driven by curiosity and an uncompromising commitment to software reliability. My focus is building dependable backend logic, desktop software in Java and C++, and clean web tools that respect user clarity.
+                        </p>
+                        <p>
+                            Whether designing relational schemas in MySQL, writing automation scripts with Python, or crafting vector design systems in Figma, I approach every challenge with an engineering-first mindset.
+                        </p>
+                    </div>
+
+                    <!-- Education Timeline Cards -->
+                    <div class="timeline">
+                        <div class="timeline-card stagger-item">
+                            <div class="timeline-card-top">
+                                <h3 class="timeline-card-title">Systems &amp; Design Academy</h3>
+                                <span class="timeline-card-date">2024 &mdash; PRESENT</span>
+                            </div>
+                            <span class="timeline-card-meta font-mono">STEM Strand (Science, Technology, Engineering, and Mathematics)</span>
+                            <p class="text-sm text-muted">
+                                Core Coursework: Computer Programming, Object-Oriented Software, Systems Analysis, Data Logic.
+                            </p>
+                        </div>
+
+                        <div class="timeline-card stagger-item">
+                            <div class="timeline-card-top">
+                                <h3 class="timeline-card-title">Secondary Education Center</h3>
+                                <span class="timeline-card-date">2020 &mdash; 2024</span>
+                            </div>
+                            <span class="timeline-card-meta font-mono">High School Diploma with High Honors</span>
+                            <p class="text-sm text-muted">
+                                Focus Areas: Algorithmic Foundations, Web Logic, Creative Graphics.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 03: Skills Matrix Section -->
+                <section id="stack" class="content-section reveal-section">
+                    <div class="section-header">
+                        <span class="section-num">03</span>
+                        <h2 class="section-title">SKILLS MATRIX</h2>
+                    </div>
+
+                    <div class="skills-matrix-section">
+                        <p class="text-sm text-muted font-mono">
+                            Hover over skill badges to inspect core competencies and runtime familiarity levels.
+                        </p>
+
+                        <div class="skills-matrix-grid">
+                            <div class="skills-group">
+                                <h3 class="skills-group-title font-mono">// PROGRAMMING</h3>
+                                <div class="skills-chips">
+                                    <div class="skill-badge stagger-item" data-level="Expert"
+                                        data-desc="Systems-level execution, memory layouts, algorithms.">
+                                        <span class="badge-text">C++</span>
+                                        <span class="badge-dot"></span>
+                                    </div>
+                                    <div class="skill-badge stagger-item" data-level="Expert"
+                                        data-desc="OOP, desktop program architecture, multi-threading.">
+                                        <span class="badge-text">Java</span>
+                                        <span class="badge-dot"></span>
+                                    </div>
+                                    <div class="skill-badge stagger-item" data-level="Advanced"
+                                        data-desc="Scripting, data analysis, automation pipelines.">
+                                        <span class="badge-text">Python</span>
+                                        <span class="badge-dot"></span>
+                                    </div>
+                                    <div class="skill-badge stagger-item" data-level="Advanced"
+                                        data-desc="Frontend logic, client scripts, reactive integrations.">
+                                        <span class="badge-text">JavaScript</span>
+                                        <span class="badge-dot"></span>
+                                    </div>
+                                    <div class="skill-badge stagger-item" data-level="Intermediate"
+                                        data-desc="Server script execution, API queries.">
+                                        <span class="badge-text">PHP</span>
+                                        <span class="badge-dot"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="skills-group">
+                                <h3 class="skills-group-title font-mono">// WEB DEVELOPMENT</h3>
+                                <div class="skills-chips">
+                                    <div class="skill-badge stagger-item" data-level="Expert"
+                                        data-desc="Semantic content structures, accessibility practices.">
+                                        <span class="badge-text">HTML</span>
+                                        <span class="badge-dot"></span>
+                                    </div>
+                                    <div class="skill-badge stagger-item" data-level="Expert"
+                                        data-desc="Flexbox/Grid layout, variables, layout transformations.">
+                                        <span class="badge-text">CSS</span>
+                                        <span class="badge-dot"></span>
+                                    </div>
+                                    <div class="skill-badge stagger-item" data-level="Advanced"
+                                        data-desc="Grid layouts, component modules, quick wireframes.">
+                                        <span class="badge-text">Bootstrap</span>
+                                        <span class="badge-dot"></span>
+                                    </div>
+                                    <div class="skill-badge stagger-item" data-level="Advanced"
+                                        data-desc="Component frameworks, reactive DOM, clean bindings.">
+                                        <span class="badge-text">Vue.js</span>
+                                        <span class="badge-dot"></span>
+                                    </div>
+                                    <div class="skill-badge stagger-item" data-level="Advanced"
+                                        data-desc="Relational designs, index optimization, query logic.">
+                                        <span class="badge-text">MySQL</span>
+                                        <span class="badge-dot"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="skills-group">
+                                <h3 class="skills-group-title font-mono">// TOOLS &amp; DESIGN</h3>
+                                <div class="skills-chips">
+                                    <div class="skill-badge stagger-item" data-level="Expert"
+                                        data-desc="Vector design systems, interactive prototypes, assets scaling.">
+                                        <span class="badge-text">Figma</span>
+                                        <span class="badge-dot"></span>
+                                    </div>
+                                    <div class="skill-badge stagger-item" data-level="Expert"
+                                        data-desc="Syntax utilities, lint controls, debugging terminals.">
+                                        <span class="badge-text">VS Code</span>
+                                        <span class="badge-dot"></span>
+                                    </div>
+                                    <div class="skill-badge stagger-item" data-level="Advanced"
+                                        data-desc="Java compiler builds, desktop UI visual builders.">
+                                        <span class="badge-text">NetBeans</span>
+                                        <span class="badge-dot"></span>
+                                    </div>
+                                    <div class="skill-badge stagger-item" data-level="Advanced"
+                                        data-desc="Local database servers, PHP server hosts.">
+                                        <span class="badge-text">XAMPP</span>
+                                        <span class="badge-dot"></span>
+                                    </div>
+                                    <div class="skill-badge stagger-item" data-level="Advanced"
+                                        data-desc="Branch control workflows, codebase versions, pulls.">
+                                        <span class="badge-text">Git/GitHub</span>
+                                        <span class="badge-dot"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Skills Info Panel (Interactive HUD) -->
+                        <div class="skills-hud font-mono" id="skills-hud">
+                            <div class="hud-status">[ SELECT OR HOVER A SKILL BADGE ABOVE TO INSPECT METADATA ]</div>
+                            <div class="hud-details hidden">
+                                <div class="hud-header-line">
+                                    <span>SKILL:</span> <span class="hud-val-name">--</span> &nbsp;|&nbsp;
+                                    <span>LEVEL:</span> <span class="hud-val-level">--</span>
+                                </div>
+                                <div class="hud-desc">--</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 04: Projects Section -->
+                <section id="projects" class="content-section reveal-section">
+                    <div class="section-header">
+                        <span class="section-num">04</span>
+                        <h2 class="section-title">SELECTED PROJECTS</h2>
+                    </div>
+
+                    <!-- Category Filtering Tabs -->
+                    <div class="project-filter-bar font-mono">
+                        <button type="button" class="filter-btn active" data-filter="all">[ALL]</button>
+                        <button type="button" class="filter-btn" data-filter="systems">[SYSTEMS]</button>
+                        <button type="button" class="filter-btn" data-filter="programming">[PROGRAMMING]</button>
+                        <button type="button" class="filter-btn" data-filter="design">[DESIGN]</button>
+                    </div>
+
+                    <div class="projects-grid" id="projects-grid">
+                        <!-- Project 1 -->
+                        <article class="project-card stagger-item" data-category="systems" data-project-id="p1">
+                            <div class="project-card-header">
+                                <h3 class="project-card-title">Lost &amp; Found Campus Portal</h3>
+                                <div class="project-card-links">
+                                    <span class="project-card-link">[VIEW SPECS ↗]</span>
+                                </div>
+                            </div>
+                            <p class="project-card-desc">
+                                A secure web application for logging lost items and claiming found property on campus. Features dynamic keyword matching, administrative audit logs, and claim verification workflows.
+                            </p>
+                            <div class="project-card-tags">
+                                <span class="project-card-tag">PHP</span>
+                                <span class="project-card-tag">MySQL</span>
+                                <span class="project-card-tag">Bootstrap</span>
+                                <span class="project-card-tag">Systems</span>
+                            </div>
+                        </article>
+
+                        <!-- Project 2 -->
+                        <article class="project-card stagger-item" data-category="systems" data-project-id="p2">
+                            <div class="project-card-header">
+                                <h3 class="project-card-title">Campus Canteen Kiosk</h3>
+                                <div class="project-card-links">
+                                    <span class="project-card-link">[VIEW SPECS ↗]</span>
+                                </div>
+                            </div>
+                            <p class="project-card-desc">
+                                An automated self-service point-of-sale desktop system that streamlines meal orders, reduces queue times, generates itemized transaction receipts, and syncs records to a local database.
+                            </p>
+                            <div class="project-card-tags">
+                                <span class="project-card-tag">Java</span>
+                                <span class="project-card-tag">Swing UI</span>
+                                <span class="project-card-tag">MySQL</span>
+                                <span class="project-card-tag">Systems</span>
+                            </div>
+                        </article>
+
+                        <!-- Project 3 -->
+                        <article class="project-card stagger-item" data-category="programming" data-project-id="p3">
+                            <div class="project-card-header">
+                                <h3 class="project-card-title">Desktop Systems &amp; Script Utilities</h3>
+                                <div class="project-card-links">
+                                    <span class="project-card-link">[VIEW SPECS ↗]</span>
+                                </div>
+                            </div>
+                            <p class="project-card-desc">
+                                A curated suite of desktop utility scripts designed for batch file management, hardware resource readouts, and text encryption tools.
+                            </p>
+                            <div class="project-card-tags">
+                                <span class="project-card-tag">C++</span>
+                                <span class="project-card-tag">Python</span>
+                                <span class="project-card-tag">Java</span>
+                                <span class="project-card-tag">Programming</span>
+                            </div>
+                        </article>
+
+                        <!-- Project 4 -->
+                        <article class="project-card stagger-item" data-category="programming" data-project-id="p4">
+                            <div class="project-card-header">
+                                <h3 class="project-card-title">EdTech Engagement Research</h3>
+                                <div class="project-card-links">
+                                    <span class="project-card-link">[VIEW SPECS ↗]</span>
+                                </div>
+                            </div>
+                            <p class="project-card-desc">
+                                Quantitative statistics analysis investigating the efficacy of classroom software tools and their correlation with STEM academic performance scores.
+                            </p>
+                            <div class="project-card-tags">
+                                <span class="project-card-tag">Python</span>
+                                <span class="project-card-tag">Pandas</span>
+                                <span class="project-card-tag">Data Analysis</span>
+                            </div>
+                        </article>
+
+                        <!-- Project 5 -->
+                        <article class="project-card stagger-item" data-category="design" data-project-id="p5">
+                            <div class="project-card-header">
+                                <h3 class="project-card-title">Brand Identity &amp; Digital Art</h3>
+                                <div class="project-card-links">
+                                    <span class="project-card-link">[VIEW SPECS ↗]</span>
+                                </div>
+                            </div>
+                            <p class="project-card-desc">
+                                A visual collection of vector graphics, brand typography systems, and technical illustration sheets for custom enamel pins and digital merchandising.
+                            </p>
+                            <div class="project-card-tags">
+                                <span class="project-card-tag">Figma</span>
+                                <span class="project-card-tag">Vector Art</span>
+                                <span class="project-card-tag">Design</span>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <!-- 05: Contact Section -->
+                <section id="contact" class="content-section reveal-section">
+                    <div class="section-header">
+                        <span class="section-num">05</span>
+                        <h2 class="section-title">GET IN TOUCH</h2>
+                    </div>
+
+                    <div class="contact-grid">
+                        <!-- Left Column: Direct Info & Socials -->
+                        <div class="contact-info">
+                            <p class="contact-intro">
+                                Have a system development challenge, an ambitious application outline, or a creative layout design? Let's build something exceptional together.
+                            </p>
+
+                            <div class="direct-methods">
+                                <div class="method-item">
+                                    <span class="method-label font-mono">[ DIRECT EMAIL ]</span>
+                                    <a href="mailto:tristan.agoilo@example.com" class="method-value" id="email-address-val">tristan.agoilo@example.com</a>
+                                    <button type="button" class="btn-copy-mono" id="copy-email-btn">
+                                        [COPY EMAIL]
+                                    </button>
+                                </div>
+
+                                <div class="method-item">
+                                    <span class="method-label font-mono">[ SOCIO-NETWORKS ]</span>
+                                    <div class="social-links font-mono">
+                                        <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="hover-underline">GITHUB</a>
+                                        <span class="social-sep">/</span>
+                                        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="hover-underline">LINKEDIN</a>
+                                        <span class="social-sep">/</span>
+                                        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="hover-underline">TWITTER</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column: Interactive Cyber Validation Form -->
+                        <form class="contact-form" id="contact-form" action="#" method="POST" novalidate>
+                            <div class="form-group">
+                                <label for="form-name" class="font-mono">01 // FULL NAME</label>
+                                <input type="text" id="form-name" name="name" placeholder="e.g. Alexis Carter" autocomplete="name">
+                                <div class="field-error-msg font-mono" id="name-error">ERR_REQUIRED: Full Name is necessary.</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="form-email" class="font-mono">02 // EMAIL ADDRESS</label>
+                                <input type="email" id="form-email" name="email" placeholder="e.g. alexis@company.com" autocomplete="email">
+                                <div class="field-error-msg font-mono" id="email-error">ERR_REQUIRED: Email address is necessary.</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="form-message" class="font-mono">03 // INQUIRY / DETAILS</label>
+                                <textarea id="form-message" name="message" rows="5" placeholder="Describe the project scope or system requirements..."></textarea>
+                                <div class="field-error-msg font-mono" id="message-error">ERR_REQUIRED: Scope/Message details are necessary.</div>
+                            </div>
+
+                            <div class="form-submit-row">
+                                <button type="submit" class="btn-submit-cyber" id="form-submit-btn">
+                                    <span>SEND MESSAGE</span>
+                                    <svg class="btn-send-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                                    </svg>
+                                </button>
+                            </div>
+
+                            <div class="form-feedback-hud font-mono" id="form-feedback-hud"></div>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- Page Footer -->
+                <footer class="site-footer">
+                    <span>&copy; 2026 TRISTAN RAY AGOILO. ALL RIGHTS RESERVED.</span>
+                    <a href="#home" class="hover-underline font-mono">[BACK TO TOP &uarr;]</a>
+                </footer>
+            </main>
+        </div>
+    </div>
+
+    <!-- Project Detail Modal Dialog -->
+    <div class="modal-backdrop" id="project-modal" aria-hidden="true" role="dialog">
+        <div class="modal-dialog">
+            <button class="modal-close-btn" id="modal-close-btn" aria-label="Close modal">&times;</button>
+            <div class="modal-header">
+                <div class="modal-badge font-mono" id="modal-badge">SYSTEMS ARCHITECTURE</div>
+                <h3 class="modal-title" id="modal-title">Project Title</h3>
+            </div>
+            <div class="modal-body">
+                <div class="modal-specs font-mono" id="modal-specs">
+                    <div><strong>STACK:</strong> <span id="modal-spec-stack">--</span></div>
+                    <div><strong>ARCHITECTURE:</strong> <span id="modal-spec-arch">--</span></div>
+                    <div><strong>STATUS:</strong> <span id="modal-spec-status">PRODUCTION_READY</span></div>
+                </div>
+                <p class="modal-description" id="modal-desc">Detailed descriptions and technical architecture.</p>
+                <div class="modal-contributions">
+                    <h4>Key Architectural Contributions</h4>
+                    <ul id="modal-contributions-list">
+                        <!-- Dynamic list -->
+                    </ul>
+                </div>
+                <div class="modal-tags font-mono" id="modal-tags">
+                    <!-- Dynamic tags -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="btn btn-outline" id="modal-github-link">[GITHUB REPO ↗]</a>
+                <a href="https://demo.dev" target="_blank" rel="noopener noreferrer" class="btn btn-primary" id="modal-demo-link">[LIVE DEMO ↗]</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modular Scripts -->
+    <script src="scripts/theme.js" defer></script>
+    <script src="scripts/navigation.js" defer></script>
+    <script src="scripts/main.js" defer></script>
+</body>
+
+</html>

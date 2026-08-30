@@ -1,0 +1,77 @@
+            <!-- Contact Section -->
+            <section id="contact" class="content-section reveal-section">
+                <div class="section-header">
+                    <span class="section-num">04</span>
+                    <h2 class="section-title">GET IN TOUCH</h2>
+                </div>
+
+                <div class="contact-grid">
+                    <!-- Left Column: Direct Info & Socials -->
+                    <div class="contact-info">
+                        <p class="contact-intro">
+                            Have a system development challenge, an ambitious application outline, or a creative layout
+                            design? Let's build something exceptional together.
+                        </p>
+
+                        <div class="direct-methods">
+                            <div class="method-item">
+                                <span class="method-label font-mono">[ DIRECT EMAIL ]</span>
+                                <a href="mailto:tristan.agoilo@example.com" class="method-value"
+                                    id="email-address-val">tristan.agoilo@example.com</a>
+                                <button type="button" class="btn-copy-mono" id="copy-email-btn">
+                                    [COPY EMAIL]
+                                </button>
+                            </div>
+
+                            <div class="method-item">
+                                <span class="method-label font-mono">[ SOCIO-NETWORKS ]</span>
+                                <div class="social-links font-mono">
+                                    <a href="https://github.com" target="_blank" rel="noopener noreferrer"
+                                        class="hover-underline">GITHUB</a>
+                                    <span class="social-sep">/</span>
+                                    <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"
+                                        class="hover-underline">LINKEDIN</a>
+                                    <span class="social-sep">/</span>
+                                    <a href="https://twitter.com" target="_blank" rel="noopener noreferrer"
+                                        class="hover-underline">TWITTER</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Interactive Cyber Validation Form -->
+                    <form class="contact-form" id="contact-form" action="#" method="POST" novalidate>
+                        <div class="form-group">
+                            <label for="form-name" class="font-mono">01 // FULL NAME</label>
+                            <input type="text" id="form-name" name="name" placeholder="e.g. Alexis Carter" autocomplete="name">
+                            <div class="field-error-msg font-mono" id="name-error">ERR_REQUIRED: Full Name is necessary.</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="form-email" class="font-mono">02 // EMAIL ADDRESS</label>
+                            <input type="email" id="form-email" name="email" placeholder="e.g. alexis@company.com" autocomplete="email">
+                            <div class="field-error-msg font-mono" id="email-error">ERR_REQUIRED: Email address is necessary.</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="form-message" class="font-mono">03 // INQUIRY / DETAILS</label>
+                            <textarea id="form-message" name="message" rows="5"
+                                placeholder="Describe the project scope or system requirements..."></textarea>
+                            <div class="field-error-msg font-mono" id="message-error">ERR_REQUIRED: Scope/Message details are necessary.</div>
+                        </div>
+
+                        <div class="form-submit-row">
+                            <button type="submit" class="btn-submit-cyber" id="form-submit-btn">
+                                <span>SEND MESSAGE</span>
+                                <svg class="btn-send-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="22" y1="2" x2="11" y2="13" />
+                                    <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                                </svg>
+                            </button>
+                        </div>
+
+                        <div class="form-feedback-hud font-mono" id="form-feedback-hud"></div>
+                    </form>
+                </div>
+            </section>
