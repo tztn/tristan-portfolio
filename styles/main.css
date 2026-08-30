@@ -34,7 +34,7 @@
     /* Transitions */
     --transition-fast: 0.15s cubic-bezier(0.16, 1, 0.3, 1);
     --transition-medium: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    --transition-theme: background-color 0.35s ease, color 0.35s ease, border-color 0.35s ease;
+    --transition-theme: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
 }
 
 /* Dark Mode Tokens */
@@ -56,6 +56,21 @@ html.dark {
     --terminal-prompt: #71717A;
     --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
     --card-shadow-hover: 0 12px 30px rgba(0, 0, 0, 0.6);
+}
+
+/* View Transitions API (Circular Ripple Theme Switch) */
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+}
+
+::view-transition-new(root) {
+    z-index: 99999;
+}
+
+::view-transition-old(root) {
+    z-index: 1;
 }
 
 /* Reset */

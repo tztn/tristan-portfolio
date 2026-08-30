@@ -65,6 +65,11 @@
     100% { transform: scale(1); }
 }
 
+/* Theme Toggle Button Micro-Interaction Animation */
+.theme-toggle-btn.animating svg {
+    transform: rotate(180deg) scale(1.1);
+}
+
 /* ==========================================================================
    PROJECT CATEGORY FILTER TABS
    ========================================================================== */

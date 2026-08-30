@@ -412,7 +412,7 @@ html.dark .top-header.scrolled {
     border-radius: 6px;
     cursor: pointer;
     color: var(--text-primary);
-    transition: border-color var(--transition-fast), background-color var(--transition-fast);
+    transition: border-color var(--transition-fast), background-color var(--transition-fast), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .theme-toggle-btn:hover {
@@ -420,9 +420,18 @@ html.dark .top-header.scrolled {
     background-color: var(--bg-secondary);
 }
 
+.theme-toggle-btn:active {
+    transform: scale(0.92);
+}
+
 .theme-toggle-btn svg {
     width: 15px;
     height: 15px;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.theme-toggle-btn.animating svg {
+    transform: rotate(180deg) scale(1.1);
 }
 
 .sun-icon { display: block; }
