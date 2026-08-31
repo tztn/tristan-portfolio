@@ -174,6 +174,7 @@ function initTerminalTypewriter() {
     if (!terminalBody) return;
 
     let currentTimer = null;
+    let typingInterval = null;
 
     const tabData = {
         profile: [
@@ -211,8 +212,13 @@ function initTerminalTypewriter() {
         ]
     };
 
-    function renderLines(lines, animate = true) {
+    function clearTimers() {
         if (currentTimer) clearTimeout(currentTimer);
+        if (typingInterval) clearInterval(typingInterval);
+    }
+
+    function renderLines(lines, animate = true) {
+        clearTimers();
         terminalBody.innerHTML = "";
 
         if (!animate) {
@@ -236,6 +242,7 @@ function initTerminalTypewriter() {
             idleLine.className = "terminal-line";
             idleLine.innerHTML = `<span class="terminal-prompt">$</span> <span class="terminal-cursor-blink">_</span>`;
             terminalBody.appendChild(idleLine);
+            terminalBody.scrollTop = terminalBody.scrollHeight;
             return;
         }
 
@@ -247,6 +254,7 @@ function initTerminalTypewriter() {
                 idleLine.className = "terminal-line";
                 idleLine.innerHTML = `<span class="terminal-prompt">$</span> <span class="terminal-cursor-blink">_</span>`;
                 terminalBody.appendChild(idleLine);
+                terminalBody.scrollTop = terminalBody.scrollHeight;
                 return;
             }
 
@@ -262,16 +270,19 @@ function initTerminalTypewriter() {
                 const blinkCursor = lineEl.querySelector(".terminal-cursor-blink");
                 let charIdx = 0;
 
-                const interval = setInterval(() => {
+                typingInterval = setInterval(() => {
                     cmdSpan.textContent += item.text[charIdx];
+                    if (window.SoundSystem && charIdx % 2 === 0) {
+                        window.SoundSystem.playKeySound();
+                    }
                     charIdx++;
                     if (charIdx >= item.text.length) {
-                        clearInterval(interval);
+                        clearInterval(typingInterval);
                         blinkCursor.remove();
                         lineIdx++;
-                        currentTimer = setTimeout(printNextLine, 180);
+                        currentTimer = setTimeout(printNextLine, 160);
                     }
-                }, 28);
+                }, 26);
             } else {
                 lineEl.className = "terminal-line output-line";
                 if (item.key) {
@@ -280,16 +291,17 @@ function initTerminalTypewriter() {
                     lineEl.innerHTML = `<span class="italic">${item.text}</span>`;
                 }
                 terminalBody.appendChild(lineEl);
+                terminalBody.scrollTop = terminalBody.scrollHeight;
                 lineIdx++;
-                currentTimer = setTimeout(printNextLine, 110);
+                currentTimer = setTimeout(printNextLine, 90);
             }
         }
 
         printNextLine();
     }
 
-    // Initial Animated Run
-    setTimeout(() => renderLines(tabData.profile, true), 300);
+    // Initial Animated Typewriter Run on page load
+    setTimeout(() => renderLines(tabData.profile, true), 350);
 
     // Tab Switching
     tabs.forEach(tab => {
@@ -299,43 +311,56 @@ function initTerminalTypewriter() {
 
             const tabKey = tab.getAttribute("data-tab");
             if (tabData[tabKey]) {
-                renderLines(tabData[tabKey], false);
+                renderLines(tabData[tabKey], true);
             }
         });
     });
 
-    // Quick Command Chips
+    // Quick Command Chips Toolbar
     cmdChips.forEach(chip => {
         chip.addEventListener("click", () => {
             const cmd = chip.getAttribute("data-cmd");
+            
+            // Visual active flash on chip
+            cmdChips.forEach(c => c.classList.remove("chip-active"));
+            chip.classList.add("chip-active");
+            setTimeout(() => chip.classList.remove("chip-active"), 350);
+
             if (cmd === "clear") {
-                if (currentTimer) clearTimeout(currentTimer);
-                terminalBody.innerHTML = `<div class="terminal-line"><span class="terminal-prompt">$</span> <span class="terminal-cursor-blink">_</span></div>`;
+                clearTimers();
+                terminalBody.innerHTML = `
+                    <div class="terminal-line"><span class="terminal-prompt">$</span> <span class="cmd-text">clear</span></div>
+                    <div class="terminal-line"><span class="terminal-prompt">$</span> <span class="terminal-cursor-blink">_</span></div>
+                `;
             } else if (cmd === "fetch") {
                 tabs.forEach(t => t.classList.toggle("active", t.getAttribute("data-tab") === "profile"));
-                renderLines(tabData.profile, false);
+                renderLines(tabData.profile, true);
             } else if (cmd === "stack") {
                 tabs.forEach(t => t.classList.toggle("active", t.getAttribute("data-tab") === "stack"));
-                renderLines(tabData.stack, false);
+                renderLines(tabData.stack, true);
             } else if (cmd === "projects") {
+                tabs.forEach(t => t.classList.remove("active"));
                 const projectLines = [
                     { type: "cmd", text: "list --all-repositories" },
                     { type: "out", key: "[p1] Lost & Found Campus Portal:", text: "PHP, MySQL, Bootstrap // DEPLOYED" },
                     { type: "out", key: "[p2] Campus Canteen Kiosk POS:", text: "Java Swing UI, MySQL, JDBC // PRODUCTION" },
                     { type: "out", key: "[p3] Desktop Systems Utilities:", text: "C++, Python, Encryption Suite // OPEN_SOURCE" },
                     { type: "out", key: "[p4] EdTech Research Analysis:", text: "Python, Pandas, Regression Models // PUBLISHED" },
-                    { type: "out", quote: true, text: "Scroll down to section 04 to inspect full specifications & contributions." }
+                    { type: "out", key: "[p5] Brand Identity & UI:", text: "Figma Tokens, Vector Assets // COMMERCIAL" },
+                    { type: "out", quote: true, text: "Scroll to section [04 // PROJECTS] to view full architecture & specs." }
                 ];
-                renderLines(projectLines, false);
+                renderLines(projectLines, true);
             } else if (cmd === "contact") {
+                tabs.forEach(t => t.classList.remove("active"));
                 const contactLines = [
                     { type: "cmd", text: "netstat --contact-endpoints" },
                     { type: "out", key: "Direct Email:", text: "tristan.agoilo@example.com" },
                     { type: "out", key: "Location:", text: "Manila, Philippines [UTC+8]" },
                     { type: "out", key: "Socials:", text: "GitHub: /tristan-agoilo | LinkedIn: /in/tristan-agoilo" },
-                    { type: "out", quote: true, text: "Transmission channel open for software engineering inquiries." }
+                    { type: "out", key: "Transmission:", text: "SYS_STATUS: READY_FOR_DEPLOYMENT" },
+                    { type: "out", quote: true, text: "Channel open for software engineering inquiries." }
                 ];
-                renderLines(contactLines, false);
+                renderLines(contactLines, true);
             }
         });
     });
@@ -515,6 +540,7 @@ function initProjectModal() {
         modal.classList.add("open");
         modal.setAttribute("aria-hidden", "false");
         document.body.style.overflow = "hidden";
+        if (window.SoundSystem) window.SoundSystem.playModalOpenSound();
     }
 
     function closeModal() {

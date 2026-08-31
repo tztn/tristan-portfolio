@@ -428,11 +428,13 @@
     transition: all var(--transition-fast);
 }
 
-.cmd-chip:hover {
+.cmd-chip:hover,
+.cmd-chip.chip-active {
     background: #ffffff;
     color: #09090b;
     border-color: #ffffff;
-    transform: translateY(-1px);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.25);
 }
 
 .terminal-status-info {
@@ -459,12 +461,13 @@
     flex-direction: column;
     gap: 6px;
     box-shadow: var(--card-shadow);
-    transition: var(--transition-theme), border-color var(--transition-fast), transform var(--transition-fast);
+    transition: var(--transition-theme), border-color 0.22s ease, transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s ease;
 }
 
 .telemetry-card:hover {
     border-color: var(--text-primary);
-    transform: translateY(-2px);
+    transform: translateY(-4px);
+    box-shadow: var(--card-shadow-hover);
 }
 
 .telemetry-card-header {
