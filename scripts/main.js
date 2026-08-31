@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initTerminalTypewriter();
     initSkillsHUD();
     initProjectsFilter();
-    initProjectModal();
+    initProjectDetailsController();
     initContactFeedback();
     initScrollReveal();
 });
@@ -181,7 +181,7 @@ function initTerminalTypewriter() {
             { type: "cmd", text: "fetch --developer" },
             { type: "out", key: "Name:", text: "Tristan Ray Agoilo" },
             { type: "out", key: "Role:", text: "Systems Developer & Software Engineer" },
-            { type: "out", key: "Focus:", text: "Scalable Backends, Desktop POS Architecture, Creative Frontends" },
+            { type: "out", key: "Focus:", text: "Desktop Architectures, Campus Web Systems, C++ POS Utilities & UI Tokens" },
             { type: "out", key: "Status:", text: "Available for ambitious systems engineering & full-stack roles" },
             { type: "cmd", text: "ping -c 1 core_philosophy" },
             { type: "out", quote: true, text: '"Complexity is easy. Simplicity, contrast, and performance are hard work."' }
@@ -197,10 +197,10 @@ function initTerminalTypewriter() {
         ],
         stack: [
             { type: "cmd", text: "stack --inspect-runtime" },
-            { type: "out", key: "Languages:", text: "C++ (C++20), Java (JDK 21), Python 3, JavaScript (ES6+), PHP 8.2" },
-            { type: "out", key: "Frameworks:", text: "Vue.js, Java Swing UI, Bootstrap 5, Express/Node" },
-            { type: "out", key: "Database:", text: "MySQL, Relational Schema Normalization, JDBC" },
-            { type: "out", key: "Design Tools:", text: "Figma (Design Tokens), VS Code, NetBeans, Git" },
+            { type: "out", key: "Languages:", text: "Java (JDK 21), C++ (C++20), PHP 8.2, JavaScript (ES6+), Python 3" },
+            { type: "out", key: "Frameworks:", text: "Java Swing UI, Bootstrap 5, Vue.js, Express/Node" },
+            { type: "out", key: "Database:", text: "MySQL, Relational Schema Normalization (3NF), JDBC" },
+            { type: "out", key: "Toolchains:", text: "Figma (Design Tokens), NetBeans, VS Code, Git/GitHub" },
             { type: "out", quote: true, text: "Zero bloat. Deterministic architectures built for efficiency." }
         ],
         philosophy: [
@@ -320,7 +320,7 @@ function initTerminalTypewriter() {
     cmdChips.forEach(chip => {
         chip.addEventListener("click", () => {
             const cmd = chip.getAttribute("data-cmd");
-            
+
             // Visual active flash on chip
             cmdChips.forEach(c => c.classList.remove("chip-active"));
             chip.classList.add("chip-active");
@@ -342,11 +342,10 @@ function initTerminalTypewriter() {
                 tabs.forEach(t => t.classList.remove("active"));
                 const projectLines = [
                     { type: "cmd", text: "list --all-repositories" },
-                    { type: "out", key: "[p1] Lost & Found Campus Portal:", text: "PHP, MySQL, Bootstrap // DEPLOYED" },
-                    { type: "out", key: "[p2] Campus Canteen Kiosk POS:", text: "Java Swing UI, MySQL, JDBC // PRODUCTION" },
-                    { type: "out", key: "[p3] Desktop Systems Utilities:", text: "C++, Python, Encryption Suite // OPEN_SOURCE" },
-                    { type: "out", key: "[p4] EdTech Research Analysis:", text: "Python, Pandas, Regression Models // PUBLISHED" },
-                    { type: "out", key: "[p5] Brand Identity & UI:", text: "Figma Tokens, Vector Assets // COMMERCIAL" },
+                    { type: "out", key: "[p1] DLAILS Lab Incident Logger:", text: "Java Swing UI, MySQL, JDBC // PRODUCTION_STABLE" },
+                    { type: "out", key: "[p2] Lost & Found NCST System:", text: "PHP, MySQL, Bootstrap // CAMPUS_PORTAL" },
+                    { type: "out", key: "[p3] Stym Web Platform:", text: "JavaScript, CSS3, Figma Tokens // INTERACTIVE_UI" },
+                    { type: "out", key: "[p4] Supermarket POS Utility:", text: "C++20, Object-Oriented, Binary I/O // HIGH_EFFICIENCY" },
                     { type: "out", quote: true, text: "Scroll to section [04 // PROJECTS] to view full architecture & specs." }
                 ];
                 renderLines(projectLines, true);
@@ -354,9 +353,9 @@ function initTerminalTypewriter() {
                 tabs.forEach(t => t.classList.remove("active"));
                 const contactLines = [
                     { type: "cmd", text: "netstat --contact-endpoints" },
-                    { type: "out", key: "Direct Email:", text: "tristan.agoilo@example.com" },
-                    { type: "out", key: "Location:", text: "Manila, Philippines [UTC+8]" },
-                    { type: "out", key: "Socials:", text: "GitHub: /tristan-agoilo | LinkedIn: /in/tristan-agoilo" },
+                    { type: "out", key: "Direct Email:", text: "agoilotristanray@gmail.com" },
+                    { type: "out", key: "Location:", text: "Cavite, Philippines [UTC+8]" },
+                    { type: "out", key: "Socials:", text: "GitHub: /tztn | LinkedIn: /in/tristan-agoilo" },
                     { type: "out", key: "Transmission:", text: "SYS_STATUS: READY_FOR_DEPLOYMENT" },
                     { type: "out", quote: true, text: "Channel open for software engineering inquiries." }
                 ];
@@ -367,206 +366,482 @@ function initTerminalTypewriter() {
 }
 
 /* ==========================================================================
-   04: SKILLS MATRIX INTERACTIVE HUD
+   04: SKILLS MATRIX INTERACTIVE HEX POPOVER & FILTER ENGINE
    ========================================================================== */
+const skillsHexData = {
+    cpp: {
+        name: "C++",
+        badge: "[ SYSTEMS // C++20 ]",
+        level: "Expert (3+ Yrs)",
+        quote: "Low-level memory management, multithreaded concurrency routines, and high-performance algorithmic execution.",
+        focus: "Pointers & References, SHA-256 Routines, File I/O Streams, RAII Concurrency"
+    },
+    java: {
+        name: "Java",
+        badge: "[ DESKTOP // JDK 21 ]",
+        level: "Expert (3+ Yrs)",
+        quote: "Object-oriented desktop architectures, Java Swing POS client interfaces, and JDBC transactional connectivity.",
+        focus: "OOP Design Patterns, Swing Layout Managers, ACID Database Queries, Event Dispatch Thread"
+    },
+    python: {
+        name: "Python",
+        badge: "[ DATA // PYTHON 3 ]",
+        level: "Advanced (2+ Yrs)",
+        quote: "Quantitative data modeling with Pandas, statistical regression analysis, and batch filesystem automation scripts.",
+        focus: "Pandas DataFrame Pipelines, NumPy Math Modeling, Matplotlib Visualizations, System Automation"
+    },
+    mysql: {
+        name: "MySQL",
+        badge: "[ DATABASE // SQL ]",
+        level: "Advanced (3+ Yrs)",
+        quote: "Relational schema engineering, composite index tuning, foreign key constraints, and ACID-compliant transaction pipelines.",
+        focus: "Schema Normalization (3NF), Query Execution Optimization, Relational Integrity"
+    },
+    php: {
+        name: "PHP",
+        badge: "[ BACKEND // PHP 8.2 ]",
+        level: "Intermediate (2+ Yrs)",
+        quote: "Server-side RESTful API controllers, role-based access verification, and session state management for campus portals.",
+        focus: "PDO Prepared Statements, RBAC Authorization Matrices, CRUD Query Optimization"
+    },
+    javascript: {
+        name: "JavaScript",
+        badge: "[ CLIENT // ES6+ ]",
+        level: "Advanced (3+ Yrs)",
+        quote: "Reactive UI state management, Web Audio API synthesis, dynamic HTML5 canvas shaders, and asynchronous event handlers.",
+        focus: "DOM Event Delegation, Asynchronous Promises, Web Audio API, Interactive Canvas"
+    },
+    vue: {
+        name: "Vue.js",
+        badge: "[ FRAMEWORK // VUE 3 ]",
+        level: "Advanced (2+ Yrs)",
+        quote: "Single-file component composition, reactive state stores, and modular interface workflows for responsive web tools.",
+        focus: "Component Composition, Props & Emit Reactivity, Virtual DOM Diffing"
+    },
+    html5: {
+        name: "HTML5",
+        badge: "[ MARKUP // SEMANTIC ]",
+        level: "Expert (4+ Yrs)",
+        quote: "Semantic document architecture, accessible ARIA roles, and standards-compliant structural markup hierarchies.",
+        focus: "Semantic Elements, ARIA Roles, SEO Meta Structures"
+    },
+    css3: {
+        name: "CSS3",
+        badge: "[ STYLING // MODERN ]",
+        level: "Expert (4+ Yrs)",
+        quote: "Custom property token design systems, CSS Grid/Flexbox layouts, glassmorphic filters, and GPU-accelerated micro-animations.",
+        focus: "CSS Variables Design System, Flexbox/Grid Systems, 3D Perspective Transforms"
+    },
+    figma: {
+        name: "Figma",
+        badge: "[ DESIGN // TOKENS ]",
+        level: "Expert (3+ Yrs)",
+        quote: "High-contrast monochrome UI design systems, responsive auto-layout prototypes, and scalable vector assets.",
+        focus: "Design Tokens Hierarchy, Auto-Layout Components, Interactive Prototype Flows"
+    },
+    vscode: {
+        name: "VS Code",
+        badge: "[ DEV // WORKSPACE ]",
+        level: "Expert (4+ Yrs)",
+        quote: "Custom workspace configurations, integrated debugger terminals, and multi-language linting extensions.",
+        focus: "Git Worktrees, Workspace Configs, Profiler Diagnostics"
+    },
+    git: {
+        name: "Git / GitHub",
+        badge: "[ VERSION // CI/CD ]",
+        level: "Advanced (3+ Yrs)",
+        quote: "Branch control workflows, atomic commits, repository documentation, and pull request code reviews.",
+        focus: "Branch Rebasing & Merging, Commit History Integrity, Remote Collaborations"
+    },
+    netbeans: {
+        name: "Apache NetBeans",
+        badge: "[ JAVA IDE // GUI ]",
+        level: "Advanced (2+ Yrs)",
+        quote: "Ant/Maven build lifecycles, Swing GUI form builders, and bytecode compilation workflows for desktop clients.",
+        focus: "Maven/Ant Compilers, Swing Form Architecture, JVM Debugging"
+    },
+    xampp: {
+        name: "XAMPP Stack",
+        badge: "[ LOCAL SERVER // ENV ]",
+        level: "Advanced (3+ Yrs)",
+        quote: "Local development hosting environment for Apache web servers, PHP runtimes, and phpMyAdmin MySQL instances.",
+        focus: "Apache VirtualHosts, phpMyAdmin Administration, Local Port Routing"
+    }
+};
+
 function initSkillsHUD() {
-    const badges = document.querySelectorAll(".skill-badge");
-    const hudStatus = document.querySelector(".hud-status");
-    const hudDetails = document.querySelector(".hud-details");
-    const hudName = document.querySelector(".hud-val-name");
-    const hudLevel = document.querySelector(".hud-val-level");
-    const hudDesc = document.querySelector(".hud-desc");
+    const container = document.querySelector(".skills-hex-container");
+    const grid = document.getElementById("skills-hex-grid");
+    const popover = document.getElementById("hex-popover-card");
+    const techNodes = document.querySelectorAll(".tech-logo-item, .tech-brand-tile, .tech-node");
+    const filterPills = document.querySelectorAll(".skills-filter-pill");
 
-    if (!badges.length || !hudDetails) return;
+    if (!container || !popover || !techNodes.length) return;
 
-    badges.forEach((badge) => {
-        badge.addEventListener("mouseenter", () => {
-            badges.forEach(b => b.classList.remove("active-hud"));
-            badge.classList.add("active-hud");
+    const popName = document.getElementById("hex-pop-name");
+    const popBadge = document.getElementById("hex-pop-badge");
+    const popLevel = document.getElementById("hex-pop-level");
+    const popQuote = document.getElementById("hex-pop-quote");
+    const popFocus = document.getElementById("hex-pop-focus");
 
-            const name = badge.querySelector(".badge-text")?.textContent || "";
-            const level = badge.getAttribute("data-level") || "";
-            const desc = badge.getAttribute("data-desc") || "";
+    let activeNode = null;
+    let hideTimeout = null;
 
-            hudName.textContent = name;
-            hudLevel.textContent = level;
-            hudDesc.textContent = desc;
+    function positionPopover(node) {
+        const containerRect = container.getBoundingClientRect();
+        const nodeRect = node.getBoundingClientRect();
 
-            hudStatus.classList.add("hidden");
-            hudDetails.classList.remove("hidden");
+        const popWidth = popover.offsetWidth || 340;
+        const popHeight = popover.offsetHeight || 190;
+
+        // Center horizontally relative to node
+        let left = (nodeRect.left - containerRect.left) + (nodeRect.width / 2) - (popWidth / 2);
+        
+        // Keep within container bounds
+        if (left < 0) left = 0;
+        if (left + popWidth > containerRect.width) left = containerRect.width - popWidth;
+
+        // Position above the node
+        let top = (nodeRect.top - containerRect.top) - popHeight - 14;
+
+        // If overflowing above, position below
+        if (top < 0) {
+            top = (nodeRect.bottom - containerRect.top) + 14;
+        }
+
+        popover.style.left = `${Math.round(left)}px`;
+        popover.style.top = `${Math.round(top)}px`;
+    }
+
+    function showPopover(node) {
+        clearTimeout(hideTimeout);
+        const skillId = node.getAttribute("data-skill-id");
+        const data = skillsHexData[skillId];
+        if (!data) return;
+
+        techNodes.forEach(n => n.classList.remove("active-node"));
+        node.classList.add("active-node");
+        activeNode = node;
+
+        if (popName) popName.textContent = data.name;
+        if (popBadge) popBadge.textContent = data.badge;
+        if (popLevel) popLevel.textContent = data.level;
+        if (popQuote) popQuote.textContent = `${data.quote}`;
+        if (popFocus) popFocus.textContent = data.focus;
+
+        popover.classList.add("visible");
+        positionPopover(node);
+    }
+
+    function hidePopover() {
+        hideTimeout = setTimeout(() => {
+            popover.classList.remove("visible");
+            if (activeNode) {
+                activeNode.classList.remove("active-node");
+                activeNode = null;
+            }
+        }, 180);
+    }
+
+    techNodes.forEach((node) => {
+        node.addEventListener("mouseenter", () => showPopover(node));
+        node.addEventListener("focus", () => showPopover(node));
+        node.addEventListener("mouseleave", hidePopover);
+        node.addEventListener("blur", hidePopover);
+        node.addEventListener("click", (e) => {
+            showPopover(node);
         });
     });
+
+    // Keep popover visible if user hovers directly onto the card (e.g. to click Read Story)
+    popover.addEventListener("mouseenter", () => {
+        clearTimeout(hideTimeout);
+    });
+    popover.addEventListener("mouseleave", hidePopover);
+
+    // Category Filter Pills
+    filterPills.forEach(pill => {
+        pill.addEventListener("click", () => {
+            filterPills.forEach(p => p.classList.remove("active"));
+            pill.classList.add("active");
+
+            const filter = pill.getAttribute("data-skill-filter");
+            techNodes.forEach(node => {
+                const category = node.getAttribute("data-category");
+                if (filter === "all" || category === filter) {
+                    node.classList.remove("filter-hidden");
+                } else {
+                    node.classList.add("filter-hidden");
+                }
+            });
+            hidePopover();
+        });
+    });
+
+    window.addEventListener("resize", () => {
+        if (activeNode && popover.classList.contains("visible")) {
+            positionPopover(activeNode);
+        }
+    }, { passive: true });
 }
 
 /* ==========================================================================
-   05: PROJECT CATEGORY FILTERING
+   05: PROJECT CATEGORY FILTERING & REAL-TIME SEARCH (KOYEB UI)
    ========================================================================== */
 function initProjectsFilter() {
-    const filterBtns = document.querySelectorAll(".filter-btn");
-    const projectCards = document.querySelectorAll(".project-card");
+    const filterBtns = document.querySelectorAll(".filter-btn, .koyeb-filter-pill");
+    const projectCards = document.querySelectorAll(".koyeb-app-card, .bento-project-card, .project-card");
+    const searchInput = document.getElementById("koyeb-search-input");
 
-    if (!filterBtns.length || !projectCards.length) return;
+    if (!projectCards.length) return;
+
+    let currentFilter = "all";
+    let searchQuery = "";
+
+    function filterCards() {
+        projectCards.forEach(card => {
+            const category = card.getAttribute("data-category");
+            const cardText = card.textContent.toLowerCase();
+
+            const matchesCategory = currentFilter === "all" || category === currentFilter;
+            const matchesSearch = !searchQuery || cardText.includes(searchQuery);
+
+            if (matchesCategory && matchesSearch) {
+                card.classList.remove("filter-hidden");
+            } else {
+                card.classList.add("filter-hidden");
+            }
+        });
+    }
 
     filterBtns.forEach(btn => {
         btn.addEventListener("click", () => {
             filterBtns.forEach(b => b.classList.remove("active"));
             btn.classList.add("active");
 
-            const filter = btn.getAttribute("data-filter");
-
-            projectCards.forEach(card => {
-                const category = card.getAttribute("data-category");
-                if (filter === "all" || category === filter) {
-                    card.classList.remove("filter-hidden");
-                } else {
-                    card.classList.add("filter-hidden");
-                }
-            });
+            currentFilter = btn.getAttribute("data-filter") || "all";
+            filterCards();
         });
     });
+
+    if (searchInput) {
+        searchInput.addEventListener("input", (e) => {
+            searchQuery = e.target.value.trim().toLowerCase();
+            filterCards();
+        });
+    }
 }
 
 /* ==========================================================================
-   06: PROJECT DETAIL MODAL DIALOG
+   06: PROJECT DETAIL IN-PAGE VIEW CONTROLLER (NO DISRUPTIVE POPUPS)
    ========================================================================== */
 const projectData = {
-    p1: {
-        title: "Lost & Found Campus Portal",
-        badge: "SYSTEMS & WEB ARCHITECTURE",
-        stack: "PHP, MySQL, Apache, Bootstrap, JavaScript",
-        arch: "MVC, Relational Database, RBAC Permission Matrix",
-        status: "DEPLOYED_CAMPUS_PILOT",
-        desc: "A secure, campus-wide web service designed to manage lost property logs and claims. Features item tracking, claim verification workflows, and an administrative panel.",
+    dlails: {
+        id: "dlails",
+        title: "Digital Laboratory Utilization & Incident Logging System (DLAILS)",
+        badge: "[ SYSTEMS / DESKTOP ]",
+        category: "systems",
+        repo: "https://github.com/tztn/DLAILS",
+        repoSlug: "tztn / DLAILS",
+        lang: "Java",
+        langColor: "#f89820",
+        stack: "Java, Java Swing, MySQL, JDBC, NetBeans IDE",
+        arch: "Desktop Client-Server Architecture, ACID Database Transactions, Event Dispatch Thread",
+        status: "PUBLIC_REPO // PRODUCTION_STABLE",
+        overview: "A desktop management system for tracking computer lab utilization, student sessions, hardware availability, and real-time incident logging across campus laboratories.",
         contributions: [
-            "Architected relational schema with index tuning on item query searches.",
-            "Implemented security validations for authenticated claim verification.",
-            "Engineered administrative audit log to prevent unauthorized status changes."
+            "Architected a responsive Java Swing desktop interface with specialized layout managers for rapid student workstation allocation.",
+            "Engineered transactional JDBC database layer ensuring zero concurrency collision during simultaneous student terminal logins.",
+            "Implemented real-time hardware fault and peripheral incident reporting module with technician resolution audit logs."
         ],
-        tags: ["PHP", "MySQL", "Bootstrap", "Systems"]
+        tags: ["Java", "Java Swing", "MySQL", "JDBC", "NetBeans"]
     },
-    p2: {
-        title: "Campus Canteen Kiosk",
-        badge: "DESKTOP POS SYSTEM",
-        stack: "Java, Swing UI, MySQL, JDBC",
-        arch: "Desktop Client, Transactional POS Architecture",
-        status: "PRODUCTION_STABLE",
-        desc: "An automated self-service point-of-sale desktop system built to streamline cafeteria orders, shorten checkout queues, and sync sales transactions directly to a database.",
+    lostfound: {
+        id: "lostfound",
+        title: "Lost & Found NCST System",
+        badge: "[ WEB SYSTEMS ]",
+        category: "web",
+        repo: "https://github.com/tztn/lost-found-ncst-system",
+        repoSlug: "tztn / lost-found-ncst-system",
+        lang: "PHP",
+        langColor: "#777bb4",
+        stack: "PHP, MySQL, HTML5, CSS3, Bootstrap",
+        arch: "MVC Web Architecture, Relational Schema (3NF), Role-Based Access Control (RBAC)",
+        status: "PUBLIC_REPO // CAMPUS_PILOT",
+        overview: "A web-based campus portal for reporting, tracking, and verifying lost and found property at NCST, featuring role-based admin workflows and automated claim verifications.",
         contributions: [
-            "Designed a responsive desktop touch interface using Java Swing UI layout managers.",
-            "Implemented ACID-compliant SQL queries for itemized receipt printing.",
-            "Built automated stock inventory counters with low-inventory notifications."
+            "Engineered 3NF relational schema in MySQL with composite indexes for lightning-fast keyword matching between lost logs and found entries.",
+            "Implemented multi-tier RBAC authorization allowing Campus Security, Department Administrators, and Students secure access.",
+            "Built tamper-resistant administrative audit logs tracking verification statuses, physical locker IDs, and claim handover paperwork."
         ],
-        tags: ["Java", "Swing UI", "MySQL", "Systems"]
+        tags: ["PHP", "MySQL", "HTML5", "CSS3", "Bootstrap"]
     },
-    p3: {
-        title: "Desktop Systems & Script Utilities",
-        badge: "SYSTEMS AUTOMATION",
-        stack: "C++, Python, Java, Bash",
-        arch: "CLI Tools, Concurrency, Hardware Diagnostics",
-        status: "OPEN_SOURCE_TOOLKIT",
-        desc: "A collection of systems utilities for batch filesystem manipulation, CPU/memory metric monitors, and string encryption suites.",
+    stym: {
+        id: "stym",
+        title: "Stym (Systems & Web Platform)",
+        badge: "[ WEB / FRONTEND ]",
+        category: "web",
+        repo: "https://github.com/tztn/Stym",
+        repoSlug: "tztn / Stym",
+        lang: "JavaScript",
+        langColor: "#f7df1e",
+        stack: "HTML5, CSS3, JavaScript, Figma",
+        arch: "Component Composition, CSS Custom Property Design Tokens, High-Contrast Responsive Layouts",
+        status: "PUBLIC_REPO // ACTIVE",
+        overview: "A responsive web interface and interactive dashboard concept engineered for clean data visualization, user navigation, and modern component workflows.",
         contributions: [
-            "Built multithreaded file organizers achieving zero data loss on large directories.",
-            "Implemented SHA-256 and AES string encryption algorithms in C++.",
-            "Created Python automated reporting scripts for memory allocation benchmarks."
+            "Defined complete typography and design token systems in Figma and translated into responsive CSS custom properties.",
+            "Engineered lightweight, dependency-free interactive UI components with fluid micro-animations and accessibility standards.",
+            "Integrated cross-browser responsive layouts optimized for high-density displays and mobile viewport sizes."
         ],
-        tags: ["C++", "Python", "Java", "Programming"]
+        tags: ["HTML5", "CSS3", "JavaScript", "Figma"]
     },
-    p4: {
-        title: "EdTech Engagement Research",
-        badge: "DATA ANALYSIS & RESEARCH",
-        stack: "Python, Pandas, NumPy, Matplotlib",
-        arch: "Statistical Modeling, Pipeline Automation",
-        status: "PUBLISHED_RESEARCH",
-        desc: "A quantitative statistics analysis exploring student engagement with educational software tools and its measurable impact on STEM exam performance.",
+    supermarket: {
+        id: "supermarket",
+        title: "Supermarket Management & POS Utility",
+        badge: "[ PROGRAMMING / C++ ]",
+        category: "programming",
+        repo: "https://github.com/tztn/supermarket",
+        repoSlug: "tztn / supermarket",
+        lang: "C++",
+        langColor: "#00599c",
+        stack: "C++, OOP, File Handling / DBMS Concepts, CLI / Console",
+        arch: "Object-Oriented Architecture, Binary File Serialization, In-Memory Data Structures",
+        status: "PUBLIC_REPO // CORE_TOOLKIT",
+        overview: "A high-efficiency console-based supermarket inventory, pricing, and point-of-sale checkout system built with Object-Oriented C++ and persistent data structures.",
         contributions: [
-            "Cleaned and normalized raw survey data from over 500 participants.",
-            "Conducted regression and variance analysis to isolate primary performance factors.",
-            "Produced publication-ready visual charts and correlation graphs."
+            "Engineered binary file serialization streams (fstream) for persistent, corruption-resistant storage of product inventories without external DBMS.",
+            "Implemented object-oriented product catalog classes with polymorphic discount calculations and real-time inventory deductions.",
+            "Built robust console input validation routines preventing memory leaks, buffer overruns, and incorrect billing computations."
         ],
-        tags: ["Python", "Pandas", "Data Analysis"]
-    },
-    p5: {
-        title: "Brand Identity & Digital Art",
-        badge: "VECTOR & UI DESIGN",
-        stack: "Figma, Adobe Illustrator, Vector Geometry",
-        arch: "Design Systems, Token Guides, Asset Specs",
-        status: "COMMERCIAL_RELEASE",
-        desc: "A complete vector design collection encompassing typography hierarchies, responsive grid tokens, and technical illustration sheets for physical and digital assets.",
-        contributions: [
-            "Defined high-contrast dark/light monochrome token guidelines in Figma.",
-            "Created scalable vector badge systems with exact Pantone color matching.",
-            "Built reusable UI asset libraries for web prototypes."
-        ],
-        tags: ["Figma", "Vector Art", "Design"]
+        tags: ["C++", "OOP", "File Handling", "CLI / Console"]
     }
 };
 
-function initProjectModal() {
-    const modal = document.getElementById("project-modal");
-    const closeBtn = document.getElementById("modal-close-btn");
-    const cards = document.querySelectorAll(".project-card");
+// Aliases for legacy triggers
+projectData.p1 = projectData.dlails;
+projectData.p2 = projectData.lostfound;
+projectData.p3 = projectData.stym;
+projectData.p4 = projectData.supermarket;
 
-    if (!modal) return;
+function initProjectDetailsController() {
+    const bentoContainer = document.getElementById("projects-bento-view");
+    const detailView = document.getElementById("project-detail-view");
+    const backBtn = document.getElementById("back-to-projects-btn");
+    const projectSection = document.getElementById("projects");
 
-    function openModal(projectId) {
+    if (!detailView || !bentoContainer) return;
+
+    function renderProjectDetail(projectId) {
         const data = projectData[projectId];
         if (!data) return;
 
-        document.getElementById("modal-badge").textContent = data.badge;
-        document.getElementById("modal-title").textContent = data.title;
-        document.getElementById("modal-spec-stack").textContent = data.stack;
-        document.getElementById("modal-spec-arch").textContent = data.arch;
-        document.getElementById("modal-spec-status").textContent = data.status;
-        document.getElementById("modal-desc").textContent = data.desc;
+        // Populate detail view fields
+        const stickyBadge = document.getElementById("detail-sticky-badge");
+        const stickyGithub = document.getElementById("detail-sticky-github");
+        const mainTitle = document.getElementById("detail-main-title");
+        const langDot = document.getElementById("detail-lang-dot");
+        const langText = document.getElementById("detail-lang-text");
+        const statusPill = document.getElementById("detail-status-pill");
+        const overviewP = document.getElementById("detail-overview-text");
+        const stackList = document.getElementById("detail-stack-list");
+        const archText = document.getElementById("detail-arch-text");
+        const contributionsList = document.getElementById("detail-contributions-list");
+        const cloneCode = document.getElementById("detail-clone-code");
+        const primaryGithubBtn = document.getElementById("detail-primary-github-btn");
 
-        const contributionsList = document.getElementById("modal-contributions-list");
-        contributionsList.innerHTML = "";
-        data.contributions.forEach(item => {
-            const li = document.createElement("li");
-            li.textContent = item;
-            contributionsList.appendChild(li);
-        });
+        if (stickyBadge) stickyBadge.textContent = data.badge;
+        if (stickyGithub) stickyGithub.href = data.repo;
+        if (mainTitle) mainTitle.textContent = data.title;
+        if (langText) langText.textContent = data.lang;
+        if (langDot) langDot.style.backgroundColor = data.langColor || "var(--text-primary)";
+        if (statusPill) statusPill.textContent = data.status;
+        if (overviewP) overviewP.textContent = data.overview;
+        if (archText) archText.textContent = data.arch;
 
-        const tagsContainer = document.getElementById("modal-tags");
-        tagsContainer.innerHTML = "";
-        data.tags.forEach(tag => {
-            const span = document.createElement("span");
-            span.className = "project-card-tag";
-            span.textContent = tag;
-            tagsContainer.appendChild(span);
-        });
+        if (stackList) {
+            stackList.innerHTML = "";
+            data.tags.forEach(tag => {
+                const span = document.createElement("span");
+                span.className = "detail-tag-chip font-mono";
+                span.textContent = `[ ${tag} ]`;
+                stackList.appendChild(span);
+            });
+        }
 
-        modal.classList.add("open");
-        modal.setAttribute("aria-hidden", "false");
-        document.body.style.overflow = "hidden";
-        if (window.SoundSystem) window.SoundSystem.playModalOpenSound();
+        if (contributionsList) {
+            contributionsList.innerHTML = "";
+            data.contributions.forEach(item => {
+                const li = document.createElement("li");
+                li.textContent = item;
+                contributionsList.appendChild(li);
+            });
+        }
+
+        if (cloneCode) {
+            cloneCode.textContent = `git clone ${data.repo}.git`;
+        }
+
+        if (primaryGithubBtn) {
+            primaryGithubBtn.href = data.repo;
+        }
+
+        // Smooth in-page transition
+        bentoContainer.classList.add("view-hidden");
+        detailView.classList.remove("view-hidden");
+        detailView.classList.add("view-active");
+
+        // Scroll to projects section top cleanly
+        if (projectSection) {
+            projectSection.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
     }
 
-    function closeModal() {
-        modal.classList.remove("open");
-        modal.setAttribute("aria-hidden", "true");
-        document.body.style.overflow = "";
+    function returnToProjectsGrid() {
+        detailView.classList.remove("view-active");
+        detailView.classList.add("view-hidden");
+        bentoContainer.classList.remove("view-hidden");
+
+        if (projectSection) {
+            projectSection.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
     }
 
-    cards.forEach(card => {
-        card.addEventListener("click", () => {
-            const id = card.getAttribute("data-project-id");
-            if (id) openModal(id);
-        });
-    });
-
-    if (closeBtn) closeBtn.addEventListener("click", closeModal);
-
-    modal.addEventListener("click", (e) => {
-        if (e.target === modal) closeModal();
-    });
-
-    document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape" && modal.classList.contains("open")) {
-            closeModal();
+    // Attach trigger listeners
+    document.addEventListener("click", (e) => {
+        const trigger = e.target.closest("[data-project-trigger], [data-project-id]");
+        if (trigger && !trigger.classList.contains("modal-close-btn")) {
+            const id = trigger.getAttribute("data-project-trigger") || trigger.getAttribute("data-project-id");
+            if (id && projectData[id]) {
+                e.preventDefault();
+                renderProjectDetail(id);
+            }
         }
     });
+
+    if (backBtn) {
+        backBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            returnToProjectsGrid();
+        });
+    }
+
+    // 1-Click Clone Command Copy
+    const copyCloneBtn = document.getElementById("copy-clone-btn");
+    if (copyCloneBtn) {
+        copyCloneBtn.addEventListener("click", () => {
+            const cloneCode = document.getElementById("detail-clone-code");
+            if (cloneCode) {
+                navigator.clipboard.writeText(cloneCode.textContent.trim()).then(() => {
+                    const originalText = copyCloneBtn.textContent;
+                    copyCloneBtn.textContent = "[ COPIED! ]";
+                    setTimeout(() => {
+                        copyCloneBtn.textContent = originalText;
+                    }, 2000);
+                });
+            }
+        });
+    }
 }
 
 /* ==========================================================================
@@ -575,7 +850,7 @@ function initProjectModal() {
 function initContactFeedback() {
     const copyBtn = document.getElementById("copy-email-btn");
     const contactForm = document.getElementById("contact-form");
-    const emailToCopy = "tristan.agoilo@example.com";
+    const emailToCopy = "agoilotristanray@gmail.com";
 
     // Copy Email to Clipboard
     if (copyBtn) {

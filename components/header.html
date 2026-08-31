@@ -1,50 +1,36 @@
-        <!-- Floating Top Navigation Bar with Hex-Style Interactive Popovers -->
+        <!-- Floating Top Navigation Capsule Island -->
         <header class="top-header" id="top-header">
-            <div class="header-container">
-                <!-- Left Brand Logo -->
-                <a href="#home" class="header-brand" aria-label="Tristan Ray Agoilo">
-                    <div class="brand-text">
-                        <span class="brand-name">TRISTAN RAY AGOILO</span>
-                        <span class="brand-title">SYSTEMS DEVELOPER</span>
-                    </div>
+            <div class="header-capsule">
+                <!-- Left Brand Identifier -->
+                <a href="#home" class="capsule-brand" aria-label="Tristan Ray Agoilo">
+                    <span class="capsule-brand-text">TRISTAN</span>
                 </a>
+                <span class="capsule-divider"></span>
 
-                <!-- Center Navigation Menu with Popovers -->
-                <nav class="header-nav" id="header-nav">
+                <!-- Navigation Menu with Popovers -->
+                <nav class="capsule-nav" id="header-nav">
                     <ul class="nav-list">
                         <!-- 01: HOME -->
                         <li class="nav-item">
                             <a href="#home" class="nav-link active" data-section="home">
-                                <span class="nav-bracket">[ </span>
-                                <span class="nav-number">01</span>
-                                <span class="nav-separator">//</span>
-                                <span class="nav-text">HOME</span>
-                                <span class="nav-bracket"> ]</span>
+                                <span class="nav-dot"></span>
+                                <span class="nav-text font-mono">HOME</span>
                             </a>
                         </li>
 
                         <!-- 02: ABOUT -->
                         <li class="nav-item">
                             <a href="#about" class="nav-link" data-section="about">
-                                <span class="nav-bracket">[ </span>
-                                <span class="nav-number">02</span>
-                                <span class="nav-separator">//</span>
-                                <span class="nav-text">ABOUT</span>
-                                <span class="nav-bracket"> ]</span>
+                                <span class="nav-dot"></span>
+                                <span class="nav-text font-mono">ABOUT</span>
                             </a>
                         </li>
 
                         <!-- 03: STACK (With Hex-Style Popover) -->
                         <li class="nav-item has-popover">
                             <a href="#stack" class="nav-link" data-section="stack">
-                                <span class="nav-bracket">[ </span>
-                                <span class="nav-number">03</span>
-                                <span class="nav-separator">//</span>
-                                <span class="nav-text">STACK</span>
-                                <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline points="6 9 12 15 18 9"></polyline>
-                                </svg>
-                                <span class="nav-bracket"> ]</span>
+                                <span class="nav-dot"></span>
+                                <span class="nav-text font-mono">STACK</span>
                             </a>
 
                             <!-- Stack Popover Card -->
@@ -131,58 +117,45 @@
                         <!-- 04: PROJECTS (With Hex-Style Popover) -->
                         <li class="nav-item has-popover">
                             <a href="#projects" class="nav-link" data-section="projects">
-                                <span class="nav-bracket">[ </span>
-                                <span class="nav-number">04</span>
-                                <span class="nav-separator">//</span>
-                                <span class="nav-text">PROJECTS</span>
-                                <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline points="6 9 12 15 18 9"></polyline>
-                                </svg>
-                                <span class="nav-bracket"> ]</span>
+                                <span class="nav-dot"></span>
+                                <span class="nav-text font-mono">PROJECTS</span>
                             </a>
 
                             <!-- Projects Popover Card -->
                             <div class="nav-popover">
                                 <div class="popover-grid">
                                     <div class="popover-col">
-                                        <div class="popover-col-header font-mono">// SYSTEMS & ENTERPRISE</div>
-                                        <a href="#projects" class="popover-item" data-project-trigger="p1">
+                                        <div class="popover-col-header font-mono">// DESKTOP & SYSTEMS</div>
+                                        <a href="#projects" class="popover-item" data-project-trigger="dlails">
                                             <div class="popover-item-badge">01</div>
                                             <div class="popover-item-content">
-                                                <span class="popover-item-title">Campus Lost & Found Portal</span>
-                                                <span class="popover-item-desc">PHP/MySQL web portal with claim verification & audit logs.</span>
+                                                <span class="popover-item-title">DLAILS Lab Incident Logger</span>
+                                                <span class="popover-item-desc">Java Swing & MySQL laboratory session and incident tracker.</span>
                                             </div>
                                         </a>
-                                        <a href="#projects" class="popover-item" data-project-trigger="p2">
+                                        <a href="#projects" class="popover-item" data-project-trigger="supermarket">
                                             <div class="popover-item-badge">02</div>
                                             <div class="popover-item-content">
-                                                <span class="popover-item-title">Campus Canteen Kiosk POS</span>
-                                                <span class="popover-item-desc">Java Swing automated transactional POS system with receipting.</span>
-                                            </div>
-                                        </a>
-                                        <a href="#projects" class="popover-item" data-project-trigger="p3">
-                                            <div class="popover-item-badge">03</div>
-                                            <div class="popover-item-content">
-                                                <span class="popover-item-title">Desktop Systems Utilities</span>
-                                                <span class="popover-item-desc">C++/Python multithreaded file organizers & encryption tools.</span>
+                                                <span class="popover-item-title">Supermarket POS Utility</span>
+                                                <span class="popover-item-desc">C++ OOP high-efficiency inventory & point-of-sale system.</span>
                                             </div>
                                         </a>
                                     </div>
 
                                     <div class="popover-col">
-                                        <div class="popover-col-header font-mono">// RESEARCH & DESIGN</div>
-                                        <a href="#projects" class="popover-item" data-project-trigger="p4">
-                                            <div class="popover-item-badge">04</div>
+                                        <div class="popover-col-header font-mono">// WEB & PLATFORMS</div>
+                                        <a href="#projects" class="popover-item" data-project-trigger="lostfound">
+                                            <div class="popover-item-badge">03</div>
                                             <div class="popover-item-content">
-                                                <span class="popover-item-title">EdTech Engagement Research</span>
-                                                <span class="popover-item-desc">Python & Pandas quantitative statistical regression analysis.</span>
+                                                <span class="popover-item-title">Lost & Found NCST System</span>
+                                                <span class="popover-item-desc">PHP/MySQL web portal with verification & audit logs.</span>
                                             </div>
                                         </a>
-                                        <a href="#projects" class="popover-item" data-project-trigger="p5">
-                                            <div class="popover-item-badge">05</div>
+                                        <a href="#projects" class="popover-item" data-project-trigger="stym">
+                                            <div class="popover-item-badge">04</div>
                                             <div class="popover-item-content">
-                                                <span class="popover-item-title">Brand Identity & Digital Art</span>
-                                                <span class="popover-item-desc">Vector illustration sheets, typography & enamel pin designs.</span>
+                                                <span class="popover-item-title">Stym Web Platform</span>
+                                                <span class="popover-item-desc">JavaScript/CSS3 interactive dashboard & token design.</span>
                                             </div>
                                         </a>
                                     </div>
@@ -204,22 +177,15 @@
                         <!-- 05: CONTACT -->
                         <li class="nav-item">
                             <a href="#contact" class="nav-link" data-section="contact">
-                                <span class="nav-bracket">[ </span>
-                                <span class="nav-number">05</span>
-                                <span class="nav-separator">//</span>
-                                <span class="nav-text">CONTACT</span>
-                                <span class="nav-bracket"> ]</span>
+                                <span class="nav-dot"></span>
+                                <span class="nav-text font-mono">CONTACT</span>
                             </a>
                         </li>
                     </ul>
                 </nav>
 
-                <!-- Right Action Controls -->
-                <div class="header-actions">
-                    <a href="#" class="btn-header-resume" id="resume-button">
-                        <span>[Resume PDF ↗]</span>
-                    </a>
-
+                <!-- Right Action Controls (Refined Utility Buttons) -->
+                <div class="capsule-actions">
                     <!-- Audio SFX Feedback Toggle -->
                     <button class="sfx-toggle-btn" id="sfx-toggle-btn" aria-label="Toggle Sound Effects" title="Toggle audio feedback">
                         <svg class="sfx-icon-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -232,9 +198,9 @@
                             <line x1="23" y1="9" x2="17" y2="15"></line>
                             <line x1="17" y1="9" x2="23" y2="15"></line>
                         </svg>
-                        <span class="sfx-label font-mono">[ SFX: ON ]</span>
                     </button>
 
+                    <!-- Theme Dark/Light Toggle -->
                     <button class="theme-toggle-btn" id="theme-toggle-desktop" aria-label="Toggle Theme" title="Toggle dark/light mode">
                         <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <circle cx="12" cy="12" r="4" />
@@ -245,6 +211,7 @@
                         </svg>
                     </button>
 
+                    <!-- Mobile Menu Hamburger -->
                     <button class="menu-toggle" id="menu-toggle" aria-label="Toggle Navigation Menu">
                         <span class="hamburger-line"></span>
                         <span class="hamburger-line"></span>
@@ -261,21 +228,5 @@
                     <li><a href="#projects" class="mobile-nav-link" data-section="projects">[ 04 // PROJECTS ]</a></li>
                     <li><a href="#contact" class="mobile-nav-link" data-section="contact">[ 05 // CONTACT ]</a></li>
                 </ul>
-                <div class="mobile-drawer-actions">
-                    <button class="btn btn-outline sfx-toggle-btn-mobile" id="sfx-toggle-mobile" style="justify-content: center; gap: 8px;">
-                        <svg class="sfx-icon-on" style="width: 15px; height: 15px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-                            <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
-                        </svg>
-                        <svg class="sfx-icon-off" style="width: 15px; height: 15px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                            <line x1="23" y1="9" x2="17" y2="15"></line>
-                            <line x1="17" y1="9" x2="23" y2="15"></line>
-                        </svg>
-                        <span class="sfx-label-mobile font-mono">[ SFX: ON ]</span>
-                    </button>
-                    <a href="#" class="btn btn-outline" id="resume-button-mobile" style="justify-content: center;">[RESUME PDF ↗]</a>
-                </div>
             </div>
         </header>

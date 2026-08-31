@@ -9,8 +9,9 @@ const SoundSystem = (() => {
     let masterGain = null;
     let isMuted = false;
     let lastHoverTime = 0;
+    let lastClickTime = 0;
 
-    // Initialize state from localStorage (default: enabled)
+    // Initialize state from localStorage
     const storedState = localStorage.getItem("portfolio_sfx_enabled");
     if (storedState !== null) {
         isMuted = storedState === "false";
@@ -22,7 +23,7 @@ const SoundSystem = (() => {
             if (AudioContextClass) {
                 audioCtx = new AudioContextClass();
                 masterGain = audioCtx.createGain();
-                masterGain.gain.setValueAtTime(isMuted ? 0 : 0.08, audioCtx.currentTime);
+                masterGain.gain.setValueAtTime(isMuted ? 0 : 0.75, audioCtx.currentTime);
                 masterGain.connect(audioCtx.destination);
             }
         }
@@ -33,7 +34,7 @@ const SoundSystem = (() => {
 
     // Ensure audio context is unlocked on first user interaction
     function setupLazyInit() {
-        const triggerEvents = ["pointerdown", "click", "keydown", "touchstart"];
+        const triggerEvents = ["pointerdown", "mousedown", "click", "keydown", "touchstart", "mousemove"];
         const unlock = () => {
             initAudioContext();
             triggerEvents.forEach(evt => window.removeEventListener(evt, unlock, { capture: true }));
@@ -42,16 +43,16 @@ const SoundSystem = (() => {
     }
 
     /* --------------------------------------------------------------------------
-       SFX SYNTHESIZERS
+       SFX SYNTHESIZERS (CLEAR, SATISFYING TACTILE SOUNDS)
        -------------------------------------------------------------------------- */
 
     /**
-     * Subtle, high-frequency mechanical "pip" on element hover.
+     * Subtle, crisp tactile chirp on hover.
      */
     function playHoverSound() {
         if (isMuted) return;
         const now = Date.now();
-        if (now - lastHoverTime < 38) return; // Throttle rapid sweeps
+        if (now - lastHoverTime < 28) return; // Responsive throttle
         lastHoverTime = now;
 
         initAudioContext();
@@ -61,61 +62,79 @@ const SoundSystem = (() => {
             const t = audioCtx.currentTime;
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
-            const filter = audioCtx.createBiquadFilter();
 
             osc.type = "sine";
-            osc.frequency.setValueAtTime(2400, t);
-            osc.frequency.exponentialRampToValueAtTime(1500, t + 0.016);
+            osc.frequency.setValueAtTime(1850, t);
+            osc.frequency.exponentialRampToValueAtTime(750, t + 0.022);
 
-            filter.type = "highpass";
-            filter.frequency.setValueAtTime(800, t);
-
-            gain.gain.setValueAtTime(0.026, t);
-            gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.016);
-
-            osc.connect(filter);
-            filter.connect(gain);
-            gain.connect(masterGain);
-
-            osc.start(t);
-            osc.stop(t + 0.02);
-        } catch (e) {
-            // Browser autoplay safety
-        }
-    }
-
-    /**
-     * Crisp terminal switch / key select sound on button/card click.
-     */
-    function playClickSound() {
-        if (isMuted) return;
-        initAudioContext();
-        if (!audioCtx) return;
-
-        try {
-            const t = audioCtx.currentTime;
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-
-            osc.type = "triangle";
-            osc.frequency.setValueAtTime(460, t);
-            osc.frequency.exponentialRampToValueAtTime(130, t + 0.032);
-
-            gain.gain.setValueAtTime(0.06, t);
-            gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.032);
+            gain.gain.setValueAtTime(0.18, t);
+            gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.022);
 
             osc.connect(gain);
             gain.connect(masterGain);
 
             osc.start(t);
-            osc.stop(t + 0.038);
+            osc.stop(t + 0.026);
         } catch (e) {
-            // Browser autoplay safety
+            // Autoplay safe
         }
     }
 
     /**
-     * Soft mechanical key click for terminal typewriter characters.
+     * Punchy, satisfying mechanical switch "click" on button / card interactions.
+     */
+    function playClickSound() {
+        if (isMuted) return;
+        const now = Date.now();
+        if (now - lastClickTime < 25) return; // Debounce double triggers
+        lastClickTime = now;
+
+        initAudioContext();
+        if (!audioCtx) return;
+
+        try {
+            const t = audioCtx.currentTime;
+            
+            // 1. Tactile Mechanical Thock (Low-Mid Body)
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+
+            osc.type = "triangle";
+            osc.frequency.setValueAtTime(420, t);
+            osc.frequency.exponentialRampToValueAtTime(95, t + 0.045);
+
+            gain.gain.setValueAtTime(0.58, t);
+            gain.gain.exponentialRampToValueAtTime(0.001, t + 0.045);
+
+            osc.connect(gain);
+            gain.connect(masterGain);
+
+            osc.start(t);
+            osc.stop(t + 0.05);
+
+            // 2. High-Frequency Tactile Snap (Crisp switch transient)
+            const snap = audioCtx.createOscillator();
+            const snapGain = audioCtx.createGain();
+
+            snap.type = "sine";
+            snap.frequency.setValueAtTime(1600, t);
+            snap.frequency.exponentialRampToValueAtTime(320, t + 0.02);
+
+            snapGain.gain.setValueAtTime(0.32, t);
+            snapGain.gain.exponentialRampToValueAtTime(0.001, t + 0.02);
+
+            snap.connect(snapGain);
+            snapGain.connect(masterGain);
+
+            snap.start(t);
+            snap.stop(t + 0.025);
+        } catch (e) {
+            // Autoplay safe
+        }
+    }
+
+    /**
+     * Soft typewriter key sound.
      */
     function playKeySound() {
         if (isMuted) return;
@@ -127,26 +146,26 @@ const SoundSystem = (() => {
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
 
-            const freq = 750 + Math.random() * 320;
+            const freq = 600 + Math.random() * 220;
             osc.type = "sine";
             osc.frequency.setValueAtTime(freq, t);
-            osc.frequency.exponentialRampToValueAtTime(freq * 0.45, t + 0.012);
+            osc.frequency.exponentialRampToValueAtTime(freq * 0.45, t + 0.018);
 
-            gain.gain.setValueAtTime(0.02, t);
-            gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.012);
+            gain.gain.setValueAtTime(0.24, t);
+            gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.018);
 
             osc.connect(gain);
             gain.connect(masterGain);
 
             osc.start(t);
-            osc.stop(t + 0.015);
+            osc.stop(t + 0.022);
         } catch (e) {
-            // Browser autoplay safety
+            // Autoplay safe
         }
     }
 
     /**
-     * Terminal modal opening tone.
+     * Modal opening chime.
      */
     function playModalOpenSound() {
         if (isMuted) return;
@@ -159,11 +178,11 @@ const SoundSystem = (() => {
             const gain = audioCtx.createGain();
 
             osc.type = "sine";
-            osc.frequency.setValueAtTime(280, t);
-            osc.frequency.exponentialRampToValueAtTime(780, t + 0.065);
+            osc.frequency.setValueAtTime(420, t);
+            osc.frequency.exponentialRampToValueAtTime(840, t + 0.07);
 
-            gain.gain.setValueAtTime(0.04, t);
-            gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.075);
+            gain.gain.setValueAtTime(0.25, t);
+            gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.07);
 
             osc.connect(gain);
             gain.connect(masterGain);
@@ -171,12 +190,12 @@ const SoundSystem = (() => {
             osc.start(t);
             osc.stop(t + 0.08);
         } catch (e) {
-            // Browser autoplay safety
+            // Autoplay safe
         }
     }
 
     /**
-     * Toggle sound feedback when enabling/disabling audio.
+     * Clean, soft toggle switch audio.
      */
     function playToggleSound(enabled) {
         initAudioContext();
@@ -189,23 +208,23 @@ const SoundSystem = (() => {
 
             osc.type = "sine";
             if (enabled) {
-                osc.frequency.setValueAtTime(540, t);
-                osc.frequency.exponentialRampToValueAtTime(1080, t + 0.07);
+                osc.frequency.setValueAtTime(400, t);
+                osc.frequency.exponentialRampToValueAtTime(680, t + 0.045);
             } else {
-                osc.frequency.setValueAtTime(840, t);
-                osc.frequency.exponentialRampToValueAtTime(420, t + 0.05);
+                osc.frequency.setValueAtTime(620, t);
+                osc.frequency.exponentialRampToValueAtTime(340, t + 0.038);
             }
 
-            gain.gain.setValueAtTime(0.045, t);
-            gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.08);
+            gain.gain.setValueAtTime(0.35, t);
+            gain.gain.exponentialRampToValueAtTime(0.001, t + 0.05);
 
             osc.connect(gain);
-            gain.connect(audioCtx.destination);
+            gain.connect(masterGain);
 
             osc.start(t);
-            osc.stop(t + 0.09);
+            osc.stop(t + 0.055);
         } catch (e) {
-            // Browser autoplay safety
+            // Autoplay safe
         }
     }
 
@@ -213,10 +232,12 @@ const SoundSystem = (() => {
         isMuted = muted;
         localStorage.setItem("portfolio_sfx_enabled", (!muted).toString());
         if (masterGain && audioCtx) {
-            masterGain.gain.setValueAtTime(isMuted ? 0 : 0.08, audioCtx.currentTime);
+            masterGain.gain.setValueAtTime(isMuted ? 0 : 0.75, audioCtx.currentTime);
         }
         updateToggleUI();
-        playToggleSound(!isMuted);
+        if (!isMuted) {
+            playToggleSound(true);
+        }
     }
 
     function toggleMute() {
@@ -245,8 +266,9 @@ const SoundSystem = (() => {
     }
 
     function attachUIListeners() {
-        // Hover SFX across interactive portfolio elements
-        const hoverTargets = "a, button, .skill-badge, .project-card, .filter-btn, .cmd-chip, .terminal-tab, .telemetry-card, .popover-item, .hero-spec-chip";
+        // Universal Hover SFX across all interactive portfolio elements
+        const hoverTargets = "a, button, [role='button'], .skill-badge, .tech-logo-item, .tech-logo-bubble, .tech-brand-tile, .tech-node, .skills-filter-pill, .project-card, .bento-project-card, .koyeb-app-card, .koyeb-featured-card, .koyeb-filter-pill, .koyeb-action-btn, .deck-card, .filter-btn, .cmd-chip, .terminal-tab, .telemetry-card, .popover-item, .hero-spec-chip, .timeline-card, .bento-badge, .nav-link, .mobile-nav-link, .name-word, .koyeb-link-btn, .koyeb-view-all-link, .hex-read-story-btn, .btn-copy-mono, input, .clone-box";
+        
         document.addEventListener("mouseover", (e) => {
             const target = e.target.closest(hoverTargets);
             if (target && !target.hasAttribute("data-no-sfx")) {
@@ -254,14 +276,19 @@ const SoundSystem = (() => {
             }
         }, { passive: true });
 
-        // Click SFX on actionable controls
-        const clickTargets = "button, .btn, .filter-btn, .cmd-chip, .terminal-tab, .project-card, .modal-close-btn, .theme-toggle-btn, .sfx-toggle-btn, .contact-social-link";
-        document.addEventListener("click", (e) => {
+        // Universal Click SFX on ALL clickable controls throughout the portfolio
+        const clickTargets = "a, button, [role='button'], input[type='submit'], input[type='button'], .btn, .nav-link, .mobile-nav-link, .tech-logo-item, .tech-logo-bubble, .skills-filter-pill, .tech-brand-tile, .tech-node, .filter-btn, .cmd-chip, .terminal-tab, .project-card, .bento-project-card, .koyeb-app-card, .koyeb-featured-card, .koyeb-filter-pill, .koyeb-action-btn, .deck-card, .popover-item, .modal-close-btn, .theme-toggle-btn, .sfx-toggle-btn, .contact-social-link, .btn-copy-mono, [data-project-trigger], .name-word, .koyeb-link-btn, .koyeb-view-all-link, .hex-read-story-btn, .back-projects-btn";
+        
+        const triggerClick = (e) => {
             const target = e.target.closest(clickTargets);
-            if (target && !target.classList.contains("sfx-toggle-btn") && !target.classList.contains("sfx-toggle-btn-mobile")) {
+            if (target && !target.hasAttribute("data-no-sfx")) {
+                initAudioContext();
                 playClickSound();
             }
-        }, { passive: true });
+        };
+
+        document.addEventListener("pointerdown", triggerClick, { passive: true });
+        document.addEventListener("click", triggerClick, { passive: true });
 
         // SFX Toggle button event listeners
         const toggleDesktop = document.getElementById("sfx-toggle-btn");
@@ -294,6 +321,7 @@ const SoundSystem = (() => {
         playClickSound,
         playKeySound,
         playModalOpenSound,
+        playToggleSound,
         toggleMute,
         setMuted,
         getMuted
@@ -305,3 +333,5 @@ if (document.readyState === "loading") {
 } else {
     SoundSystem.init();
 }
+
+

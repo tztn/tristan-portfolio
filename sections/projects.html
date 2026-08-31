@@ -1,333 +1,249 @@
-            <!-- Projects Section -->
-            <section id="projects" class="content-section">
-                <div class="section-header">
-                    <span class="section-number">03</span>
-                    <h2>SELECTED PROJECTS</h2>
+            <!-- 04: Selected Projects Section (Koyeb-Inspired One-Click Apps Reference UI) -->
+            <section id="projects" class="content-section reveal-section">
+                <div class="koyeb-section-header">
+                    <span class="koyeb-top-tag font-mono">/START BUILDING // 04: SELECTED PROJECTS</span>
+                    <h2 class="koyeb-main-title">DEPLOY IN PRODUCTION WITH ONE-CLICK REPOSITORIES</h2>
+                    <p class="koyeb-sub-desc">
+                        From multi-threaded desktop software to full-stack campus web portals, explore architectural specifications.
+                    </p>
                 </div>
 
-                <div class="projects-grid">
-                    <!-- Project 1: Lost and Found Campus Reporting System -->
-                    <article class="project-card">
-                        <div class="project-thumbnail">
-                            <svg viewBox="0 0 320 180" fill="none" xmlns="http://www.w3.org/2000/svg" class="thumbnail-svg">
-                                <rect width="320" height="180" fill="var(--bg-secondary)"/>
-                                <path d="M0 20 H320 M0 40 H320 M0 60 H320 M0 80 H320 M0 100 H320 M0 120 H320 M0 140 H320 M0 160 H320" stroke="var(--border)" stroke-width="0.5"/>
-                                <path d="M40 0 V180 M80 0 V180 M120 0 V180 M160 0 V180 M200 0 V180 M240 0 V180 M280 0 V180" stroke="var(--border)" stroke-width="0.5"/>
-                                <rect x="20" y="20" width="280" height="24" rx="4" fill="var(--bg-card)" stroke="var(--text-primary)" stroke-width="1"/>
-                                <path d="M35 32 H250" stroke="var(--text-secondary)" stroke-width="1.5"/>
-                                <circle cx="280" cy="32" r="4" stroke="var(--text-primary)" stroke-width="1.5"/>
-                                <path d="M283 35 L288 40" stroke="var(--text-primary)" stroke-width="1.5" stroke-linecap="round"/>
-                                <rect x="20" y="60" width="130" height="100" rx="6" fill="var(--bg-card)" stroke="var(--border)" stroke-width="1"/>
-                                <rect x="30" y="72" width="110" height="48" rx="4" fill="var(--bg-secondary)" stroke="var(--border)" stroke-width="0.5"/>
-                                <circle cx="85" cy="96" r="8" stroke="var(--text-primary)" stroke-width="1.5"/>
-                                <path d="M85 104 V116 H93 M85 110 H90" stroke="var(--text-primary)" stroke-width="1.5"/>
-                                <rect x="30" y="130" width="80" height="8" rx="2" fill="var(--text-secondary)"/>
-                                <rect x="30" y="142" width="50" height="6" rx="2" fill="var(--text-secondary)" opacity="0.6"/>
-                                <rect x="170" y="60" width="130" height="100" rx="6" fill="var(--bg-card)" stroke="var(--border)" stroke-width="1"/>
-                                <rect x="180" y="72" width="110" height="48" rx="4" fill="var(--bg-secondary)" stroke="var(--border)" stroke-width="0.5"/>
-                                <rect x="225" y="80" width="20" height="32" rx="3" stroke="var(--text-primary)" stroke-width="1.5"/>
-                                <line x1="229" y1="84" x2="241" y2="84" stroke="var(--text-primary)" stroke-width="1"/>
-                                <circle cx="235" cy="108" r="1.5" fill="var(--text-primary)"/>
-                                <rect x="180" y="130" width="80" height="8" rx="2" fill="var(--text-secondary)"/>
-                                <rect x="180" y="142" width="50" height="6" rx="2" fill="var(--text-secondary)" opacity="0.6"/>
-                            </svg>
-                        </div>
-                        <div class="project-header">
-                            <span class="project-category font-mono">FEATURED WEB &amp; SYSTEMS</span>
-                            <div class="project-links">
-                                <a href="https://github.com" target="_blank" rel="noopener noreferrer"
-                                    class="project-link-icon" aria-label="View Github Repository">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <path
-                                            d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
-                                    </svg>
-                                </a>
-                                <a href="https://demo.dev" target="_blank" rel="noopener noreferrer"
-                                    class="project-link-icon" aria-label="Launch Live Demo">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                                        <polyline points="15 3 21 3 21 9" />
-                                        <line x1="10" y1="14" x2="21" y2="3" />
-                                    </svg>
-                                </a>
+                <!-- Main Projects Bento Grid View -->
+                <div class="projects-bento-view" id="projects-bento-view">
+                    <!-- Top Featured Repository Showcase (Matching Reference Image 2) -->
+                    <div class="koyeb-featured-wrapper">
+                        <span class="koyeb-featured-label font-mono">/FEATURED</span>
+                        <div class="koyeb-featured-card stagger-item" data-project-trigger="dlails">
+                            <div class="koyeb-featured-left">
+                                <div class="koyeb-wireframe-grid"></div>
+                                <div class="koyeb-featured-brand font-mono">DLAILS</div>
+                                <span class="koyeb-runtime-pill font-mono">[ JAVA JDK 21 // SWING // MYSQL ]</span>
+                            </div>
+                            <div class="koyeb-featured-right">
+                                <div class="koyeb-brand-header">
+                                    <div class="koyeb-icon-badge">
+                                        <span class="koyeb-icon-glyph">☕</span>
+                                    </div>
+                                    <div class="koyeb-title-group">
+                                        <h3 class="koyeb-card-title">DLAILS Lab Incident Logger</h3>
+                                        <span class="koyeb-card-status font-mono">STATUS: PUBLIC_REPO</span>
+                                    </div>
+                                </div>
+                                <p class="koyeb-card-desc">
+                                    A self-hosted desktop laboratory utilization and incident tracking suite engineered for computer laboratories, terminal allocations, and real-time technician diagnostics.
+                                </p>
+                                <div class="koyeb-card-tags font-mono">
+                                    <span class="koyeb-tag">Java</span>
+                                    <span class="koyeb-tag">Java Swing</span>
+                                    <span class="koyeb-tag">MySQL</span>
+                                    <span class="koyeb-tag">JDBC</span>
+                                    <span class="koyeb-tag">NetBeans</span>
+                                </div>
+                                <div class="koyeb-btn-row">
+                                    <button type="button" class="koyeb-action-btn font-mono" data-project-trigger="dlails">
+                                        <span>&#9656; GET STARTED / VIEW SPECS</span>
+                                    </button>
+                                    <a href="https://github.com/tztn/DLAILS" target="_blank" rel="noopener noreferrer" class="koyeb-link-btn font-mono" onclick="event.stopPropagation()">
+                                        <span>&#9656; GITHUB REPO ↗</span>
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                        <h3 class="project-title">Lost &amp; Found Campus System</h3>
-                        <p class="project-desc">
-                            A secure web portal for reporting lost items and claiming found property on campus.
-                            Solves logging errors by matching keywords dynamically.
-                        </p>
-                        <div class="project-meta">
-                            <strong>Role:</strong> Lead Full-Stack Developer
-                        </div>
-                        <ul class="project-features text-sm">
-                            <li>Automated real-time keyword matching logic.</li>
-                            <li>Secure admin audit logs &amp; claim approvals.</li>
-                            <li>Image upload interface for quick verification.</li>
-                        </ul>
-                        <div class="project-tags font-mono">
-                            <span>PHP</span>
-                            <span>MySQL</span>
-                            <span>Bootstrap</span>
-                            <span>HTML5</span>
-                        </div>
-                    </article>
+                    </div>
 
-                    <!-- Project 2: Campus Canteen Kiosk -->
-                    <article class="project-card">
-                        <div class="project-thumbnail">
-                            <svg viewBox="0 0 320 180" fill="none" xmlns="http://www.w3.org/2000/svg" class="thumbnail-svg">
-                                <rect width="320" height="180" fill="var(--bg-secondary)"/>
-                                <path d="M0 20 H320 M0 40 H320 M0 60 H320 M0 80 H320 M0 100 H320 M0 120 H320 M0 140 H320 M0 160 H320" stroke="var(--border)" stroke-width="0.5"/>
-                                <path d="M40 0 V180 M80 0 V180 M120 0 V180 M160 0 V180 M200 0 V180 M240 0 V180 M280 0 V180" stroke="var(--border)" stroke-width="0.5"/>
-                                <rect x="15" y="20" width="55" height="50" rx="4" fill="var(--bg-card)" stroke="var(--border)" stroke-width="1"/>
-                                <path d="M30 45 V35 H48 V45 C48 49 44 51 39 51 C34 51 30 49 30 45 Z" stroke="var(--text-primary)" stroke-width="1.5"/>
-                                <path d="M48 38 H52 C54 38 55 39 55 41 C55 43 54 44 52 44 H48" stroke="var(--text-primary)" stroke-width="1.2"/>
-                                <rect x="20" y="78" width="45" height="24" rx="2" fill="var(--bg-card)" stroke="var(--border)" stroke-width="1"/>
-                                <rect x="25" y="84" width="35" height="12" rx="4" stroke="var(--text-primary)" stroke-width="1.5"/>
-                                <rect x="80" y="20" width="55" height="50" rx="4" fill="var(--bg-card)" stroke="var(--border)" stroke-width="1"/>
-                                <path d="M92 42 C92 48 100 52 107 52 C114 52 122 48 122 42 H92 Z" stroke="var(--text-primary)" stroke-width="1.5"/>
-                                <rect x="15" y="110" width="120" height="50" rx="4" fill="var(--bg-card)" stroke="var(--border)" stroke-width="1"/>
-                                <rect x="25" y="120" width="100" height="12" rx="2" fill="var(--text-secondary)" opacity="0.3"/>
-                                <rect x="25" y="138" width="60" height="10" rx="2" fill="var(--text-primary)"/>
-                                <rect x="150" y="20" width="155" height="140" rx="6" fill="var(--bg-card)" stroke="var(--text-primary)" stroke-width="1"/>
-                                <rect x="160" y="30" width="135" height="20" rx="3" fill="var(--bg-secondary)" stroke="var(--border)" stroke-width="0.5"/>
-                                <path d="M170 40 H250" stroke="var(--text-primary)" stroke-width="2"/>
-                                <rect x="160" y="60" width="100" height="6" rx="2" fill="var(--text-secondary)"/>
-                                <circle cx="280" cy="63" r="3" fill="var(--text-primary)"/>
-                                <rect x="160" y="75" width="80" height="6" rx="2" fill="var(--text-secondary)"/>
-                                <circle cx="280" cy="78" r="3" fill="var(--text-primary)"/>
-                                <rect x="160" y="90" width="110" height="6" rx="2" fill="var(--text-secondary)"/>
-                                <circle cx="280" cy="93" r="3" fill="var(--text-primary)"/>
-                                <line x1="160" y1="115" x2="295" y2="115" stroke="var(--text-primary)" stroke-width="1" stroke-dasharray="2,2"/>
-                                <rect x="160" y="128" width="60" height="12" rx="2" fill="var(--text-primary)"/>
-                                <rect x="250" y="128" width="45" height="12" rx="2" fill="var(--text-primary)"/>
-                            </svg>
+                    <!-- Filter Controls Bar with Live Search (Matching Reference Image 1 & 2) -->
+                    <div class="koyeb-controls-bar">
+                        <div class="koyeb-filter-pills font-mono">
+                            <button type="button" class="koyeb-filter-pill filter-btn active" data-filter="all">ALL REPOSITORIES</button>
+                            <button type="button" class="koyeb-filter-pill filter-btn" data-filter="systems">SYSTEMS / DESKTOP</button>
+                            <button type="button" class="koyeb-filter-pill filter-btn" data-filter="web">WEB SYSTEMS</button>
+                            <button type="button" class="koyeb-filter-pill filter-btn" data-filter="programming">C++ / PROGRAMMING</button>
                         </div>
-                        <div class="project-header">
-                            <span class="project-category font-mono">FEATURED WEB &amp; SYSTEMS</span>
-                            <div class="project-links">
-                                <a href="https://github.com" target="_blank" rel="noopener noreferrer"
-                                    class="project-link-icon" aria-label="View Github Repository">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <path
-                                            d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
-                                    </svg>
-                                </a>
-                                <a href="https://demo.dev" target="_blank" rel="noopener noreferrer"
-                                    class="project-link-icon" aria-label="Launch Live Demo">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                                        <polyline points="15 3 21 3 21 9" />
-                                        <line x1="10" y1="14" x2="21" y2="3" />
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
-                        <h3 class="project-title">Campus Canteen Kiosk</h3>
-                        <p class="project-desc">
-                            An automated self-service point-of-sale terminal software system that streamlines meal
-                            orders and speeds up checkout queues.
-                        </p>
-                        <div class="project-meta">
-                            <strong>Role:</strong> Desktop App Developer
-                        </div>
-                        <ul class="project-features text-sm">
-                            <li>Java Swing product grid selection view.</li>
-                            <li>Instant transaction receipt builders.</li>
-                            <li>Local database sync mapping records.</li>
-                        </ul>
-                        <div class="project-tags font-mono">
-                            <span>Java</span>
-                            <span>NetBeans</span>
-                            <span>MySQL</span>
-                            <span>Swing UI</span>
-                        </div>
-                    </article>
 
-                    <!-- Project 3: Java / C++ / Python System Projects -->
-                    <article class="project-card">
-                        <div class="project-thumbnail">
-                            <svg viewBox="0 0 320 180" fill="none" xmlns="http://www.w3.org/2000/svg" class="thumbnail-svg">
-                                <rect width="320" height="180" fill="var(--bg-secondary)"/>
-                                <path d="M0 20 H320 M0 40 H320 M0 60 H320 M0 80 H320 M0 100 H320 M0 120 H320 M0 140 H320 M0 160 H320" stroke="var(--border)" stroke-width="0.5"/>
-                                <path d="M40 0 V180 M80 0 V180 M120 0 V180 M160 0 V180 M200 0 V180 M240 0 V180 M280 0 V180" stroke="var(--border)" stroke-width="0.5"/>
-                                <rect x="15" y="20" width="155" height="140" rx="6" fill="var(--bg-card)" stroke="var(--text-primary)" stroke-width="1"/>
-                                <circle cx="25" cy="30" r="3" fill="var(--text-secondary)"/>
-                                <circle cx="35" cy="30" r="3" fill="var(--text-secondary)"/>
-                                <circle cx="45" cy="30" r="3" fill="var(--text-secondary)"/>
-                                <path d="M25 50 V130 M25 70 H45 M25 95 H45 M25 120 H45" stroke="var(--border)" stroke-width="1.5"/>
-                                <rect x="52" y="65" width="60" height="10" rx="2" fill="var(--text-primary)"/>
-                                <rect x="52" y="90" width="80" height="10" rx="2" fill="var(--text-secondary)"/>
-                                <rect x="52" y="115" width="50" height="10" rx="2" fill="var(--text-secondary)"/>
-                                <rect x="180" y="20" width="125" height="140" rx="6" fill="var(--bg-card)" stroke="var(--border)" stroke-width="1"/>
-                                <circle cx="242" cy="70" r="28" stroke="var(--border)" stroke-width="4"/>
-                                <path d="M214 70 A28 28 0 0 1 242 42" stroke="var(--text-primary)" stroke-width="4" stroke-linecap="round"/>
-                                <rect x="222" y="110" width="40" height="8" rx="2" fill="var(--text-primary)"/>
-                                <rect x="210" y="125" width="65" height="6" rx="2" fill="var(--text-secondary)" opacity="0.6"/>
-                            </svg>
+                        <div class="koyeb-search-wrapper font-mono">
+                            <span class="search-icon">&#9029;</span>
+                            <input type="text" id="koyeb-search-input" class="koyeb-search-input font-mono" placeholder="Search projects, tech stack or keywords..." autocomplete="off">
                         </div>
-                        <div class="project-header">
-                            <span class="project-category font-mono">PROGRAMMING &amp; RESEARCH</span>
-                            <div class="project-links">
-                                <a href="https://github.com" target="_blank" rel="noopener noreferrer"
-                                    class="project-link-icon" aria-label="View Github Repository">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <path
-                                            d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
-                                    </svg>
-                                </a>
-                                <a href="https://demo.dev" target="_blank" rel="noopener noreferrer"
-                                    class="project-link-icon" aria-label="Launch Live Demo">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                                        <polyline points="15 3 21 3 21 9" />
-                                        <line x1="10" y1="14" x2="21" y2="3" />
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
-                        <h3 class="project-title">Desktop Systems &amp; Script Utilities</h3>
-                        <p class="project-desc">
-                            A curated collection of desktop applications and scripting pipelines built to optimize
-                            workflow efficiency, file management, and hardware readouts.
-                        </p>
-                        <div class="project-meta">
-                            <strong>Role:</strong> Creator &amp; Maintainer
-                        </div>
-                        <ul class="project-features text-sm">
-                            <li>Automated file indexing &amp; sorting script.</li>
-                            <li>Low-overhead system diagnostic monitor.</li>
-                            <li>Interactive text encryption utility tool.</li>
-                        </ul>
-                        <div class="project-tags font-mono">
-                            <span>Java</span>
-                            <span>C++</span>
-                            <span>Python</span>
-                            <span>VS Code</span>
-                        </div>
-                    </article>
+                    </div>
 
-                    <!-- Project 4: Quantitative Research Project -->
-                    <article class="project-card">
-                        <div class="project-thumbnail">
-                            <svg viewBox="0 0 320 180" fill="none" xmlns="http://www.w3.org/2000/svg" class="thumbnail-svg">
-                                <rect width="320" height="180" fill="var(--bg-secondary)"/>
-                                <path d="M0 20 H320 M0 40 H320 M0 60 H320 M0 80 H320 M0 100 H320 M0 120 H320 M0 140 H320 M0 160 H320" stroke="var(--border)" stroke-width="0.5"/>
-                                <path d="M40 0 V180 M80 0 V180 M120 0 V180 M160 0 V180 M200 0 V180 M240 0 V180 M280 0 V180" stroke="var(--border)" stroke-width="0.5"/>
-                                <rect x="15" y="20" width="290" height="140" rx="6" fill="var(--bg-card)" stroke="var(--text-primary)" stroke-width="1"/>
-                                <path d="M40 30 V140 H280" stroke="var(--text-primary)" stroke-width="1.5"/>
-                                <path d="M40 50 H280 M40 80 H280 M40 110 H280" stroke="var(--border)" stroke-width="0.5" stroke-dasharray="2,2"/>
-                                <line x1="50" y1="120" x2="270" y2="40" stroke="var(--text-primary)" stroke-width="2" stroke-linecap="round"/>
-                                <circle cx="70" cy="115" r="4.5" fill="none" stroke="var(--text-secondary)" stroke-width="1.5"/>
-                                <circle cx="100" cy="98" r="4.5" fill="var(--text-primary)"/>
-                                <circle cx="130" cy="102" r="4.5" fill="none" stroke="var(--text-secondary)" stroke-width="1.5"/>
-                                <circle cx="160" cy="72" r="4.5" fill="var(--text-primary)"/>
-                                <circle cx="190" cy="85" r="4.5" fill="none" stroke="var(--text-secondary)" stroke-width="1.5"/>
-                                <circle cx="220" cy="54" r="4.5" fill="var(--text-primary)"/>
-                                <circle cx="250" cy="48" r="4.5" fill="none" stroke="var(--text-secondary)" stroke-width="1.5"/>
-                            </svg>
-                        </div>
-                        <div class="project-header">
-                            <span class="project-category font-mono">PROGRAMMING &amp; RESEARCH</span>
-                            <div class="project-links">
-                                <a href="https://github.com" target="_blank" rel="noopener noreferrer"
-                                    class="project-link-icon" aria-label="View Github Repository">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <path
-                                            d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
-                                    </svg>
-                                </a>
-                                <a href="https://demo.dev" target="_blank" rel="noopener noreferrer"
-                                    class="project-link-icon" aria-label="Launch Live Demo">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                                        <polyline points="15 3 21 3 21 9" />
-                                        <line x1="10" y1="14" x2="21" y2="3" />
-                                    </svg>
-                                </a>
+                    <!-- One-Click Apps Cards Grid (Matching Reference Image 1 & 2) -->
+                    <div class="koyeb-apps-grid" id="projects-grid">
+                        <!-- Card 1: DLAILS -->
+                        <article class="koyeb-app-card stagger-item" data-category="systems" data-project-id="dlails">
+                            <div class="koyeb-app-top">
+                                <div class="koyeb-app-icon">
+                                    <span>☕</span>
+                                </div>
+                                <div class="koyeb-app-heading">
+                                    <h4 class="koyeb-app-title">DLAILS Lab Logger</h4>
+                                    <span class="koyeb-app-meta font-mono">[ SYSTEMS / DESKTOP ]</span>
+                                </div>
                             </div>
-                        </div>
-                        <h3 class="project-title">EdTech Engagement Research</h3>
-                        <p class="project-desc">
-                            A quantitative statistics research project analyzing classroom tool efficacy and its
-                            impact on STEM student academic scores.
-                        </p>
-                        <div class="project-meta">
-                            <strong>Role:</strong> Lead Analyst &amp; Researcher
-                        </div>
-                        <ul class="project-features text-sm">
-                            <li>Engagement data parser built in Python.</li>
-                            <li>Regression mapping showing score correlations.</li>
-                            <li>Pandas/Matplotlib data visualizations.</li>
-                        </ul>
-                        <div class="project-tags font-mono">
-                            <span>Python</span>
-                            <span>Pandas</span>
-                            <span>Matplotlib</span>
-                            <span>Research</span>
-                        </div>
-                    </article>
+                            <p class="koyeb-app-desc font-mono">
+                                DEPLOY LABORATORY UTILIZATION &amp; INCIDENT LOGGING DESKTOP MANAGEMENT SYSTEM WITH JDBC SQL TRANSACTIONS AND SEAT ALLOCATION...
+                            </p>
+                            <div class="koyeb-app-tags font-mono">
+                                <span class="koyeb-mini-tag">Java</span>
+                                <span class="koyeb-mini-tag">Swing UI</span>
+                                <span class="koyeb-mini-tag">MySQL</span>
+                            </div>
+                            <div class="koyeb-app-footer font-mono">
+                                <span class="koyeb-deploy-action">&#9656; VIEW SPECS</span>
+                                <span class="koyeb-repo-hint">tztn/DLAILS</span>
+                            </div>
+                        </article>
 
-                    <!-- Project 5: Logo Designs, Custom Pin Work, and Digital Art -->
-                    <article class="project-card">
-                        <div class="project-thumbnail">
-                            <svg viewBox="0 0 320 180" fill="none" xmlns="http://www.w3.org/2000/svg" class="thumbnail-svg">
-                                <rect width="320" height="180" fill="var(--bg-secondary)"/>
-                                <path d="M0 20 H320 M0 40 H320 M0 60 H320 M0 80 H320 M0 100 H320 M0 120 H320 M0 140 H320 M0 160 H320" stroke="var(--border)" stroke-width="0.5"/>
-                                <path d="M40 0 V180 M80 0 V180 M120 0 V180 M160 0 V180 M200 0 V180 M240 0 V180 M280 0 V180" stroke="var(--border)" stroke-width="0.5"/>
-                                <rect x="15" y="20" width="290" height="140" rx="6" fill="var(--bg-card)" stroke="var(--text-primary)" stroke-width="1"/>
-                                <circle cx="160" cy="90" r="48" stroke="var(--border)" stroke-width="1" stroke-dasharray="4,4"/>
-                                <circle cx="160" cy="90" r="32" stroke="var(--border)" stroke-width="1"/>
-                                <line x1="160" y1="30" x2="160" y2="150" stroke="var(--border)" stroke-width="1" stroke-dasharray="4,4"/>
-                                <line x1="80" y1="90" x2="240" y2="90" stroke="var(--border)" stroke-width="1" stroke-dasharray="4,4"/>
-                                <rect x="145" y="60" width="30" height="10" rx="2" fill="var(--text-primary)" stroke="var(--text-primary)"/>
-                                <rect x="155" y="70" width="10" height="36" rx="2" fill="var(--text-primary)" stroke="var(--text-primary)"/>
-                                <line x1="110" y1="40" x2="210" y2="140" stroke="var(--text-secondary)" stroke-width="0.5"/>
-                                <rect x="106" y="36" width="8" height="8" stroke="var(--text-secondary)" stroke-width="0.5"/>
-                                <rect x="206" y="136" width="8" height="8" stroke="var(--text-secondary)" stroke-width="0.5"/>
-                            </svg>
+                        <!-- Card 2: Lost & Found NCST System -->
+                        <article class="koyeb-app-card stagger-item" data-category="web" data-project-id="lostfound">
+                            <div class="koyeb-app-top">
+                                <div class="koyeb-app-icon">
+                                    <span>⚡</span>
+                                </div>
+                                <div class="koyeb-app-heading">
+                                    <h4 class="koyeb-app-title">Lost &amp; Found NCST</h4>
+                                    <span class="koyeb-app-meta font-mono">[ WEB SYSTEMS ]</span>
+                                </div>
+                            </div>
+                            <p class="koyeb-app-desc font-mono">
+                                DEPLOY CAMPUS PROPERTY REPORTING WEB PORTAL WITH DYNAMIC KEYWORD MATCHING, RBAC ROLES, AND TAMPER-RESISTANT AUDIT LOGS...
+                            </p>
+                            <div class="koyeb-app-tags font-mono">
+                                <span class="koyeb-mini-tag">PHP</span>
+                                <span class="koyeb-mini-tag">MySQL</span>
+                                <span class="koyeb-mini-tag">Bootstrap</span>
+                            </div>
+                            <div class="koyeb-app-footer font-mono">
+                                <span class="koyeb-deploy-action">&#9656; VIEW SPECS</span>
+                                <span class="koyeb-repo-hint">tztn/lost-found</span>
+                            </div>
+                        </article>
+
+                        <!-- Card 3: Stym Platform -->
+                        <article class="koyeb-app-card stagger-item" data-category="web" data-project-id="stym">
+                            <div class="koyeb-app-top">
+                                <div class="koyeb-app-icon">
+                                    <span>▲</span>
+                                </div>
+                                <div class="koyeb-app-heading">
+                                    <h4 class="koyeb-app-title">Stym Web Platform</h4>
+                                    <span class="koyeb-app-meta font-mono">[ WEB / FRONTEND ]</span>
+                                </div>
+                            </div>
+                            <p class="koyeb-app-desc font-mono">
+                                DEPLOY RESPONSIVE DASHBOARD INTERFACE WITH FIGMA DESIGN SYSTEM TOKENS, MICRO-ANIMATIONS, AND MODULAR CSS CUSTOM PROPERTIES...
+                            </p>
+                            <div class="koyeb-app-tags font-mono">
+                                <span class="koyeb-mini-tag">JavaScript</span>
+                                <span class="koyeb-mini-tag">CSS3</span>
+                                <span class="koyeb-mini-tag">Figma</span>
+                            </div>
+                            <div class="koyeb-app-footer font-mono">
+                                <span class="koyeb-deploy-action">&#9656; VIEW SPECS</span>
+                                <span class="koyeb-repo-hint">tztn/Stym</span>
+                            </div>
+                        </article>
+
+                        <!-- Card 4: Supermarket Management POS -->
+                        <article class="koyeb-app-card stagger-item" data-category="programming" data-project-id="supermarket">
+                            <div class="koyeb-app-top">
+                                <div class="koyeb-app-icon">
+                                    <span>&lt;/&gt;</span>
+                                </div>
+                                <div class="koyeb-app-heading">
+                                    <h4 class="koyeb-app-title">Supermarket POS</h4>
+                                    <span class="koyeb-app-meta font-mono">[ C++ / PROGRAMMING ]</span>
+                                </div>
+                            </div>
+                            <p class="koyeb-app-desc font-mono">
+                                DEPLOY HIGH-EFFICIENCY C++ POINT-OF-SALE UTILITY WITH OBJECT-ORIENTED INVENTORY, BINARY FILE SERIALIZATION, AND DISCOUNTS...
+                            </p>
+                            <div class="koyeb-app-tags font-mono">
+                                <span class="koyeb-mini-tag">C++20</span>
+                                <span class="koyeb-mini-tag">OOP</span>
+                                <span class="koyeb-mini-tag">Binary I/O</span>
+                            </div>
+                            <div class="koyeb-app-footer font-mono">
+                                <span class="koyeb-deploy-action">&#9656; VIEW SPECS</span>
+                                <span class="koyeb-repo-hint">tztn/supermarket</span>
+                            </div>
+                        </article>
+                    </div>
+
+                    <!-- Reference Footer Link (Matching Image 1) -->
+                    <div class="koyeb-bottom-link-row font-mono">
+                        <a href="https://github.com/tztn?tab=repositories" target="_blank" rel="noopener noreferrer" class="koyeb-view-all-link">
+                            <span>&#9656; VIEW ALL REPOSITORIES ON GITHUB (tztn) &#9666;</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- In-Page Full-Width Project Detail View (No Pop-ups) -->
+                <div class="project-detail-view view-hidden" id="project-detail-view" aria-live="polite">
+                    <!-- Sticky Top Action Bar -->
+                    <div class="detail-sticky-bar">
+                        <button type="button" class="back-projects-btn font-mono" id="back-to-projects-btn">
+                            <span>&larr;</span>
+                            <span>[ BACK TO PROJECTS ]</span>
+                        </button>
+                        <span class="detail-sticky-badge font-mono" id="detail-sticky-badge">[ SYSTEMS / DESKTOP ]</span>
+                        <a href="https://github.com/tztn" target="_blank" rel="noopener noreferrer" class="detail-github-link font-mono" id="detail-sticky-github">
+                            <span>[ GITHUB REPOSITORY ↗ ]</span>
+                        </a>
+                    </div>
+
+                    <!-- Main Spec Content -->
+                    <div class="detail-content-wrapper">
+                        <div class="detail-header-block">
+                            <div class="detail-meta-row font-mono">
+                                <span class="detail-status-pill" id="detail-status-pill">STATUS: PUBLIC_REPO</span>
+                                <div class="detail-lang-group">
+                                    <span class="lang-dot" id="detail-lang-dot"></span>
+                                    <span id="detail-lang-text">Java</span>
+                                </div>
+                            </div>
+                            <h1 class="detail-main-title" id="detail-main-title">Digital Laboratory Utilization &amp; Incident Logging System (DLAILS)</h1>
+                            <p class="detail-overview-text" id="detail-overview-text">
+                                A desktop management system for tracking computer lab utilization, student sessions, hardware availability, and real-time incident logging across campus laboratories.
+                            </p>
                         </div>
-                        <div class="project-header">
-                            <span class="project-category font-mono">CREATIVE &amp; DESIGN</span>
-                            <div class="project-links">
-                                <a href="https://demo.dev" target="_blank" rel="noopener noreferrer"
-                                    class="project-link-icon" aria-label="Launch Live Demo">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                                        <polyline points="15 3 21 3 21 9" />
-                                        <line x1="10" y1="14" x2="21" y2="3" />
-                                    </svg>
-                                </a>
+
+                        <!-- Detail Specs Bento Layout -->
+                        <div class="detail-bento-grid">
+                            <div class="detail-bento-card">
+                                <div class="detail-card-label font-mono">// 01: TECH STACK &amp; TOOLCHAINS</div>
+                                <div class="detail-tags-cloud" id="detail-stack-list">
+                                    <!-- Dynamic tags -->
+                                </div>
+                            </div>
+
+                            <div class="detail-bento-card">
+                                <div class="detail-card-label font-mono">// 02: SYSTEM ARCHITECTURE</div>
+                                <p class="detail-card-value font-mono" id="detail-arch-text">
+                                    Desktop Client-Server Architecture, ACID Database Transactions, Event Dispatch Thread
+                                </p>
+                            </div>
+
+                            <div class="detail-bento-card detail-card-wide">
+                                <div class="detail-card-label font-mono">// 03: KEY ARCHITECTURAL CONTRIBUTIONS</div>
+                                <ul class="detail-checklist font-sans" id="detail-contributions-list">
+                                    <!-- Dynamic list -->
+                                </ul>
+                            </div>
+
+                            <div class="detail-bento-card detail-card-wide detail-repo-card">
+                                <div class="detail-card-label font-mono">// 04: SOURCE CODE &amp; REPOSITORY</div>
+                                <div class="clone-box font-mono">
+                                    <span class="clone-prompt">$</span>
+                                    <code class="clone-code" id="detail-clone-code">git clone https://github.com/tztn/DLAILS.git</code>
+                                    <button type="button" class="btn-copy-mono" id="copy-clone-btn">[ COPY ]</button>
+                                </div>
+                                <div class="detail-repo-actions">
+                                    <a href="https://github.com/tztn" target="_blank" rel="noopener noreferrer" class="btn btn-primary font-mono" id="detail-primary-github-btn">
+                                        [ OPEN GITHUB REPOSITORY ↗ ]
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                        <h3 class="project-title">Brand Identity &amp; Digital Art</h3>
-                        <p class="project-desc">
-                            A visual portfolio demonstrating layout composition, brand typography systems, vector
-                            illustrations, and technical graphics for enamel pin manufacturing.
-                        </p>
-                        <div class="project-meta">
-                            <strong>Role:</strong> Visual Designer
-                        </div>
-                        <ul class="project-features text-sm">
-                            <li>Minimalist vector branding design sheets.</li>
-                            <li>Enamel pin manufacturing technical guides.</li>
-                            <li>Geometric mockups and digital illustrations.</li>
-                        </ul>
-                        <div class="project-tags font-mono">
-                            <span>Figma</span>
-                            <span>Vector Design</span>
-                            <span>Branding</span>
-                        </div>
-                    </article>
+                    </div>
                 </div>
             </section>

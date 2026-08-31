@@ -1,40 +1,135 @@
-            <!-- 01: Hero Section (Enhanced Systems HUD) -->
-            <section id="home" class="content-section reveal-section">
-                <!-- Live System Status Header -->
-                <div class="hero-status-row font-mono">
-                    <div class="status-pill">
-                        <span class="status-indicator-dot"></span>
-                        <span class="status-text">SYS_ONLINE // RUNNING</span>
-                    </div>
-                    <div class="status-meta">
-                        <span class="meta-item">ARCH: x86_64</span>
-                        <span class="meta-separator">//</span>
-                        <span class="meta-item">LOCAL: MANILA [UTC+8]</span>
-                        <span class="meta-separator">//</span>
-                        <span class="meta-item status-avail">STATUS: READY_FOR_DEPLOYMENT</span>
-                    </div>
+            <!-- 01: Hero Section (Spencer Gabor Visual Showcase + Systems HUD) -->
+            <section id="home" class="content-section reveal-section hero-showcase-section">
+                <!-- Top Compact Location & Contact Meta -->
+                <div class="hero-top-meta font-mono">
+                    <span class="hero-location">[ CAVITE, PHILIPPINES ]</span>
+                    <a href="mailto:agoilotristanray@gmail.com" class="hero-email-contact">AGOILOTRISTANRAY@GMAIL.COM</a>
                 </div>
 
-                <!-- Main Headline -->
-                <h1 class="hero-headline">
-                    Tristan Ray Agoilo
+                <!-- Massive Impact Display Headline with Kinetic Animation -->
+                <h1 class="hero-main-title animated-name" aria-label="Tristan Ray Agoilo">
+                    <span class="name-word word-tristan" data-text="TRISTAN">TRISTAN</span>
+                    <span class="name-word word-ray" data-text="RAY">RAY</span>
+                    <span class="name-word word-agoilo" data-text="AGOILO">AGOILO</span>
                 </h1>
 
-                <p class="hero-description">
-                    I design, develop, and maintain clean software architectures. My focus lies at the intersection
-                    of robust backend programming, high-efficiency system structures, and functional, creative design.
-                </p>
+                <!-- Centerpiece Layered Interactive Showcase Fan-Out Deck -->
+                <div class="hero-showcase-wrapper">
+                    <div class="hero-card-deck" id="hero-card-deck">
+                        <!-- Card 01: DLAILS Desktop System -->
+                        <div class="deck-card deck-card-1" data-project-trigger="dlails" title="Click to inspect DLAILS">
+                            <div class="deck-card-header font-mono">
+                                <span class="deck-card-tag">[ 01 // DLAILS ]</span>
+                                <span class="deck-card-badge">JAVA / SWING</span>
+                            </div>
+                            <div class="deck-card-body">
+                                <div class="deck-card-visual visual-pos">
+                                    <div class="deck-visual-hud">
+                                        <div class="deck-hud-dot"></div>
+                                        <span class="font-mono">LAB_LOG_LIVE</span>
+                                    </div>
+                                    <div class="deck-code-preview font-mono">
+                                        <code>STATUS: SESSIONS_ACTIVE</code>
+                                        <span class="deck-metric-highlight">STATIONS: 40+ SEATS</span>
+                                    </div>
+                                </div>
+                                <h4 class="deck-card-title">DLAILS Lab Logger</h4>
+                                <p class="deck-card-desc">Computer lab utilization, seat allocation & incident logging system.</p>
+                            </div>
+                        </div>
 
-                <!-- Core Competency Chips -->
-                <div class="hero-specialties font-mono">
-                    <span class="hero-spec-chip">[ C++ SYSTEMS ]</span>
-                    <span class="hero-spec-chip">[ JAVA OOP / POS ]</span>
-                    <span class="hero-spec-chip">[ PYTHON AUTOMATION ]</span>
-                    <span class="hero-spec-chip">[ MYSQL RELATIONAL ]</span>
-                    <span class="hero-spec-chip">[ FIGMA DESIGN TOKENS ]</span>
+                        <!-- Card 02: Lost & Found NCST System -->
+                        <div class="deck-card deck-card-2" data-project-trigger="lostfound" title="Click to inspect Lost & Found">
+                            <div class="deck-card-header font-mono">
+                                <span class="deck-card-tag">[ 02 // NCST_PORTAL ]</span>
+                                <span class="deck-card-badge">PHP / MYSQL</span>
+                            </div>
+                            <div class="deck-card-body">
+                                <div class="deck-card-visual visual-portal">
+                                    <div class="deck-pos-grid">
+                                        <span class="pos-chip font-mono">[RBAC_AUTH]</span>
+                                        <span class="pos-chip active font-mono">[AUDIT_LOG]</span>
+                                    </div>
+                                    <div class="deck-pos-receipt font-mono">
+                                        <span>CLAIM_SYNC: VERIFIED</span>
+                                        <span>STATUS: CAMPUS_PILOT</span>
+                                    </div>
+                                </div>
+                                <h4 class="deck-card-title">Lost & Found System</h4>
+                                <p class="deck-card-desc">Campus property logging, dynamic keyword matching & verification.</p>
+                            </div>
+                        </div>
+
+                        <!-- Card 03: Stym Web Platform -->
+                        <div class="deck-card deck-card-3" data-project-trigger="stym" title="Click to inspect Stym">
+                            <div class="deck-card-header font-mono">
+                                <span class="deck-card-tag">[ 03 // STYM ]</span>
+                                <span class="deck-card-badge">JS / CSS3 / FIGMA</span>
+                            </div>
+                            <div class="deck-card-body">
+                                <div class="deck-card-visual visual-design">
+                                    <div class="deck-visual-hud">
+                                        <span class="font-mono text-emerald">[ DASHBOARD_UI ]</span>
+                                        <span class="font-mono">TOKENS: 48</span>
+                                    </div>
+                                    <div class="deck-token-swatches">
+                                        <div class="token-swatch s-dark"></div>
+                                        <div class="token-swatch s-mid"></div>
+                                        <div class="token-swatch s-light"></div>
+                                    </div>
+                                </div>
+                                <h4 class="deck-card-title">Stym Web Platform</h4>
+                                <p class="deck-card-desc">Interactive dashboard interface, clean tokens & responsive design.</p>
+                            </div>
+                        </div>
+
+                        <!-- Card 04: Supermarket POS & Inventory -->
+                        <div class="deck-card deck-card-4" data-project-trigger="supermarket" title="Click to inspect Supermarket POS">
+                            <div class="deck-card-header font-mono">
+                                <span class="deck-card-tag">[ 04 // SUPERMARKET ]</span>
+                                <span class="deck-card-badge">C++20 / OOP</span>
+                            </div>
+                            <div class="deck-card-body">
+                                <div class="deck-card-visual visual-cpp">
+                                    <div class="deck-visual-hud">
+                                        <span class="font-mono text-emerald">[ BINARY_IO ]</span>
+                                        <span class="font-mono">POS_ENGINE</span>
+                                    </div>
+                                    <div class="deck-mem-bars">
+                                        <div class="mem-bar" style="width: 90%;"></div>
+                                        <div class="mem-bar" style="width: 75%;"></div>
+                                    </div>
+                                </div>
+                                <h4 class="deck-card-title">Supermarket POS Utility</h4>
+                                <p class="deck-card-desc">High-efficiency C++ inventory, pricing calculation & checkout system.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Custom High-Tech Interactive Terminal Window (Main Attraction) -->
+                <!-- Huge Secondary Display Statement (Spencer Gabor Style) -->
+                <div class="hero-sub-statement">
+                    <span class="hero-sub-line">SYSTEMS DEVELOPER,</span>
+                    <span class="hero-sub-line">SOFTWARE ENGINEER & ARCHITECT</span>
+                </div>
+
+                <!-- Core Disciplines Footer Strip -->
+                <div class="hero-footer-disciplines">
+                    <span class="disciplines-label font-mono">[ CORE DISCIPLINES & RUNTIMES ]</span>
+                    <div class="disciplines-chips font-mono">
+                        <span>C++ SYSTEMS</span>
+                        <span class="chip-sep">/</span>
+                        <span>JAVA OOP (JDK 21)</span>
+                        <span class="chip-sep">/</span>
+                        <span>PYTHON PIPELINES</span>
+                        <span class="chip-sep">/</span>
+                        <span>MYSQL RELATIONAL</span>
+                        <span class="chip-sep">/</span>
+                        <span>FIGMA TOKENS</span>
+                    </div>
+                </div>
+
+                <!-- Custom High-Tech Interactive Terminal Window (Interactive Telemetry) -->
                 <div class="terminal-container" id="terminal-container">
                     <div class="terminal-header">
                         <div class="terminal-header-left">
@@ -77,35 +172,35 @@
                 <!-- 3-Card Systems Telemetry Highlights Grid -->
                 <div class="hero-telemetry-grid">
                     <div class="telemetry-card stagger-item">
-                        <div class="telemetry-card-header">
-                            <span>[ 01 // ARCHITECTURE ]</span>
+                        <div class="telemetry-card-header font-mono">
+                            <span>[ 01 // DESKTOP &amp; C++ ]</span>
                             <span>SYSTEMS</span>
                         </div>
-                        <h3 class="telemetry-card-title">Reliable Backend Logic</h3>
+                        <h3 class="telemetry-card-title">Desktop &amp; Systems Engineering</h3>
                         <p class="telemetry-card-desc">
-                            ACID-compliant relational schemas, multi-threaded Java Swing POS clients, and robust C++ algorithmic memory routines.
+                            Multi-threaded Java Swing client architectures (DLAILS), JDBC transactional pipelines, and high-efficiency C++ algorithmic memory &amp; binary serialization engines.
                         </p>
                     </div>
 
                     <div class="telemetry-card stagger-item">
-                        <div class="telemetry-card-header">
-                            <span>[ 02 // DATA PIPELINES ]</span>
-                            <span>AUTOMATION</span>
+                        <div class="telemetry-card-header font-mono">
+                            <span>[ 02 // WEB SYSTEMS ]</span>
+                            <span>PORTALS</span>
                         </div>
-                        <h3 class="telemetry-card-title">Python Analytics & Tools</h3>
+                        <h3 class="telemetry-card-title">Campus Portals &amp; SQL</h3>
                         <p class="telemetry-card-desc">
-                            Quantitative research modeling, regression analytics on student software data, and batch filesystem automation scripts.
+                            Role-based campus portal architectures (Lost &amp; Found NCST), relational MySQL 3NF schemas, automated claim verifications, and tamper-resistant audit logs.
                         </p>
                     </div>
 
                     <div class="telemetry-card stagger-item">
-                        <div class="telemetry-card-header">
-                            <span>[ 03 // UI INTEGRITY ]</span>
+                        <div class="telemetry-card-header font-mono">
+                            <span>[ 03 // UI ARCHITECTURE ]</span>
                             <span>CREATIVE</span>
                         </div>
-                        <h3 class="telemetry-card-title">Precision Design Systems</h3>
+                        <h3 class="telemetry-card-title">Design Tokens &amp; Frontends</h3>
                         <p class="telemetry-card-desc">
-                            High-contrast monochrome typography, vector geometry tokens in Figma, and reactive interactive canvas animations.
+                            Modular dashboard interfaces (Stym), monochrome design token systems in Figma, custom CSS properties, and reactive interactive canvas animations.
                         </p>
                     </div>
                 </div>

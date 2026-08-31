@@ -7,7 +7,7 @@ function initNavigation() {
     const menuToggle = document.getElementById("menu-toggle");
     const mobileDrawer = document.getElementById("mobile-drawer");
     const navLinks = document.querySelectorAll(".nav-link, .mobile-nav-link");
-    const popoverItems = document.querySelectorAll(".popover-item[data-project-trigger]");
+    const popoverItems = document.querySelectorAll("[data-project-trigger]");
     const popoverParents = document.querySelectorAll(".has-popover");
 
     /* --------------------------------------------------------------------------
