@@ -29,7 +29,7 @@ function initTheme() {
         btn.classList.add("animating");
         setTimeout(() => {
             btn.classList.remove("animating");
-        }, 400);
+        }, 800);
     }
 
     function toggleTheme(e) {
@@ -82,8 +82,8 @@ function initTheme() {
                     clipPath: clipPath
                 },
                 {
-                    duration: 450,
-                    easing: "cubic-bezier(0.16, 1, 0.3, 1)",
+                    duration: 800,
+                    easing: "cubic-bezier(0.25, 1, 0.4, 1)",
                     pseudoElement: "::view-transition-new(root)"
                 }
             );
