@@ -57,27 +57,9 @@ function initNavigation() {
         }
     });
 
-    /* --------------------------------------------------------------------------
-       03: Popover Interactivity & Project Modal Triggers
-       -------------------------------------------------------------------------- */
-    popoverItems.forEach(item => {
-        item.addEventListener("click", (e) => {
-            const projectId = item.getAttribute("data-project-trigger");
-            if (projectId) {
-                // Find matching project card in DOM and trigger modal
-                const targetCard = document.querySelector(`.project-card[data-project-id="${projectId}"]`);
-                if (targetCard) {
-                    targetCard.click();
-                }
-            }
-            popoverParents.forEach(p => p.classList.remove("popover-open"));
-        });
-    });
-
-    // Close popovers on ESC
+    // Close mobile menu on ESC
     document.addEventListener("keydown", (e) => {
         if (e.key === "Escape") {
-            popoverParents.forEach(p => p.classList.remove("popover-open"));
             closeMobileMenu();
         }
     });

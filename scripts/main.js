@@ -5,6 +5,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     initInteractiveCanvas();
     initCustomCursor();
+    initDevDock();
     initTerminalTypewriter();
     initSkillsHUD();
     initProjectsFilter();
@@ -165,6 +166,86 @@ function initCustomCursor() {
 }
 
 /* ==========================================================================
+   02.5: INTERACTIVE DEVDOCK CONTROLLER (SHELF FILTERS & LIVE PREVIEWS)
+   ========================================================================== */
+function initDevDock() {
+    const dock = document.getElementById("hero-dock-container");
+    const filterPills = document.querySelectorAll(".dock-pill");
+    const itemCards = document.querySelectorAll(".dock-item-card");
+    const terminalView = document.getElementById("dock-terminal-view");
+    const searchInput = document.getElementById("dock-search-input");
+
+    if (!dock) return;
+
+    // Filter Switcher
+    filterPills.forEach(pill => {
+        pill.addEventListener("click", () => {
+            filterPills.forEach(p => p.classList.remove("active"));
+            pill.classList.add("active");
+
+            const filter = pill.getAttribute("data-dock-filter");
+            if (filter === "terminal") {
+                itemCards.forEach(c => c.style.display = "none");
+                if (terminalView) terminalView.style.display = "flex";
+            } else {
+                if (terminalView) terminalView.style.display = "none";
+                itemCards.forEach(card => {
+                    const cat = card.getAttribute("data-category");
+                    if (filter === "all" || cat === filter) {
+                        card.style.display = "flex";
+                    } else {
+                        card.style.display = "none";
+                    }
+                });
+            }
+        });
+    });
+
+    // Real-time Search
+    if (searchInput) {
+        searchInput.addEventListener("input", (e) => {
+            const query = e.target.value.toLowerCase().trim();
+            if (query === "terminal" || query === "cmd" || query === "sh" || query === "help") {
+                filterPills.forEach(p => p.classList.toggle("active", p.getAttribute("data-dock-filter") === "terminal"));
+                itemCards.forEach(c => c.style.display = "none");
+                if (terminalView) terminalView.style.display = "flex";
+                return;
+            }
+
+            if (terminalView && terminalView.style.display === "flex") {
+                terminalView.style.display = "none";
+                filterPills.forEach(p => p.classList.toggle("active", p.getAttribute("data-dock-filter") === "all"));
+            }
+
+            itemCards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                if (!query || text.includes(query)) {
+                    card.style.display = "flex";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        });
+    }
+
+    // Subtle 3D Mouse Perspective Physics on Dock
+    dock.addEventListener("mousemove", (e) => {
+        const rect = dock.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = ((y - centerY) / centerY) * -1.8;
+        const rotateY = ((x - centerX) / centerX) * 2.2;
+        dock.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-2px)`;
+    });
+
+    dock.addEventListener("mouseleave", () => {
+        dock.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)";
+    });
+}
+
+/* ==========================================================================
    03: INTERACTIVE CYBER TERMINAL ENGINE & TYPEWRITER
    ========================================================================== */
 function initTerminalTypewriter() {
@@ -180,9 +261,9 @@ function initTerminalTypewriter() {
         profile: [
             { type: "cmd", text: "fetch --developer" },
             { type: "out", key: "Name:", text: "Tristan Ray Agoilo" },
-            { type: "out", key: "Role:", text: "Systems Developer & Software Engineer" },
-            { type: "out", key: "Focus:", text: "Desktop Architectures, Campus Web Systems, C++ POS Utilities & UI Tokens" },
-            { type: "out", key: "Status:", text: "Available for ambitious systems engineering & full-stack roles" },
+            { type: "out", key: "Role:", text: "Front-End Developer & UI Designer" },
+            { type: "out", key: "Focus:", text: "Bootstrap, Figma UI Design, Responsive Web & Practical Software" },
+            { type: "out", key: "Status:", text: "Available for internships, front-end & UI design roles" },
             { type: "cmd", text: "ping -c 1 core_philosophy" },
             { type: "out", quote: true, text: '"Complexity is easy. Simplicity, contrast, and performance are hard work."' }
         ],
@@ -355,7 +436,7 @@ function initTerminalTypewriter() {
                     { type: "cmd", text: "netstat --contact-endpoints" },
                     { type: "out", key: "Direct Email:", text: "agoilotristanray@gmail.com" },
                     { type: "out", key: "Location:", text: "Cavite, Philippines [UTC+8]" },
-                    { type: "out", key: "Socials:", text: "GitHub: /tztn | LinkedIn: /in/tristan-agoilo" },
+                    { type: "out", key: "Socials:", text: "GitHub: /tztn" },
                     { type: "out", key: "Transmission:", text: "SYS_STATUS: READY_FOR_DEPLOYMENT" },
                     { type: "out", quote: true, text: "Channel open for software engineering inquiries." }
                 ];
@@ -366,107 +447,23 @@ function initTerminalTypewriter() {
 }
 
 /* ==========================================================================
-   04: SKILLS MATRIX INTERACTIVE HEX POPOVER & FILTER ENGINE
+   04: SKILLS MATRIX MINIMAL HOVER TOOLTIP & FILTER ENGINE
    ========================================================================== */
 const skillsHexData = {
-    cpp: {
-        name: "C++",
-        badge: "[ SYSTEMS // C++20 ]",
-        level: "Expert (3+ Yrs)",
-        quote: "Low-level memory management, multithreaded concurrency routines, and high-performance algorithmic execution.",
-        focus: "Pointers & References, SHA-256 Routines, File I/O Streams, RAII Concurrency"
-    },
-    java: {
-        name: "Java",
-        badge: "[ DESKTOP // JDK 21 ]",
-        level: "Expert (3+ Yrs)",
-        quote: "Object-oriented desktop architectures, Java Swing POS client interfaces, and JDBC transactional connectivity.",
-        focus: "OOP Design Patterns, Swing Layout Managers, ACID Database Queries, Event Dispatch Thread"
-    },
-    python: {
-        name: "Python",
-        badge: "[ DATA // PYTHON 3 ]",
-        level: "Advanced (2+ Yrs)",
-        quote: "Quantitative data modeling with Pandas, statistical regression analysis, and batch filesystem automation scripts.",
-        focus: "Pandas DataFrame Pipelines, NumPy Math Modeling, Matplotlib Visualizations, System Automation"
-    },
-    mysql: {
-        name: "MySQL",
-        badge: "[ DATABASE // SQL ]",
-        level: "Advanced (3+ Yrs)",
-        quote: "Relational schema engineering, composite index tuning, foreign key constraints, and ACID-compliant transaction pipelines.",
-        focus: "Schema Normalization (3NF), Query Execution Optimization, Relational Integrity"
-    },
-    php: {
-        name: "PHP",
-        badge: "[ BACKEND // PHP 8.2 ]",
-        level: "Intermediate (2+ Yrs)",
-        quote: "Server-side RESTful API controllers, role-based access verification, and session state management for campus portals.",
-        focus: "PDO Prepared Statements, RBAC Authorization Matrices, CRUD Query Optimization"
-    },
-    javascript: {
-        name: "JavaScript",
-        badge: "[ CLIENT // ES6+ ]",
-        level: "Advanced (3+ Yrs)",
-        quote: "Reactive UI state management, Web Audio API synthesis, dynamic HTML5 canvas shaders, and asynchronous event handlers.",
-        focus: "DOM Event Delegation, Asynchronous Promises, Web Audio API, Interactive Canvas"
-    },
-    vue: {
-        name: "Vue.js",
-        badge: "[ FRAMEWORK // VUE 3 ]",
-        level: "Advanced (2+ Yrs)",
-        quote: "Single-file component composition, reactive state stores, and modular interface workflows for responsive web tools.",
-        focus: "Component Composition, Props & Emit Reactivity, Virtual DOM Diffing"
-    },
-    html5: {
-        name: "HTML5",
-        badge: "[ MARKUP // SEMANTIC ]",
-        level: "Expert (4+ Yrs)",
-        quote: "Semantic document architecture, accessible ARIA roles, and standards-compliant structural markup hierarchies.",
-        focus: "Semantic Elements, ARIA Roles, SEO Meta Structures"
-    },
-    css3: {
-        name: "CSS3",
-        badge: "[ STYLING // MODERN ]",
-        level: "Expert (4+ Yrs)",
-        quote: "Custom property token design systems, CSS Grid/Flexbox layouts, glassmorphic filters, and GPU-accelerated micro-animations.",
-        focus: "CSS Variables Design System, Flexbox/Grid Systems, 3D Perspective Transforms"
-    },
-    figma: {
-        name: "Figma",
-        badge: "[ DESIGN // TOKENS ]",
-        level: "Expert (3+ Yrs)",
-        quote: "High-contrast monochrome UI design systems, responsive auto-layout prototypes, and scalable vector assets.",
-        focus: "Design Tokens Hierarchy, Auto-Layout Components, Interactive Prototype Flows"
-    },
-    vscode: {
-        name: "VS Code",
-        badge: "[ DEV // WORKSPACE ]",
-        level: "Expert (4+ Yrs)",
-        quote: "Custom workspace configurations, integrated debugger terminals, and multi-language linting extensions.",
-        focus: "Git Worktrees, Workspace Configs, Profiler Diagnostics"
-    },
-    git: {
-        name: "Git / GitHub",
-        badge: "[ VERSION // CI/CD ]",
-        level: "Advanced (3+ Yrs)",
-        quote: "Branch control workflows, atomic commits, repository documentation, and pull request code reviews.",
-        focus: "Branch Rebasing & Merging, Commit History Integrity, Remote Collaborations"
-    },
-    netbeans: {
-        name: "Apache NetBeans",
-        badge: "[ JAVA IDE // GUI ]",
-        level: "Advanced (2+ Yrs)",
-        quote: "Ant/Maven build lifecycles, Swing GUI form builders, and bytecode compilation workflows for desktop clients.",
-        focus: "Maven/Ant Compilers, Swing Form Architecture, JVM Debugging"
-    },
-    xampp: {
-        name: "XAMPP Stack",
-        badge: "[ LOCAL SERVER // ENV ]",
-        level: "Advanced (3+ Yrs)",
-        quote: "Local development hosting environment for Apache web servers, PHP runtimes, and phpMyAdmin MySQL instances.",
-        focus: "Apache VirtualHosts, phpMyAdmin Administration, Local Port Routing"
-    }
+    cpp: { name: "C++", level: "Advanced" },
+    java: { name: "Java", level: "Advanced" },
+    python: { name: "Python", level: "Advanced" },
+    mysql: { name: "MySQL", level: "Advanced" },
+    php: { name: "PHP", level: "Intermediate" },
+    javascript: { name: "JavaScript", level: "Advanced" },
+    vue: { name: "Vue.js", level: "Intermediate" },
+    html5: { name: "HTML5", level: "Advanced" },
+    css3: { name: "CSS3", level: "Advanced" },
+    figma: { name: "Figma", level: "Intermediate" },
+    vscode: { name: "VS Code", level: "Advanced" },
+    git: { name: "Git / GitHub", level: "Advanced" },
+    netbeans: { name: "NetBeans", level: "Intermediate" },
+    xampp: { name: "XAMPP", level: "Intermediate" }
 };
 
 function initSkillsHUD() {
@@ -479,10 +476,7 @@ function initSkillsHUD() {
     if (!container || !popover || !techNodes.length) return;
 
     const popName = document.getElementById("hex-pop-name");
-    const popBadge = document.getElementById("hex-pop-badge");
     const popLevel = document.getElementById("hex-pop-level");
-    const popQuote = document.getElementById("hex-pop-quote");
-    const popFocus = document.getElementById("hex-pop-focus");
 
     let activeNode = null;
     let hideTimeout = null;
@@ -491,22 +485,22 @@ function initSkillsHUD() {
         const containerRect = container.getBoundingClientRect();
         const nodeRect = node.getBoundingClientRect();
 
-        const popWidth = popover.offsetWidth || 340;
-        const popHeight = popover.offsetHeight || 190;
+        const popWidth = popover.offsetWidth || 150;
+        const popHeight = popover.offsetHeight || 36;
 
         // Center horizontally relative to node
         let left = (nodeRect.left - containerRect.left) + (nodeRect.width / 2) - (popWidth / 2);
         
         // Keep within container bounds
-        if (left < 0) left = 0;
-        if (left + popWidth > containerRect.width) left = containerRect.width - popWidth;
+        if (left < 6) left = 6;
+        if (left + popWidth > containerRect.width - 6) left = containerRect.width - popWidth - 6;
 
         // Position above the node
-        let top = (nodeRect.top - containerRect.top) - popHeight - 14;
+        let top = (nodeRect.top - containerRect.top) - popHeight - 8;
 
         // If overflowing above, position below
         if (top < 0) {
-            top = (nodeRect.bottom - containerRect.top) + 14;
+            top = (nodeRect.bottom - containerRect.top) + 8;
         }
 
         popover.style.left = `${Math.round(left)}px`;
@@ -524,10 +518,10 @@ function initSkillsHUD() {
         activeNode = node;
 
         if (popName) popName.textContent = data.name;
-        if (popBadge) popBadge.textContent = data.badge;
-        if (popLevel) popLevel.textContent = data.level;
-        if (popQuote) popQuote.textContent = `${data.quote}`;
-        if (popFocus) popFocus.textContent = data.focus;
+        if (popLevel) {
+            popLevel.textContent = data.level;
+            popLevel.className = `tooltip-level-chip font-mono level-${data.level.toLowerCase()}`;
+        }
 
         popover.classList.add("visible");
         positionPopover(node);
@@ -540,7 +534,7 @@ function initSkillsHUD() {
                 activeNode.classList.remove("active-node");
                 activeNode = null;
             }
-        }, 180);
+        }, 120);
     }
 
     techNodes.forEach((node) => {
@@ -551,11 +545,6 @@ function initSkillsHUD() {
         node.addEventListener("click", (e) => {
             showPopover(node);
         });
-    });
-
-    // Keep popover visible if user hovers directly onto the card (e.g. to click Read Story)
-    popover.addEventListener("mouseenter", () => {
-        clearTimeout(hideTimeout);
     });
     popover.addEventListener("mouseleave", hidePopover);
 
@@ -638,83 +627,100 @@ function initProjectsFilter() {
 const projectData = {
     dlails: {
         id: "dlails",
-        title: "Digital Laboratory Utilization & Incident Logging System (DLAILS)",
-        badge: "[ SYSTEMS / DESKTOP ]",
+        title: "DLAILS — Digital Lab Utilization & Incident Logger",
+        badge: "[ DESKTOP / JAVA ]",
         category: "systems",
-        repo: "https://github.com/tztn/DLAILS",
-        repoSlug: "tztn / DLAILS",
         lang: "Java",
         langColor: "#f89820",
+        image: "assets/images/projects/dlails.png",
         stack: "Java, Java Swing, MySQL, JDBC, NetBeans IDE",
-        arch: "Desktop Client-Server Architecture, ACID Database Transactions, Event Dispatch Thread",
-        status: "PUBLIC_REPO // PRODUCTION_STABLE",
-        overview: "A desktop management system for tracking computer lab utilization, student sessions, hardware availability, and real-time incident logging across campus laboratories.",
+        arch: "Desktop Client-Server Setup, MySQL Database, Event-Driven UI",
+        status: "COMPLETED & ACTIVE",
+        overview: "A desktop management application for tracking computer laboratory usage, student terminal logins, and recording maintenance reports across school laboratories.",
         contributions: [
-            "Architected a responsive Java Swing desktop interface with specialized layout managers for rapid student workstation allocation.",
-            "Engineered transactional JDBC database layer ensuring zero concurrency collision during simultaneous student terminal logins.",
-            "Implemented real-time hardware fault and peripheral incident reporting module with technician resolution audit logs."
+            "Designed a clean Java Swing user interface for student login and seat allocation.",
+            "Connected Java front-end to a MySQL database using JDBC for reliable record keeping.",
+            "Implemented an incident logging module for students and lab technicians to report workstation issues."
         ],
         tags: ["Java", "Java Swing", "MySQL", "JDBC", "NetBeans"]
     },
     lostfound: {
         id: "lostfound",
-        title: "Lost & Found NCST System",
-        badge: "[ WEB SYSTEMS ]",
+        title: "Lost & Found NCST — Campus Web Portal",
+        badge: "[ WEB / BOOTSTRAP ]",
         category: "web",
-        repo: "https://github.com/tztn/lost-found-ncst-system",
-        repoSlug: "tztn / lost-found-ncst-system",
-        lang: "PHP",
+        lang: "PHP / Bootstrap",
         langColor: "#777bb4",
-        stack: "PHP, MySQL, HTML5, CSS3, Bootstrap",
-        arch: "MVC Web Architecture, Relational Schema (3NF), Role-Based Access Control (RBAC)",
-        status: "PUBLIC_REPO // CAMPUS_PILOT",
-        overview: "A web-based campus portal for reporting, tracking, and verifying lost and found property at NCST, featuring role-based admin workflows and automated claim verifications.",
+        image: "assets/images/projects/lostfound.png",
+        stack: "PHP, MySQL, Bootstrap, HTML5, CSS3",
+        arch: "Responsive Web Portal, MySQL Database, Role-Based Login",
+        status: "COMPLETED & TESTED",
+        overview: "A responsive campus web portal built with Bootstrap and PHP to help students and staff report, search, and claim lost items at NCST.",
         contributions: [
-            "Engineered 3NF relational schema in MySQL with composite indexes for lightning-fast keyword matching between lost logs and found entries.",
-            "Implemented multi-tier RBAC authorization allowing Campus Security, Department Administrators, and Students secure access.",
-            "Built tamper-resistant administrative audit logs tracking verification statuses, physical locker IDs, and claim handover paperwork."
+            "Built responsive web layouts using Bootstrap, ensuring clean display on mobile phones, tablets, and desktop computers.",
+            "Created an intuitive search tool that helps students quickly find reported lost and found items.",
+            "Developed user roles for students and security staff to verify claims and update item statuses."
         ],
-        tags: ["PHP", "MySQL", "HTML5", "CSS3", "Bootstrap"]
+        tags: ["Bootstrap", "PHP", "MySQL", "HTML5", "CSS3"]
     },
     stym: {
         id: "stym",
-        title: "Stym (Systems & Web Platform)",
-        badge: "[ WEB / FRONTEND ]",
+        title: "Stym — Gaming Storefront Website",
+        badge: "[ FRONT-END / WEB ]",
         category: "web",
-        repo: "https://github.com/tztn/Stym",
-        repoSlug: "tztn / Stym",
-        lang: "JavaScript",
+        lang: "Bootstrap / JavaScript",
         langColor: "#f7df1e",
-        stack: "HTML5, CSS3, JavaScript, Figma",
-        arch: "Component Composition, CSS Custom Property Design Tokens, High-Contrast Responsive Layouts",
-        status: "PUBLIC_REPO // ACTIVE",
-        overview: "A responsive web interface and interactive dashboard concept engineered for clean data visualization, user navigation, and modern component workflows.",
+        image: "assets/images/projects/stym.png",
+        stack: "HTML5, CSS3, JavaScript, Bootstrap",
+        arch: "Front-End Web Layout, Responsive Product Cards, Interactive Catalog",
+        status: "COMPLETED & LIVE",
+        overview: "A responsive gaming storefront website designed with Bootstrap and JavaScript, featuring trending game banners, category filters, and product cards.",
         contributions: [
-            "Defined complete typography and design token systems in Figma and translated into responsive CSS custom properties.",
-            "Engineered lightweight, dependency-free interactive UI components with fluid micro-animations and accessibility standards.",
-            "Integrated cross-browser responsive layouts optimized for high-density displays and mobile viewport sizes."
+            "Designed an engaging dark-mode storefront layout with modern typography and sleek product cards.",
+            "Built responsive catalog grids using Bootstrap classes and modular CSS.",
+            "Added interactive JavaScript hover effects, game detail previews, and shopping cart buttons."
         ],
-        tags: ["HTML5", "CSS3", "JavaScript", "Figma"]
+        tags: ["Bootstrap", "HTML5", "CSS3", "JavaScript"]
+    },
+    sneakrs: {
+        id: "sneakrs",
+        title: "SNEAKRS — Streetwear & Sneaker E-Commerce UI",
+        badge: "[ FIGMA / UI DESIGN ]",
+        category: "tools",
+        lang: "Figma Design",
+        langColor: "#f24e1e",
+        image: "assets/images/projects/sneakrs-figma.png",
+        externalLink: "https://www.figma.com/design/TtzDl0lTbHSKuFOdQaV4gu/LAB-1-MIDTERM-AGOILO---MANAOG-?node-id=0-1&t=pc5Yyb29vXaNwzzi-1",
+        externalLinkLabel: "[ OPEN FIGMA PROJECT ↗ ]",
+        stack: "Figma, Auto-Layout, UI Components, Color Tokens, Typography",
+        arch: "Modular Figma Component Library, Auto-Layout Frames, Clean UI System",
+        status: "DESIGN PROTOTYPE",
+        overview: "A modern e-commerce landing page design for limited-edition sneakers and streetwear, prototyped in Figma with reusable components and auto-layout.",
+        contributions: [
+            "Created a bold, modern visual identity with high-contrast typography and dynamic sneaker showcase layouts.",
+            "Built reusable Figma UI components with Auto-Layout for responsive card resizing.",
+            "Organized consistent color styles, button states, and spacing tokens for smooth developer handoff."
+        ],
+        tags: ["Figma", "UI/UX Design", "Auto-Layout", "Design System"]
     },
     supermarket: {
         id: "supermarket",
-        title: "Supermarket Management & POS Utility",
-        badge: "[ PROGRAMMING / C++ ]",
+        title: "Supermarket POS & Billing System",
+        badge: "[ DESKTOP / C++ ]",
         category: "programming",
-        repo: "https://github.com/tztn/supermarket",
-        repoSlug: "tztn / supermarket",
         lang: "C++",
         langColor: "#00599c",
-        stack: "C++, OOP, File Handling / DBMS Concepts, CLI / Console",
-        arch: "Object-Oriented Architecture, Binary File Serialization, In-Memory Data Structures",
-        status: "PUBLIC_REPO // CORE_TOOLKIT",
-        overview: "A high-efficiency console-based supermarket inventory, pricing, and point-of-sale checkout system built with Object-Oriented C++ and persistent data structures.",
+        image: "assets/images/projects/supermarket.png",
+        stack: "C++, Object-Oriented Programming (OOP), File Handling",
+        arch: "Object-Oriented Console App, Local File Storage",
+        status: "COMPLETED",
+        overview: "A reliable point-of-sale console tool written in C++ for managing store inventory, computing receipt totals with discounts, and saving sales records to files.",
         contributions: [
-            "Engineered binary file serialization streams (fstream) for persistent, corruption-resistant storage of product inventories without external DBMS.",
-            "Implemented object-oriented product catalog classes with polymorphic discount calculations and real-time inventory deductions.",
-            "Built robust console input validation routines preventing memory leaks, buffer overruns, and incorrect billing computations."
+            "Structured product and customer classes using clean Object-Oriented Programming principles.",
+            "Implemented file handling to store and retrieve inventory data without needing external software.",
+            "Created clear interactive console menus with helpful input validation."
         ],
-        tags: ["C++", "OOP", "File Handling", "CLI / Console"]
+        tags: ["C++", "OOP", "File Storage", "Console App"]
     }
 };
 
@@ -722,7 +728,8 @@ const projectData = {
 projectData.p1 = projectData.dlails;
 projectData.p2 = projectData.lostfound;
 projectData.p3 = projectData.stym;
-projectData.p4 = projectData.supermarket;
+projectData.p4 = projectData.sneakrs;
+projectData.p5 = projectData.supermarket;
 
 function initProjectDetailsController() {
     const bentoContainer = document.getElementById("projects-bento-view");
@@ -738,7 +745,6 @@ function initProjectDetailsController() {
 
         // Populate detail view fields
         const stickyBadge = document.getElementById("detail-sticky-badge");
-        const stickyGithub = document.getElementById("detail-sticky-github");
         const mainTitle = document.getElementById("detail-main-title");
         const langDot = document.getElementById("detail-lang-dot");
         const langText = document.getElementById("detail-lang-text");
@@ -747,17 +753,36 @@ function initProjectDetailsController() {
         const stackList = document.getElementById("detail-stack-list");
         const archText = document.getElementById("detail-arch-text");
         const contributionsList = document.getElementById("detail-contributions-list");
-        const cloneCode = document.getElementById("detail-clone-code");
-        const primaryGithubBtn = document.getElementById("detail-primary-github-btn");
+        const showcaseImg = document.getElementById("detail-showcase-img");
+        const showcaseTitle = document.getElementById("detail-showcase-title");
+        const externalLink = document.getElementById("detail-external-link");
 
         if (stickyBadge) stickyBadge.textContent = data.badge;
-        if (stickyGithub) stickyGithub.href = data.repo;
         if (mainTitle) mainTitle.textContent = data.title;
         if (langText) langText.textContent = data.lang;
         if (langDot) langDot.style.backgroundColor = data.langColor || "var(--text-primary)";
         if (statusPill) statusPill.textContent = data.status;
         if (overviewP) overviewP.textContent = data.overview;
         if (archText) archText.textContent = data.arch;
+
+        if (showcaseImg && data.image) {
+            showcaseImg.src = data.image;
+            showcaseImg.alt = data.title;
+        }
+        if (showcaseTitle) {
+            showcaseTitle.textContent = `${data.id}_interface_view.png`;
+        }
+        if (externalLink) {
+            if (data.externalLink) {
+                externalLink.href = data.externalLink;
+                externalLink.style.display = "inline-flex";
+                if (data.externalLinkLabel) {
+                    externalLink.innerHTML = `<span>${data.externalLinkLabel}</span>`;
+                }
+            } else {
+                externalLink.style.display = "none";
+            }
+        }
 
         if (stackList) {
             stackList.innerHTML = "";
@@ -776,14 +801,6 @@ function initProjectDetailsController() {
                 li.textContent = item;
                 contributionsList.appendChild(li);
             });
-        }
-
-        if (cloneCode) {
-            cloneCode.textContent = `git clone ${data.repo}.git`;
-        }
-
-        if (primaryGithubBtn) {
-            primaryGithubBtn.href = data.repo;
         }
 
         // Smooth in-page transition
@@ -823,23 +840,6 @@ function initProjectDetailsController() {
         backBtn.addEventListener("click", (e) => {
             e.preventDefault();
             returnToProjectsGrid();
-        });
-    }
-
-    // 1-Click Clone Command Copy
-    const copyCloneBtn = document.getElementById("copy-clone-btn");
-    if (copyCloneBtn) {
-        copyCloneBtn.addEventListener("click", () => {
-            const cloneCode = document.getElementById("detail-clone-code");
-            if (cloneCode) {
-                navigator.clipboard.writeText(cloneCode.textContent.trim()).then(() => {
-                    const originalText = copyCloneBtn.textContent;
-                    copyCloneBtn.textContent = "[ COPIED! ]";
-                    setTimeout(() => {
-                        copyCloneBtn.textContent = originalText;
-                    }, 2000);
-                });
-            }
         });
     }
 }

@@ -267,7 +267,7 @@ const SoundSystem = (() => {
 
     function attachUIListeners() {
         // Universal Hover SFX across all interactive portfolio elements
-        const hoverTargets = "a, button, [role='button'], .skill-badge, .tech-logo-item, .tech-logo-bubble, .tech-brand-tile, .tech-node, .skills-filter-pill, .project-card, .bento-project-card, .koyeb-app-card, .koyeb-featured-card, .koyeb-filter-pill, .koyeb-action-btn, .deck-card, .filter-btn, .cmd-chip, .terminal-tab, .telemetry-card, .popover-item, .hero-spec-chip, .timeline-card, .bento-badge, .nav-link, .mobile-nav-link, .name-word, .koyeb-link-btn, .koyeb-view-all-link, .hex-read-story-btn, .btn-copy-mono, input, .clone-box";
+        const hoverTargets = "a, button, [role='button'], .skill-badge, .tech-logo-item, .tech-logo-bubble, .tech-brand-tile, .tech-node, .skills-filter-pill, .project-card, .bento-project-card, .koyeb-app-card, .koyeb-featured-card, .koyeb-filter-pill, .koyeb-action-btn, .dock-item-card, .dock-pill, .hero-cta-btn, .hero-secondary-btn, .hero-top-capsule, .side-award-badge, .filter-btn, .cmd-chip, .terminal-tab, .telemetry-card, .popover-item, .hero-spec-chip, .timeline-card, .bento-badge, .nav-link, .mobile-nav-link, .name-word, .koyeb-link-btn, .koyeb-view-all-link, .hex-read-story-btn, .btn-copy-mono, input, .clone-box";
         
         document.addEventListener("mouseover", (e) => {
             const target = e.target.closest(hoverTargets);
@@ -277,7 +277,7 @@ const SoundSystem = (() => {
         }, { passive: true });
 
         // Universal Click SFX on ALL clickable controls throughout the portfolio
-        const clickTargets = "a, button, [role='button'], input[type='submit'], input[type='button'], .btn, .nav-link, .mobile-nav-link, .tech-logo-item, .tech-logo-bubble, .skills-filter-pill, .tech-brand-tile, .tech-node, .filter-btn, .cmd-chip, .terminal-tab, .project-card, .bento-project-card, .koyeb-app-card, .koyeb-featured-card, .koyeb-filter-pill, .koyeb-action-btn, .deck-card, .popover-item, .modal-close-btn, .theme-toggle-btn, .sfx-toggle-btn, .contact-social-link, .btn-copy-mono, [data-project-trigger], .name-word, .koyeb-link-btn, .koyeb-view-all-link, .hex-read-story-btn, .back-projects-btn";
+        const clickTargets = "a, button, [role='button'], input[type='submit'], input[type='button'], .btn, .nav-link, .mobile-nav-link, .tech-logo-item, .tech-logo-bubble, .skills-filter-pill, .tech-brand-tile, .tech-node, .filter-btn, .cmd-chip, .terminal-tab, .project-card, .bento-project-card, .koyeb-app-card, .koyeb-featured-card, .koyeb-filter-pill, .koyeb-action-btn, .dock-item-card, .dock-pill, .hero-cta-btn, .hero-secondary-btn, .popover-item, .modal-close-btn, .theme-toggle-btn, .sfx-toggle-btn, .contact-social-link, .btn-copy-mono, [data-project-trigger], .name-word, .koyeb-link-btn, .koyeb-view-all-link, .hex-read-story-btn, .back-projects-btn";
         
         const triggerClick = (e) => {
             const target = e.target.closest(clickTargets);

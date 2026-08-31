@@ -1,163 +1,189 @@
-            <!-- 01: Hero Section (Spencer Gabor Visual Showcase + Systems HUD) -->
-            <section id="home" class="content-section reveal-section hero-showcase-section">
-                <!-- Top Compact Location & Contact Meta -->
-                <div class="hero-top-meta font-mono">
-                    <span class="hero-location">[ CAVITE, PHILIPPINES ]</span>
-                    <a href="mailto:agoilotristanray@gmail.com" class="hero-email-contact">AGOILOTRISTANRAY@GMAIL.COM</a>
+            <!-- 01: Hero Section (Supaste-Inspired Ultra-Modern Architectural Showcase) -->
+            <section id="home" class="content-section hero-showcase-section">
+                <!-- Top Compact Location & Live Status Pill -->
+                <div class="hero-top-capsule font-mono">
+                    <span class="hero-capsule-dot"></span>
+                    <span class="hero-capsule-text">FRONT-END DEVELOPER &amp; UI DESIGNER</span>
+                    <span class="hero-capsule-tag">v2026.4</span>
                 </div>
 
-                <!-- Massive Impact Display Headline with Kinetic Animation -->
-                <h1 class="hero-main-title animated-name" aria-label="Tristan Ray Agoilo">
-                    <span class="name-word word-tristan" data-text="TRISTAN">TRISTAN</span>
-                    <span class="name-word word-ray" data-text="RAY">RAY</span>
-                    <span class="name-word word-agoilo" data-text="AGOILO">AGOILO</span>
-                </h1>
+                <!-- Massive Impact Editorial Display Headline (Mixed Sans + Italic Serif) -->
+                <div class="hero-headline-container">
+                    <h1 class="hero-display-headline">
+                        <span class="headline-sans">Tristan Ray</span>
+                        <span class="headline-serif italic-serif">Agoilo</span>
+                    </h1>
+                </div>
 
-                <!-- Centerpiece Layered Interactive Showcase Fan-Out Deck -->
-                <div class="hero-showcase-wrapper">
-                    <div class="hero-card-deck" id="hero-card-deck">
-                        <!-- Card 01: DLAILS Desktop System -->
-                        <div class="deck-card deck-card-1" data-project-trigger="dlails" title="Click to inspect DLAILS">
-                            <div class="deck-card-header font-mono">
-                                <span class="deck-card-tag">[ 01 // DLAILS ]</span>
-                                <span class="deck-card-badge">JAVA / SWING</span>
+                <!-- Clean Lead Value Proposition Subtitle -->
+                <p class="hero-lead-desc">
+                    Front-End Developer &amp; UI Designer focused on building responsive websites with Bootstrap and creating clean UI layouts in Figma.
+                </p>
+
+                <!-- Primary Action Controls Row -->
+                <div class="hero-actions-container">
+                    <a href="#projects" class="hero-cta-btn" id="hero-primary-cta">
+                        <svg class="cta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                            <polyline points="2 17 12 22 22 17"></polyline>
+                            <polyline points="2 12 12 17 22 12"></polyline>
+                        </svg>
+                        <span>EXPLORE ALL WORK</span>
+                        <svg class="cta-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="7" y1="17" x2="17" y2="7"></line>
+                            <polyline points="7 7 17 7 17 17"></polyline>
+                        </svg>
+                    </a>
+
+                    <a href="#contact" class="hero-secondary-btn font-mono">
+                        <span>[ GET IN TOUCH ]</span>
+                    </a>
+                </div>
+
+                <!-- Meta Specification Row -->
+                <div class="hero-meta-strip font-mono">
+                    <span>• Available for internships &amp; roles</span>
+                    <span class="meta-sep">•</span>
+                    <span>Based in Cavite, PH</span>
+                    <span class="meta-sep">•</span>
+                    <span>Java Swing</span>
+                    <span class="meta-sep">•</span>
+                    <span>C++20</span>
+                    <span class="meta-sep">•</span>
+                    <span>MySQL 3NF</span>
+                    <span class="meta-sep">•</span>
+                    <span>Modern Web</span>
+                </div>
+
+                <!-- Centerpiece Interactive DevDock Showcase Window (Supaste Reference Shelf) -->
+                <div class="hero-dock-container" id="hero-dock-container">
+                    <!-- Dock Top Header Bar -->
+                    <div class="dock-header-bar">
+                        <div class="dock-brand-col">
+                            <span class="dock-traffic-lights">
+                                <span class="dock-light red"></span>
+                                <span class="dock-light yellow"></span>
+                                <span class="dock-light green"></span>
+                            </span>
+                            <span class="dock-brand-tag font-mono">TRISTAN // DEV_DOCK</span>
+                        </div>
+
+                        <div class="dock-search-filter-col">
+                            <div class="dock-search-box">
+                                <svg class="dock-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                </svg>
+                                <input type="text" id="dock-search-input" class="dock-search-input font-mono" placeholder="Search systems, stack, terminal..." autocomplete="off">
                             </div>
-                            <div class="deck-card-body">
-                                <div class="deck-card-visual visual-pos">
-                                    <div class="deck-visual-hud">
-                                        <div class="deck-hud-dot"></div>
-                                        <span class="font-mono">LAB_LOG_LIVE</span>
-                                    </div>
-                                    <div class="deck-code-preview font-mono">
-                                        <code>STATUS: SESSIONS_ACTIVE</code>
-                                        <span class="deck-metric-highlight">STATIONS: 40+ SEATS</span>
-                                    </div>
-                                </div>
-                                <h4 class="deck-card-title">DLAILS Lab Logger</h4>
-                                <p class="deck-card-desc">Computer lab utilization, seat allocation & incident logging system.</p>
+                            <div class="dock-filter-pills font-mono" id="dock-filter-pills">
+                                <button type="button" class="dock-pill active" data-dock-filter="all">All <span>05</span></button>
+                                <button type="button" class="dock-pill" data-dock-filter="systems">Systems <span>02</span></button>
+                                <button type="button" class="dock-pill" data-dock-filter="web">Web &amp; UI <span>03</span></button>
+                                <button type="button" class="dock-pill" data-dock-filter="terminal">Terminal <span>_</span></button>
+                            </div>
+                        </div>
+
+                        <div class="dock-status-col font-mono">
+                            <span class="dock-live-indicator"><span class="pulse-dot"></span>09:41 // LIVE</span>
+                        </div>
+                    </div>
+
+                    <!-- Dock Shelf Display Grid / Viewport -->
+                    <div class="dock-shelf-viewport" id="dock-shelf-viewport">
+                        <!-- Card 01: DLAILS Lab Logger -->
+                        <div class="dock-item-card" data-category="systems" data-project-trigger="dlails" title="Click to inspect DLAILS Lab Logger">
+                            <div class="dock-card-top font-mono">
+                                <span class="dock-item-id">[ 01 // DLAILS ]</span>
+                                <span class="dock-tag-pill">JAVA / SWING</span>
+                            </div>
+                            <div class="dock-card-preview-zone">
+                                <img src="assets/images/projects/dlails.png" alt="DLAILS Preview" style="width:100%;height:100%;object-fit:cover;">
+                            </div>
+                            <div class="dock-card-footer">
+                                <h4 class="dock-item-title">DLAILS Lab Logger</h4>
+                                <p class="dock-item-sub">Lab utilization, terminal sessions &amp; incident tracking.</p>
                             </div>
                         </div>
 
                         <!-- Card 02: Lost & Found NCST System -->
-                        <div class="deck-card deck-card-2" data-project-trigger="lostfound" title="Click to inspect Lost & Found">
-                            <div class="deck-card-header font-mono">
-                                <span class="deck-card-tag">[ 02 // NCST_PORTAL ]</span>
-                                <span class="deck-card-badge">PHP / MYSQL</span>
+                        <div class="dock-item-card" data-category="web" data-project-trigger="lostfound" title="Click to inspect Lost & Found NCST">
+                            <div class="dock-card-top font-mono">
+                                <span class="dock-item-id">[ 02 // NCST ]</span>
+                                <span class="dock-tag-pill">PHP / MYSQL</span>
                             </div>
-                            <div class="deck-card-body">
-                                <div class="deck-card-visual visual-portal">
-                                    <div class="deck-pos-grid">
-                                        <span class="pos-chip font-mono">[RBAC_AUTH]</span>
-                                        <span class="pos-chip active font-mono">[AUDIT_LOG]</span>
-                                    </div>
-                                    <div class="deck-pos-receipt font-mono">
-                                        <span>CLAIM_SYNC: VERIFIED</span>
-                                        <span>STATUS: CAMPUS_PILOT</span>
-                                    </div>
-                                </div>
-                                <h4 class="deck-card-title">Lost & Found System</h4>
-                                <p class="deck-card-desc">Campus property logging, dynamic keyword matching & verification.</p>
+                            <div class="dock-card-preview-zone">
+                                <img src="assets/images/projects/lostfound.png" alt="NCST Lost & Found" style="width:100%;height:100%;object-fit:cover;">
+                            </div>
+                            <div class="dock-card-footer">
+                                <h4 class="dock-item-title">Lost &amp; Found System</h4>
+                                <p class="dock-item-sub">Campus property verification &amp; tamper-resistant logs.</p>
                             </div>
                         </div>
 
                         <!-- Card 03: Stym Web Platform -->
-                        <div class="deck-card deck-card-3" data-project-trigger="stym" title="Click to inspect Stym">
-                            <div class="deck-card-header font-mono">
-                                <span class="deck-card-tag">[ 03 // STYM ]</span>
-                                <span class="deck-card-badge">JS / CSS3 / FIGMA</span>
+                        <div class="dock-item-card" data-category="web" data-project-trigger="stym" title="Click to inspect Stym Web Platform">
+                            <div class="dock-card-top font-mono">
+                                <span class="dock-item-id">[ 03 // STYM ]</span>
+                                <span class="dock-tag-pill">JS / WEB</span>
                             </div>
-                            <div class="deck-card-body">
-                                <div class="deck-card-visual visual-design">
-                                    <div class="deck-visual-hud">
-                                        <span class="font-mono text-emerald">[ DASHBOARD_UI ]</span>
-                                        <span class="font-mono">TOKENS: 48</span>
-                                    </div>
-                                    <div class="deck-token-swatches">
-                                        <div class="token-swatch s-dark"></div>
-                                        <div class="token-swatch s-mid"></div>
-                                        <div class="token-swatch s-light"></div>
-                                    </div>
+                            <div class="dock-card-preview-zone">
+                                <img src="assets/images/projects/stym.png" alt="Stym Gaming Store" style="width:100%;height:100%;object-fit:cover;">
+                            </div>
+                            <div class="dock-card-footer">
+                                <h4 class="dock-item-title">Stym Game Store</h4>
+                                <p class="dock-item-sub">Interactive gaming storefront &amp; dynamic catalog grid.</p>
+                            </div>
+                        </div>
+
+                        <!-- Card 04: SNEAKRS Figma UI Design -->
+                        <div class="dock-item-card" data-category="tools" data-project-trigger="sneakrs" title="Click to inspect SNEAKRS Figma Design">
+                            <div class="dock-card-top font-mono">
+                                <span class="dock-item-id">[ 04 // SNEAKRS ]</span>
+                                <span class="dock-tag-pill">FIGMA / UI</span>
+                            </div>
+                            <div class="dock-card-preview-zone">
+                                <img src="assets/images/projects/sneakrs-figma.png" alt="SNEAKRS Figma Design" style="width:100%;height:100%;object-fit:cover;">
+                            </div>
+                            <div class="dock-card-footer">
+                                <h4 class="dock-item-title">SNEAKRS Concept</h4>
+                                <p class="dock-item-sub">Streetwear e-commerce prototype &amp; design tokens in Figma.</p>
+                            </div>
+                        </div>
+
+                        <!-- Card 05: Supermarket POS & Inventory -->
+                        <div class="dock-item-card" data-category="systems" data-project-trigger="supermarket" title="Click to inspect Supermarket POS">
+                            <div class="dock-card-top font-mono">
+                                <span class="dock-item-id">[ 05 // POS ]</span>
+                                <span class="dock-tag-pill">C++20 / OOP</span>
+                            </div>
+                            <div class="dock-card-preview-zone">
+                                <img src="assets/images/projects/supermarket.png" alt="Supermarket POS" style="width:100%;height:100%;object-fit:cover;">
+                            </div>
+                            <div class="dock-card-footer">
+                                <h4 class="dock-item-title">Supermarket POS</h4>
+                                <p class="dock-item-sub">High-efficiency C++ inventory &amp; algorithmic pricing engine.</p>
+                            </div>
+                        </div>
+
+                        <!-- Embedded High-Tech Interactive Terminal Screen -->
+                        <div class="dock-terminal-view" id="dock-terminal-view" style="display: none;">
+                            <div class="dock-terminal-header font-mono">
+                                <div class="terminal-dots">
+                                    <span class="terminal-dot"></span>
+                                    <span class="terminal-dot"></span>
+                                    <span class="terminal-dot"></span>
                                 </div>
-                                <h4 class="deck-card-title">Stym Web Platform</h4>
-                                <p class="deck-card-desc">Interactive dashboard interface, clean tokens & responsive design.</p>
+                                <span class="terminal-run-title">system_info.sh --interactive</span>
+                                <span class="terminal-badge font-mono">STABLE // v2.6</span>
                             </div>
-                        </div>
-
-                        <!-- Card 04: Supermarket POS & Inventory -->
-                        <div class="deck-card deck-card-4" data-project-trigger="supermarket" title="Click to inspect Supermarket POS">
-                            <div class="deck-card-header font-mono">
-                                <span class="deck-card-tag">[ 04 // SUPERMARKET ]</span>
-                                <span class="deck-card-badge">C++20 / OOP</span>
+                            <div class="dock-terminal-content font-mono" id="terminal-body">
+                                <!-- Dynamic Typewriter Terminal Content -->
                             </div>
-                            <div class="deck-card-body">
-                                <div class="deck-card-visual visual-cpp">
-                                    <div class="deck-visual-hud">
-                                        <span class="font-mono text-emerald">[ BINARY_IO ]</span>
-                                        <span class="font-mono">POS_ENGINE</span>
-                                    </div>
-                                    <div class="deck-mem-bars">
-                                        <div class="mem-bar" style="width: 90%;"></div>
-                                        <div class="mem-bar" style="width: 75%;"></div>
-                                    </div>
-                                </div>
-                                <h4 class="deck-card-title">Supermarket POS Utility</h4>
-                                <p class="deck-card-desc">High-efficiency C++ inventory, pricing calculation & checkout system.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Huge Secondary Display Statement (Spencer Gabor Style) -->
-                <div class="hero-sub-statement">
-                    <span class="hero-sub-line">SYSTEMS DEVELOPER,</span>
-                    <span class="hero-sub-line">SOFTWARE ENGINEER & ARCHITECT</span>
-                </div>
-
-                <!-- Core Disciplines Footer Strip -->
-                <div class="hero-footer-disciplines">
-                    <span class="disciplines-label font-mono">[ CORE DISCIPLINES & RUNTIMES ]</span>
-                    <div class="disciplines-chips font-mono">
-                        <span>C++ SYSTEMS</span>
-                        <span class="chip-sep">/</span>
-                        <span>JAVA OOP (JDK 21)</span>
-                        <span class="chip-sep">/</span>
-                        <span>PYTHON PIPELINES</span>
-                        <span class="chip-sep">/</span>
-                        <span>MYSQL RELATIONAL</span>
-                        <span class="chip-sep">/</span>
-                        <span>FIGMA TOKENS</span>
-                    </div>
-                </div>
-
-                <!-- Custom High-Tech Interactive Terminal Window (Interactive Telemetry) -->
-                <div class="terminal-container" id="terminal-container">
-                    <div class="terminal-header">
-                        <div class="terminal-header-left">
-                            <div class="terminal-dots">
-                                <span class="terminal-dot"></span>
-                                <span class="terminal-dot"></span>
-                                <span class="terminal-dot"></span>
-                            </div>
-                            <div class="terminal-title">system_info.sh</div>
-                            <div class="terminal-tabs" id="terminal-tabs">
-                                <button type="button" class="terminal-tab active" data-tab="profile">[ 01: PROFILE ]</button>
-                                <button type="button" class="terminal-tab" data-tab="telemetry">[ 02: TELEMETRY ]</button>
-                                <button type="button" class="terminal-tab" data-tab="stack">[ 03: STACK_SPECS ]</button>
-                                <button type="button" class="terminal-tab" data-tab="philosophy">[ 04: CORE_PHILOSOPHY ]</button>
-                            </div>
-                        </div>
-                        <div class="terminal-badge">STABLE // v2.6</div>
-                    </div>
-
-                    <div class="terminal-body font-mono" id="terminal-body">
-                        <!-- Dynamic Content Populated by Terminal Engine -->
-                    </div>
-
-                    <!-- Terminal Quick Command Chips Toolbar -->
-                    <div class="terminal-toolbar">
-                        <div class="terminal-toolbar-left">
-                            <span class="terminal-quick-label">QUICK CMDS:</span>
-                            <div class="cmd-chips">
+                            <div class="dock-terminal-chips font-mono">
+                                <span class="dock-chips-label">QUICK CMDS:</span>
                                 <button type="button" class="cmd-chip" data-cmd="fetch">[fetch]</button>
                                 <button type="button" class="cmd-chip" data-cmd="stack">[stack]</button>
                                 <button type="button" class="cmd-chip" data-cmd="projects">[projects]</button>
@@ -165,43 +191,6 @@
                                 <button type="button" class="cmd-chip" data-cmd="clear">[clear]</button>
                             </div>
                         </div>
-                        <div class="terminal-status-info">UPTIME: 99.98% | LATENCY: 12ms</div>
-                    </div>
-                </div>
-
-                <!-- 3-Card Systems Telemetry Highlights Grid -->
-                <div class="hero-telemetry-grid">
-                    <div class="telemetry-card stagger-item">
-                        <div class="telemetry-card-header font-mono">
-                            <span>[ 01 // DESKTOP &amp; C++ ]</span>
-                            <span>SYSTEMS</span>
-                        </div>
-                        <h3 class="telemetry-card-title">Desktop &amp; Systems Engineering</h3>
-                        <p class="telemetry-card-desc">
-                            Multi-threaded Java Swing client architectures (DLAILS), JDBC transactional pipelines, and high-efficiency C++ algorithmic memory &amp; binary serialization engines.
-                        </p>
-                    </div>
-
-                    <div class="telemetry-card stagger-item">
-                        <div class="telemetry-card-header font-mono">
-                            <span>[ 02 // WEB SYSTEMS ]</span>
-                            <span>PORTALS</span>
-                        </div>
-                        <h3 class="telemetry-card-title">Campus Portals &amp; SQL</h3>
-                        <p class="telemetry-card-desc">
-                            Role-based campus portal architectures (Lost &amp; Found NCST), relational MySQL 3NF schemas, automated claim verifications, and tamper-resistant audit logs.
-                        </p>
-                    </div>
-
-                    <div class="telemetry-card stagger-item">
-                        <div class="telemetry-card-header font-mono">
-                            <span>[ 03 // UI ARCHITECTURE ]</span>
-                            <span>CREATIVE</span>
-                        </div>
-                        <h3 class="telemetry-card-title">Design Tokens &amp; Frontends</h3>
-                        <p class="telemetry-card-desc">
-                            Modular dashboard interfaces (Stym), monochrome design token systems in Figma, custom CSS properties, and reactive interactive canvas animations.
-                        </p>
                     </div>
                 </div>
             </section>

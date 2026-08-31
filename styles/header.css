@@ -3,7 +3,7 @@
    ========================================================================== */
 
 :root {
-    --header-height: 70px;
+    --header-height: 80px;
     --capsule-bg: #0e0e11;
     --capsule-border: rgba(255, 255, 255, 0.14);
     --capsule-shadow: 0 14px 34px -4px rgba(0, 0, 0, 0.28), 0 0 0 1px rgba(0, 0, 0, 0.1);
@@ -22,7 +22,7 @@ html.dark {
 /* Fixed Header Island Anchor */
 .top-header {
     position: fixed;
-    top: 16px;
+    top: 20px;
     left: 0;
     width: 100%;
     display: flex;
@@ -41,12 +41,12 @@ html.dark {
     align-items: center;
     background-color: var(--capsule-bg);
     border: 1px solid var(--capsule-border);
-    border-radius: 14px;
-    padding: 5px 10px 5px 12px;
+    border-radius: 16px;
+    padding: 7px 12px 7px 14px;
     box-shadow: var(--capsule-shadow);
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
-    gap: 6px;
+    gap: 8px;
     transition: transform var(--transition-fast), box-shadow var(--transition-fast);
 }
 
@@ -59,8 +59,8 @@ html.dark {
     display: inline-flex;
     align-items: center;
     text-decoration: none;
-    padding: 6px 10px;
-    border-radius: 8px;
+    padding: 8px 12px;
+    border-radius: 10px;
     flex-shrink: 0;
     transition: opacity var(--transition-fast), background-color var(--transition-fast);
 }
@@ -73,7 +73,7 @@ html.dark {
 .capsule-brand-text {
     font-family: var(--font-sans);
     font-weight: 900;
-    font-size: 0.88rem;
+    font-size: 0.98rem;
     letter-spacing: -0.015em;
     font-style: italic;
     color: #ffffff;
@@ -84,9 +84,9 @@ html.dark {
 /* Capsule Section Dividers */
 .capsule-divider {
     width: 1px;
-    height: 18px;
+    height: 22px;
     background-color: rgba(255, 255, 255, 0.14);
-    margin: 0 2px;
+    margin: 0 3px;
     flex-shrink: 0;
 }
 
@@ -100,7 +100,7 @@ html.dark {
     list-style: none;
     display: flex;
     align-items: center;
-    gap: 3px;
+    gap: 4px;
     margin: 0;
     padding: 0;
 }
@@ -115,19 +115,19 @@ html.dark {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 3px;
-    padding: 6px 13px;
-    border-radius: 9px;
+    gap: 4px;
+    padding: 8px 16px;
+    border-radius: 10px;
     text-decoration: none;
     color: #a1a1aa;
     transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
-    min-width: 56px;
+    min-width: 64px;
     cursor: pointer;
 }
 
 .nav-dot {
-    width: 4px;
-    height: 4px;
+    width: 5px;
+    height: 5px;
     border-radius: 50%;
     background-color: transparent;
     opacity: 0;
@@ -138,7 +138,7 @@ html.dark {
 }
 
 .nav-text {
-    font-size: 0.65rem;
+    font-size: 0.74rem;
     font-weight: 700;
     letter-spacing: 0.06em;
     text-transform: uppercase;
@@ -181,182 +181,14 @@ html.dark {
 }
 
 /* ==========================================================================
-   HEX-STYLE INTERACTIVE HOVER POPOVER PANELS
-   ========================================================================== */
-
-/* Invisible hover bridge between nav item and popover */
-.has-popover::after {
-    content: '';
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    height: 18px;
-    z-index: 1001;
-}
-
-/* Mega-Menu Dropdown Popover Container */
-.nav-popover {
-    position: absolute;
-    top: calc(100% + 14px);
-    left: 50%;
-    transform: translateX(-50%) translateY(8px);
-    width: 580px;
-    background-color: var(--popover-bg);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    box-shadow: var(--popover-shadow);
-    padding: 18px;
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1),
-                transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
-                visibility 0.2s;
-    z-index: 1002;
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-}
-
-/* Reveal Popover on Hover or .popover-open */
-.has-popover:hover .nav-popover,
-.has-popover.popover-open .nav-popover {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-    transform: translateX(-50%) translateY(0);
-}
-
-/* Popover Multi-Column Grid */
-.popover-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-}
-
-.popover-col {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
-.popover-col-header {
-    font-size: 0.65rem;
-    font-weight: 700;
-    color: var(--text-muted);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 4px 8px 6px 8px;
-    border-bottom: 1px solid var(--border-light);
-    margin-bottom: 4px;
-}
-
-/* Interactive Popover Item */
-.popover-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    padding: 8px 10px;
-    border-radius: 8px;
-    text-decoration: none;
-    transition: background-color var(--transition-fast), transform var(--transition-fast);
-    border: 1px solid transparent;
-}
-
-.popover-item:hover {
-    background-color: var(--bg-secondary);
-    border-color: var(--border-light);
-    transform: translateX(2px);
-}
-
-.popover-item-badge {
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    font-weight: 700;
-    color: var(--text-secondary);
-    background-color: var(--bg-card);
-    border: 1px solid var(--border);
-    padding: 3px 6px;
-    border-radius: 4px;
-    line-height: 1;
-    flex-shrink: 0;
-    margin-top: 2px;
-}
-
-.popover-item:hover .popover-item-badge {
-    color: var(--text-primary);
-    border-color: var(--text-primary);
-}
-
-.popover-item-content {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-}
-
-.popover-item-title {
-    font-size: 0.78rem;
-    font-weight: 700;
-    color: var(--text-primary);
-    line-height: 1.25;
-}
-
-.popover-item-desc {
-    font-size: 0.68rem;
-    color: var(--text-secondary);
-    line-height: 1.35;
-}
-
-/* Popover Footer Banner */
-.popover-footer-banner {
-    margin-top: 14px;
-    padding-top: 12px;
-    border-top: 1px solid var(--border-light);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-}
-
-.popover-banner-info {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.7rem;
-    color: var(--text-secondary);
-}
-
-.popover-banner-tag {
-    font-size: 0.65rem;
-    font-weight: 700;
-    color: var(--text-muted);
-}
-
-.popover-banner-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 0.68rem;
-    font-weight: 700;
-    color: var(--text-primary);
-    text-decoration: none;
-    letter-spacing: 0.04em;
-    transition: opacity var(--transition-fast);
-}
-
-.popover-banner-link:hover {
-    opacity: 0.75;
-}
-
-/* ==========================================================================
    REFINED RIGHT ACTION CONTROLS (AUDIO & THEME TOGGLE)
    ========================================================================== */
 
 .capsule-actions {
     display: flex;
     align-items: center;
-    gap: 5px;
-    margin-left: 2px;
+    gap: 6px;
+    margin-left: 3px;
 }
 
 /* Audio SFX Toggle Button */
@@ -364,8 +196,8 @@ html.dark {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     background-color: rgba(255, 255, 255, 0.06);
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 50%;
@@ -386,8 +218,8 @@ html.dark {
 }
 
 .sfx-toggle-btn svg {
-    width: 14px;
-    height: 14px;
+    width: 16px;
+    height: 16px;
     flex-shrink: 0;
 }
 
@@ -408,8 +240,8 @@ html.dark {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     background-color: rgba(255, 255, 255, 0.06);
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 50%;
@@ -430,8 +262,8 @@ html.dark {
 }
 
 .theme-toggle-btn svg {
-    width: 14px;
-    height: 14px;
+    width: 16px;
+    height: 16px;
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -452,8 +284,8 @@ html.dark .moon-icon { display: block; }
     justify-content: center;
     align-items: center;
     gap: 4px;
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     background-color: rgba(255, 255, 255, 0.06);
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 50%;
@@ -461,7 +293,7 @@ html.dark .moon-icon { display: block; }
 }
 
 .hamburger-line {
-    width: 14px;
+    width: 16px;
     height: 1.5px;
     background-color: #ffffff;
     transition: transform var(--transition-medium), opacity var(--transition-medium);
@@ -471,7 +303,7 @@ html.dark .moon-icon { display: block; }
 .mobile-drawer {
     display: none;
     position: fixed;
-    top: 68px;
+    top: 76px;
     left: 20px;
     right: 20px;
     background-color: var(--bg-card);
