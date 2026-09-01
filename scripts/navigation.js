@@ -1,36 +1,21 @@
 /* ==========================================================================
-   TOP HEADER NAVIGATION, HEX-STYLE POPOVERS & SCROLLSPY
+   NAVIGATION & SCROLLSPY (CAD BLUEPRINT ARCHITECTURE)
    ========================================================================== */
 
 function initNavigation() {
-    const header = document.getElementById("top-header");
-    const menuToggle = document.getElementById("menu-toggle");
+    const menuToggle = document.getElementById("mobile-menu-toggle");
     const mobileDrawer = document.getElementById("mobile-drawer");
-    const navLinks = document.querySelectorAll(".nav-link, .mobile-nav-link");
-    const popoverItems = document.querySelectorAll("[data-project-trigger]");
-    const popoverParents = document.querySelectorAll(".has-popover");
+    const navLinks = document.querySelectorAll(".header-nav-link, .mobile-nav-link");
+    const backToTopBtn = document.getElementById("back-to-top-btn");
 
-    /* --------------------------------------------------------------------------
-       01: Header Elevation on Scroll
-       -------------------------------------------------------------------------- */
-    function handleScroll() {
-        if (header) {
-            header.classList.toggle("scrolled", window.scrollY > 15);
-        }
-    }
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-
-    /* --------------------------------------------------------------------------
-       02: Mobile Drawer Toggle
-       -------------------------------------------------------------------------- */
+    /* 01: Mobile Drawer Toggle */
     function toggleMobileMenu() {
-        if (header) header.classList.toggle("menu-open");
+        if (menuToggle) menuToggle.classList.toggle("open");
         if (mobileDrawer) mobileDrawer.classList.toggle("open");
     }
 
     function closeMobileMenu() {
-        if (header) header.classList.remove("menu-open");
+        if (menuToggle) menuToggle.classList.remove("open");
         if (mobileDrawer) mobileDrawer.classList.remove("open");
     }
 
@@ -44,44 +29,39 @@ function initNavigation() {
     navLinks.forEach(link => {
         link.addEventListener("click", () => {
             closeMobileMenu();
-            popoverParents.forEach(p => p.classList.remove("popover-open"));
         });
     });
 
     document.addEventListener("click", (e) => {
-        if (header && header.classList.contains("menu-open")) {
-            const isClickInside = header.contains(e.target) || (mobileDrawer && mobileDrawer.contains(e.target));
+        if (mobileDrawer && mobileDrawer.classList.contains("open")) {
+            const isClickInside = mobileDrawer.contains(e.target) || (menuToggle && menuToggle.contains(e.target));
             if (!isClickInside) {
                 closeMobileMenu();
             }
         }
     });
 
-    // Close mobile menu on ESC
     document.addEventListener("keydown", (e) => {
         if (e.key === "Escape") {
             closeMobileMenu();
         }
     });
 
-    /* --------------------------------------------------------------------------
-       04: Scroll Spy (Active Navigation Highlights)
-       -------------------------------------------------------------------------- */
-    const sections = document.querySelectorAll(".content-section");
+    /* 02: Scroll Spy */
+    const panels = document.querySelectorAll(".panel");
 
     const observerOptions = {
         root: null,
-        rootMargin: "-20% 0px -60% 0px",
+        rootMargin: "-20% 0px -65% 0px",
         threshold: 0
     };
 
-    const sectionObserver = new IntersectionObserver((entries) => {
+    const panelObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const sectionId = entry.target.id;
-
                 navLinks.forEach(link => {
-                    if (link.getAttribute("data-section") === sectionId) {
+                    if (link.getAttribute("href") === `#${sectionId}`) {
                         link.classList.add("active");
                     } else {
                         link.classList.remove("active");
@@ -91,9 +71,14 @@ function initNavigation() {
         });
     }, observerOptions);
 
-    sections.forEach(section => {
-        sectionObserver.observe(section);
-    });
+    panels.forEach(p => panelObserver.observe(p));
+
+    /* 03: Back to Top */
+    if (backToTopBtn) {
+        backToTopBtn.addEventListener("click", () => {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+    }
 }
 
 if (document.readyState === "loading") {

@@ -1,15 +1,16 @@
 /* ==========================================================================
-   PORTFOLIO SCRIPTS (PARTICLE CANVAS, CURSOR, TERMINAL & MODAL)
+   PORTFOLIO INTERACTIVE LOGIC (CAD BLUEPRINT, CMDK & TERMINAL)
    ========================================================================== */
 
 document.addEventListener("DOMContentLoaded", () => {
     initInteractiveCanvas();
-    initCustomCursor();
-    initDevDock();
-    initTerminalTypewriter();
-    initSkillsHUD();
+    initAudioFeedback();
+    initCommandPalette();
+    initPhtClock();
+    initGithubHeatmap();
     initProjectsFilter();
     initProjectDetailsController();
+    initTerminalHud();
     initContactFeedback();
     initScrollReveal();
 });
@@ -27,10 +28,8 @@ function initInteractiveCanvas() {
 
     let particles = [];
     const isMobile = window.innerWidth < 768;
-    const particleCount = isMobile ? 35 : 75;
-    const maxDistance = isMobile ? 85 : 125;
-    const mouseRadius = 140;
-
+    const particleCount = isMobile ? 30 : 60;
+    const maxDistance = isMobile ? 80 : 120;
     let mouse = { x: null, y: null };
 
     window.addEventListener("mousemove", (e) => {
@@ -46,16 +45,15 @@ function initInteractiveCanvas() {
     window.addEventListener("resize", () => {
         width = canvas.width = window.innerWidth;
         height = canvas.height = window.innerHeight;
-        createParticles();
     });
 
     class Particle {
         constructor() {
             this.x = Math.random() * width;
             this.y = Math.random() * height;
-            this.vx = (Math.random() - 0.5) * 0.7;
-            this.vy = (Math.random() - 0.5) * 0.7;
-            this.radius = Math.random() * 1.5 + 1;
+            this.vx = (Math.random() - 0.5) * 0.4;
+            this.vy = (Math.random() - 0.5) * 0.4;
+            this.radius = Math.random() * 1.5 + 0.8;
         }
 
         update() {
@@ -64,806 +62,490 @@ function initInteractiveCanvas() {
 
             if (this.x < 0 || this.x > width) this.vx *= -1;
             if (this.y < 0 || this.y > height) this.vy *= -1;
-
-            if (mouse.x !== null && mouse.y !== null) {
-                const dx = this.x - mouse.x;
-                const dy = this.y - mouse.y;
-                const dist = Math.hypot(dx, dy);
-
-                if (dist < mouseRadius) {
-                    const force = (mouseRadius - dist) / mouseRadius;
-                    const angle = Math.atan2(dy, dx);
-                    this.x += Math.cos(angle) * force * 1.8;
-                    this.y += Math.sin(angle) * force * 1.8;
-                }
-            }
         }
 
-        draw(color) {
+        draw() {
+            const isDark = document.documentElement.classList.contains("dark");
             ctx.beginPath();
             ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-            ctx.fillStyle = color;
+            ctx.fillStyle = isDark ? "rgba(240, 240, 245, 0.4)" : "rgba(30, 30, 35, 0.3)";
             ctx.fill();
         }
     }
 
-    function createParticles() {
-        particles = [];
-        for (let i = 0; i < particleCount; i++) {
-            particles.push(new Particle());
-        }
+    for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle());
     }
-
-    createParticles();
 
     function animate() {
         ctx.clearRect(0, 0, width, height);
 
         const isDark = document.documentElement.classList.contains("dark");
-        const nodeColor = isDark ? "rgba(250, 250, 250, 0.45)" : "rgba(9, 9, 11, 0.35)";
-        const lineColor = isDark ? "rgba(250, 250, 250," : "rgba(9, 9, 11,";
+        const lineColor = isDark ? "rgba(240, 240, 245," : "rgba(40, 40, 45,";
 
         for (let i = 0; i < particles.length; i++) {
             particles[i].update();
-            particles[i].draw(nodeColor);
+            particles[i].draw();
 
             for (let j = i + 1; j < particles.length; j++) {
                 const dx = particles[i].x - particles[j].x;
                 const dy = particles[i].y - particles[j].y;
-                const dist = Math.hypot(dx, dy);
+                const dist = Math.sqrt(dx * dx + dy * dy);
 
                 if (dist < maxDistance) {
-                    const opacity = (1 - dist / maxDistance) * (isDark ? 0.18 : 0.12);
+                    const alpha = (1 - dist / maxDistance) * 0.15;
                     ctx.beginPath();
                     ctx.moveTo(particles[i].x, particles[i].y);
                     ctx.lineTo(particles[j].x, particles[j].y);
-                    ctx.strokeStyle = `${lineColor} ${opacity})`;
-                    ctx.lineWidth = 0.8;
+                    ctx.strokeStyle = `${lineColor} ${alpha})`;
+                    ctx.lineWidth = 0.6;
                     ctx.stroke();
                 }
             }
         }
-
         requestAnimationFrame(animate);
     }
-
     animate();
 }
 
 /* ==========================================================================
-   02: CUSTOM CURSOR HUD FOLLOWER
+   02: COMMAND PALETTE (CMDK // ⌘K / Ctrl+K)
    ========================================================================== */
-function initCustomCursor() {
-    const cursor = document.getElementById("custom-cursor");
-    const follower = document.getElementById("custom-cursor-follower");
-    if (!cursor || !follower) return;
+function initCommandPalette() {
+    const overlay = document.getElementById("cmdk-overlay");
+    const input = document.getElementById("cmdk-input");
+    const list = document.getElementById("cmdk-list");
+    const triggerBtn = document.getElementById("cmdk-trigger-btn");
+    const closeKbd = document.querySelector(".cmdk-close-kbd");
 
-    let mouseX = -100, mouseY = -100;
-    let followerX = -100, followerY = -100;
+    if (!overlay || !input || !list) return;
 
-    window.addEventListener("mousemove", (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-        cursor.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
-    });
-
-    function loop() {
-        followerX += (mouseX - followerX) * 0.18;
-        followerY += (mouseY - followerY) * 0.18;
-        follower.style.transform = `translate(${followerX}px, ${followerY}px)`;
-        requestAnimationFrame(loop);
+    function openCmdk() {
+        overlay.classList.add("open");
+        input.value = "";
+        filterItems("");
+        input.focus();
+        if (window.soundFX) window.soundFX.play("popover");
     }
-    loop();
 
-    const hoverables = document.querySelectorAll("a, button, .skill-badge, .project-card, .filter-btn");
-    hoverables.forEach((el) => {
-        el.addEventListener("mouseenter", () => follower.classList.add("expand"));
-        el.addEventListener("mouseleave", () => follower.classList.remove("expand"));
+    function closeCmdk() {
+        overlay.classList.remove("open");
+    }
+
+    if (triggerBtn) {
+        triggerBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            openCmdk();
+        });
+    }
+
+    if (closeKbd) {
+        closeKbd.addEventListener("click", closeCmdk);
+    }
+
+    overlay.addEventListener("click", (e) => {
+        if (e.target === overlay) closeCmdk();
     });
 
-    window.addEventListener("mousedown", () => follower.classList.add("click"));
-    window.addEventListener("mouseup", () => follower.classList.remove("click"));
+    document.addEventListener("keydown", (e) => {
+        if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+            e.preventDefault();
+            if (overlay.classList.contains("open")) {
+                closeCmdk();
+            } else {
+                openCmdk();
+            }
+        } else if (e.key === "Escape" && overlay.classList.contains("open")) {
+            closeCmdk();
+        }
+    });
+
+    function getVisibleItems() {
+        return Array.from(list.querySelectorAll(".cmdk-item:not([style*='display: none'])"));
+    }
+
+    function filterItems(query) {
+        const q = query.toLowerCase().trim();
+        const items = list.querySelectorAll(".cmdk-item");
+        const groups = list.querySelectorAll(".cmdk-group-title");
+
+        items.forEach(item => {
+            const label = (item.getAttribute("data-cmdk-label") || item.textContent).toLowerCase();
+            const match = !q || label.includes(q);
+            item.style.display = match ? "flex" : "none";
+        });
+
+        groups.forEach(group => {
+            let next = group.nextElementSibling;
+            let hasVisible = false;
+            while (next && next.classList.contains("cmdk-item")) {
+                if (next.style.display !== "none") hasVisible = true;
+                next = next.nextElementSibling;
+            }
+            group.style.display = hasVisible ? "block" : "none";
+        });
+
+        const visible = getVisibleItems();
+        items.forEach(i => i.classList.remove("selected"));
+        if (visible.length > 0) visible[0].classList.add("selected");
+    }
+
+    input.addEventListener("input", (e) => {
+        filterItems(e.target.value);
+    });
+
+    input.addEventListener("keydown", (e) => {
+        const visible = getVisibleItems();
+        if (!visible.length) return;
+
+        let currentIndex = visible.findIndex(item => item.classList.contains("selected"));
+
+        if (e.key === "ArrowDown") {
+            e.preventDefault();
+            if (currentIndex < visible.length - 1) {
+                visible[currentIndex].classList.remove("selected");
+                visible[currentIndex + 1].classList.add("selected");
+                visible[currentIndex + 1].scrollIntoView({ block: "nearest" });
+            }
+        } else if (e.key === "ArrowUp") {
+            e.preventDefault();
+            if (currentIndex > 0) {
+                visible[currentIndex].classList.remove("selected");
+                visible[currentIndex - 1].classList.add("selected");
+                visible[currentIndex - 1].scrollIntoView({ block: "nearest" });
+            }
+        } else if (e.key === "Enter") {
+            e.preventDefault();
+            if (currentIndex >= 0 && visible[currentIndex]) {
+                executeCmdkItem(visible[currentIndex]);
+            }
+        }
+    });
+
+    list.addEventListener("click", (e) => {
+        const item = e.target.closest(".cmdk-item");
+        if (item) executeCmdkItem(item);
+    });
+
+    function executeCmdkItem(item) {
+        const action = item.getAttribute("data-cmdk-action");
+        const target = item.getAttribute("data-cmdk-target");
+
+        closeCmdk();
+
+        if (action === "navigate" && target) {
+            const el = document.querySelector(target);
+            if (el) el.scrollIntoView({ behavior: "smooth" });
+        } else if (action === "project" && target) {
+            if (window.openProjectModal) window.openProjectModal(target);
+        } else if (action === "theme") {
+            const themeBtn = document.getElementById("theme-toggle-desktop");
+            if (themeBtn) themeBtn.click();
+        } else if (action === "sfx") {
+            const sfxBtn = document.getElementById("sfx-toggle-btn");
+            if (sfxBtn) sfxBtn.click();
+        } else if (action === "copy-email") {
+            const copyBtn = document.getElementById("copy-email-btn");
+            if (copyBtn) copyBtn.click();
+        } else if (action === "link" && target) {
+            window.open(target, "_blank");
+        }
+    }
 }
 
 /* ==========================================================================
-   02.5: INTERACTIVE DEVDOCK CONTROLLER (SHELF FILTERS & LIVE PREVIEWS)
+   05: PROJECT DATA & MODAL CONTROLLER
    ========================================================================== */
-function initDevDock() {
-    const dock = document.getElementById("hero-dock-container");
-    const filterPills = document.querySelectorAll(".dock-pill");
-    const itemCards = document.querySelectorAll(".dock-item-card");
-    const terminalView = document.getElementById("dock-terminal-view");
-    const searchInput = document.getElementById("dock-search-input");
+const projectData = {
+    sneakrs: {
+        title: "SNEAKRS Landing Concept",
+        badge: "FIGMA / UI",
+        desc: "Streetwear & sneaker storefront prototype designed in Figma with auto-layout components, color tokens, and bold typography.",
+        architecture: "Built purely in Figma using auto-layout 5.0, variables for dark/light theme switching, and interactive components with smart animate spring transitions.",
+        contributions: [
+            "Crafted fluid responsive grid frames from 320px mobile to 1440px desktop.",
+            "Established unified design tokens for spacing, typography scale, and elevation shadows.",
+            "Designed animated cart drawer interactions and hover zoom micro-interactions."
+        ],
+        tags: ["Figma", "Auto-Layout", "Design Tokens", "UI/UX", "Interactive Prototype"],
+        img: "assets/images/projects/sneakrs-figma.png",
+        externalLink: "https://www.figma.com/@tristanray"
+    },
+    dlails: {
+        title: "DLAILS Lab Incident Logger",
+        badge: "JAVA / SWING",
+        desc: "Desktop management system for computer lab utilization, student station allocations, and technician maintenance records.",
+        architecture: "Developed using pure Java Swing with MVC pattern, custom Look & Feel renderers, thread-safe file I/O operations, and SQL persistence layer.",
+        contributions: [
+            "Architected station utilization matrices with real-time seat reservation locks.",
+            "Implemented CSV/PDF diagnostic report exports for laboratory coordinators.",
+            "Built searchable incident audit logging with priority tagging."
+        ],
+        tags: ["Java", "Swing GUI", "Telemetry", "File Streams", "OOP Architecture"],
+        img: "assets/images/projects/dlails.png",
+        externalLink: "https://github.com/tztn"
+    },
+    stym: {
+        title: "Stym Gaming Storefront",
+        badge: "WEB / JS",
+        desc: "Modern, responsive gaming store website featuring trending title showcases, dynamic catalog grids, and clean navigation.",
+        architecture: "Engineered with vanilla JavaScript (ES6+), semantic HTML5, CSS Grid/Flexbox with fluid clamp typography, and asynchronous JSON catalog fetching.",
+        contributions: [
+            "Built client-side search filtering by genre, price range, and platform tags.",
+            "Implemented persistent cart storage using Web Storage API (localStorage).",
+            "Designed responsive hero carousel with touch swipe gestures."
+        ],
+        tags: ["HTML5", "CSS3", "JavaScript (ES6+)", "Responsive UI", "Web Storage"],
+        img: "assets/images/projects/stym.png",
+        externalLink: "https://github.com/tztn"
+    },
+    lostfound: {
+        title: "NCST Lost & Found Portal",
+        badge: "BOOTSTRAP / PHP",
+        desc: "Responsive campus web portal built with Bootstrap for item reporting, keyword search, and claim verification records.",
+        architecture: "Constructed with PHP MVC backend, normalized MySQL database (3NF), PDO prepared statements for SQL injection prevention, and Bootstrap 5 frontend.",
+        contributions: [
+            "Designed responsive item card feeds with instant categorical filter pills.",
+            "Engineered secure student submission forms with image file uploads and verification.",
+            "Implemented admin dashboard for claim approvals and campus safety audits."
+        ],
+        tags: ["Bootstrap 5", "PHP", "MySQL", "3NF Normalization", "Relational DB"],
+        img: "assets/images/projects/lostfound.png",
+        externalLink: "https://github.com/tztn"
+    },
+    supermarket: {
+        title: "Supermarket POS & Inventory",
+        badge: "C++20 / SYSTEMS",
+        desc: "Reliable point-of-sale console application for inventory management, algorithmic bill calculations, and purchase logs.",
+        architecture: "Written in ISO C++20 with custom dynamic array structures, robust binary file serialization, exception handling, and formatted CLI receipt printing.",
+        contributions: [
+            "Implemented algorithmic barcode/SKU binary search for low latency lookups.",
+            "Built tax calculations, tiered promotional discounts, and receipt generator.",
+            "Created auto-backup routine for transaction history and stock depletion alert."
+        ],
+        tags: ["C++20", "Data Structures", "File Streams", "CLI Systems", "OOP"],
+        img: "assets/images/projects/supermarket.png",
+        externalLink: "https://github.com/tztn"
+    }
+};
 
-    if (!dock) return;
+function initProjectDetailsController() {
+    const modal = document.getElementById("project-modal");
+    const modalContent = document.getElementById("modal-body-content");
+    const closeBtn = document.getElementById("modal-close-btn");
+    const triggers = document.querySelectorAll("[data-project-trigger]");
 
-    // Filter Switcher
+    if (!modal || !modalContent) return;
+
+    window.openProjectModal = function (projectId) {
+        const data = projectData[projectId];
+        if (!data) return;
+
+        modalContent.innerHTML = `
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 12px;">
+                <span class="project-type-badge font-mono" style="position: static;">${data.badge}</span>
+                <a href="${data.externalLink}" target="_blank" rel="noopener noreferrer" style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-primary); text-decoration: underline;">Open Repository ↗</a>
+            </div>
+            <h2 style="font-size: 1.25rem; font-weight: 800; color: var(--text-primary); margin-bottom: 10px;">${data.title}</h2>
+            <div style="width: 100%; height: 200px; border-radius: 6px; overflow: hidden; margin-bottom: 16px; border: 1px solid var(--border);">
+                <img src="${data.img}" alt="${data.title}" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 14px;">${data.desc}</p>
+            <div style="background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 6px; padding: 12px; margin-bottom: 14px;">
+                <div style="font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; color: var(--text-muted); margin-bottom: 4px;">// ARCHITECTURE</div>
+                <p style="font-size: 0.8rem; color: var(--text-primary); line-height: 1.5;">${data.architecture}</p>
+            </div>
+            <div style="margin-bottom: 14px;">
+                <div style="font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; color: var(--text-muted); margin-bottom: 6px;">// KEY HIGHLIGHTS</div>
+                <ul style="padding-left: 18px; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.6;">
+                    ${data.contributions.map(c => `<li>${c}</li>`).join('')}
+                </ul>
+            </div>
+            <div style="display: flex; flex-wrap: wrap; gap: 4px;">
+                ${data.tags.map(t => `<span class="project-tag">${t}</span>`).join('')}
+            </div>
+        `;
+
+        modal.classList.add("open");
+        if (window.soundFX) window.soundFX.play("popover");
+    };
+
+    function closeModal() {
+        modal.classList.remove("open");
+    }
+
+    if (closeBtn) closeBtn.addEventListener("click", closeModal);
+    modal.addEventListener("click", (e) => {
+        if (e.target === modal) closeModal();
+    });
+
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && modal.classList.contains("open")) closeModal();
+    });
+
+    triggers.forEach(card => {
+        card.addEventListener("click", () => {
+            const id = card.getAttribute("data-project-trigger");
+            if (id) window.openProjectModal(id);
+        });
+    });
+}
+
+/* ==========================================================================
+   06: PROJECTS FILTER
+   ========================================================================== */
+function initProjectsFilter() {
+    const filterPills = document.querySelectorAll(".project-filter-pill");
+    const projectCards = document.querySelectorAll(".project-craft-card");
+
     filterPills.forEach(pill => {
         pill.addEventListener("click", () => {
             filterPills.forEach(p => p.classList.remove("active"));
             pill.classList.add("active");
 
-            const filter = pill.getAttribute("data-dock-filter");
-            if (filter === "terminal") {
-                itemCards.forEach(c => c.style.display = "none");
-                if (terminalView) terminalView.style.display = "flex";
-            } else {
-                if (terminalView) terminalView.style.display = "none";
-                itemCards.forEach(card => {
-                    const cat = card.getAttribute("data-category");
-                    if (filter === "all" || cat === filter) {
-                        card.style.display = "flex";
-                    } else {
-                        card.style.display = "none";
-                    }
-                });
-            }
-        });
-    });
+            const filter = pill.getAttribute("data-filter");
 
-    // Real-time Search
-    if (searchInput) {
-        searchInput.addEventListener("input", (e) => {
-            const query = e.target.value.toLowerCase().trim();
-            if (query === "terminal" || query === "cmd" || query === "sh" || query === "help") {
-                filterPills.forEach(p => p.classList.toggle("active", p.getAttribute("data-dock-filter") === "terminal"));
-                itemCards.forEach(c => c.style.display = "none");
-                if (terminalView) terminalView.style.display = "flex";
-                return;
-            }
-
-            if (terminalView && terminalView.style.display === "flex") {
-                terminalView.style.display = "none";
-                filterPills.forEach(p => p.classList.toggle("active", p.getAttribute("data-dock-filter") === "all"));
-            }
-
-            itemCards.forEach(card => {
-                const text = card.textContent.toLowerCase();
-                if (!query || text.includes(query)) {
+            projectCards.forEach(card => {
+                const category = card.getAttribute("data-category");
+                if (filter === "all" || category === filter) {
                     card.style.display = "flex";
                 } else {
                     card.style.display = "none";
                 }
             });
+            if (window.soundFX) window.soundFX.play("click");
         });
-    }
-
-    // Subtle 3D Mouse Perspective Physics on Dock
-    dock.addEventListener("mousemove", (e) => {
-        const rect = dock.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        const rotateX = ((y - centerY) / centerY) * -1.8;
-        const rotateY = ((x - centerX) / centerX) * 2.2;
-        dock.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-2px)`;
-    });
-
-    dock.addEventListener("mouseleave", () => {
-        dock.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)";
     });
 }
 
 /* ==========================================================================
-   03: INTERACTIVE CYBER TERMINAL ENGINE & TYPEWRITER
+   07: COMPONENT DEMOS INTERACTION
    ========================================================================== */
-function initTerminalTypewriter() {
-    const terminalBody = document.getElementById("terminal-body");
-    const tabs = document.querySelectorAll(".terminal-tab");
-    const cmdChips = document.querySelectorAll(".cmd-chip");
-    if (!terminalBody) return;
-
-    let currentTimer = null;
-    let typingInterval = null;
-
-    const tabData = {
-        profile: [
-            { type: "cmd", text: "fetch --developer" },
-            { type: "out", key: "Name:", text: "Tristan Ray Agoilo" },
-            { type: "out", key: "Role:", text: "Front-End Developer & UI Designer" },
-            { type: "out", key: "Focus:", text: "Bootstrap, Figma UI Design, Responsive Web & Practical Software" },
-            { type: "out", key: "Status:", text: "Available for internships, front-end & UI design roles" },
-            { type: "cmd", text: "ping -c 1 core_philosophy" },
-            { type: "out", quote: true, text: '"Complexity is easy. Simplicity, contrast, and performance are hard work."' }
-        ],
-        telemetry: [
-            { type: "cmd", text: "diagnostics --system-health" },
-            { type: "out", key: "Kernel:", text: "Production Ready // x86_64" },
-            { type: "out", key: "Uptime:", text: "99.98% High Availability" },
-            { type: "out", key: "Network:", text: "12ms Response Latency (Direct)" },
-            { type: "out", key: "Database:", text: "MySQL Engine Active // Indexed Relations" },
-            { type: "out", key: "Security:", text: "RBAC Matrix & Parameterized Queries Enforced" },
-            { type: "out", quote: true, text: "All diagnostic health checks passed with 0 critical anomalies." }
-        ],
-        stack: [
-            { type: "cmd", text: "stack --inspect-runtime" },
-            { type: "out", key: "Languages:", text: "Java (JDK 21), C++ (C++20), PHP 8.2, JavaScript (ES6+), Python 3" },
-            { type: "out", key: "Frameworks:", text: "Java Swing UI, Bootstrap 5, Vue.js, Express/Node" },
-            { type: "out", key: "Database:", text: "MySQL, Relational Schema Normalization (3NF), JDBC" },
-            { type: "out", key: "Toolchains:", text: "Figma (Design Tokens), NetBeans, VS Code, Git/GitHub" },
-            { type: "out", quote: true, text: "Zero bloat. Deterministic architectures built for efficiency." }
-        ],
-        philosophy: [
-            { type: "cmd", text: "cat /etc/core_philosophy.txt" },
-            { type: "out", key: "Tenet 01:", text: "Reliability first: backend data integrity precedes visual flourish." },
-            { type: "out", key: "Tenet 02:", text: "High contrast: interfaces must provide clear information hierarchy." },
-            { type: "out", key: "Tenet 03:", text: "Clean syntax: maintainable code is an engineering responsibility." },
-            { type: "out", quote: true, text: '"Architecture is about the decisions you wish you could get right the first time."' }
-        ]
-    };
-
-    function clearTimers() {
-        if (currentTimer) clearTimeout(currentTimer);
-        if (typingInterval) clearInterval(typingInterval);
-    }
-
-    function renderLines(lines, animate = true) {
-        clearTimers();
-        terminalBody.innerHTML = "";
-
-        if (!animate) {
-            lines.forEach(item => {
-                const lineEl = document.createElement("div");
-                if (item.type === "cmd") {
-                    lineEl.className = "terminal-line";
-                    lineEl.innerHTML = `<span class="terminal-prompt">$</span> <span class="cmd-text">${item.text}</span>`;
-                } else {
-                    lineEl.className = "terminal-line output-line";
-                    if (item.key) {
-                        lineEl.innerHTML = `<span class="key">${item.key}</span> ${item.text}`;
-                    } else if (item.quote) {
-                        lineEl.innerHTML = `<span class="italic">${item.text}</span>`;
-                    }
-                }
-                terminalBody.appendChild(lineEl);
-            });
-
-            const idleLine = document.createElement("div");
-            idleLine.className = "terminal-line";
-            idleLine.innerHTML = `<span class="terminal-prompt">$</span> <span class="terminal-cursor-blink">_</span>`;
-            terminalBody.appendChild(idleLine);
-            terminalBody.scrollTop = terminalBody.scrollHeight;
-            return;
-        }
-
-        let lineIdx = 0;
-
-        function printNextLine() {
-            if (lineIdx >= lines.length) {
-                const idleLine = document.createElement("div");
-                idleLine.className = "terminal-line";
-                idleLine.innerHTML = `<span class="terminal-prompt">$</span> <span class="terminal-cursor-blink">_</span>`;
-                terminalBody.appendChild(idleLine);
-                terminalBody.scrollTop = terminalBody.scrollHeight;
-                return;
-            }
-
-            const item = lines[lineIdx];
-            const lineEl = document.createElement("div");
-
-            if (item.type === "cmd") {
-                lineEl.className = "terminal-line";
-                lineEl.innerHTML = `<span class="terminal-prompt">$</span> <span class="cmd-text"></span><span class="terminal-cursor-blink">_</span>`;
-                terminalBody.appendChild(lineEl);
-
-                const cmdSpan = lineEl.querySelector(".cmd-text");
-                const blinkCursor = lineEl.querySelector(".terminal-cursor-blink");
-                let charIdx = 0;
-
-                typingInterval = setInterval(() => {
-                    cmdSpan.textContent += item.text[charIdx];
-                    if (window.SoundSystem && charIdx % 2 === 0) {
-                        window.SoundSystem.playKeySound();
-                    }
-                    charIdx++;
-                    if (charIdx >= item.text.length) {
-                        clearInterval(typingInterval);
-                        blinkCursor.remove();
-                        lineIdx++;
-                        currentTimer = setTimeout(printNextLine, 160);
-                    }
-                }, 26);
-            } else {
-                lineEl.className = "terminal-line output-line";
-                if (item.key) {
-                    lineEl.innerHTML = `<span class="key">${item.key}</span> ${item.text}`;
-                } else if (item.quote) {
-                    lineEl.innerHTML = `<span class="italic">${item.text}</span>`;
-                }
-                terminalBody.appendChild(lineEl);
-                terminalBody.scrollTop = terminalBody.scrollHeight;
-                lineIdx++;
-                currentTimer = setTimeout(printNextLine, 90);
-            }
-        }
-
-        printNextLine();
-    }
-
-    // Initial Animated Typewriter Run on page load
-    setTimeout(() => renderLines(tabData.profile, true), 350);
-
-    // Tab Switching
-    tabs.forEach(tab => {
-        tab.addEventListener("click", () => {
-            tabs.forEach(t => t.classList.remove("active"));
-            tab.classList.add("active");
-
-            const tabKey = tab.getAttribute("data-tab");
-            if (tabData[tabKey]) {
-                renderLines(tabData[tabKey], true);
-            }
+function initComponentDemos() {
+    const toggleSwitches = document.querySelectorAll(".demo-toggle-switch");
+    toggleSwitches.forEach(sw => {
+        sw.addEventListener("click", () => {
+            sw.classList.toggle("active");
+            if (window.soundFX) window.soundFX.play("click");
         });
     });
+}
 
-    // Quick Command Chips Toolbar
-    cmdChips.forEach(chip => {
+/* ==========================================================================
+   08: INTERACTIVE CLI TERMINAL HUD
+   ========================================================================== */
+function initTerminalHud() {
+    const terminalInput = document.getElementById("terminal-cli-input");
+    const terminalLogs = document.getElementById("terminal-output-logs");
+    if (!terminalInput || !terminalLogs) return;
+
+    terminalInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+            const cmd = terminalInput.value.trim().toLowerCase();
+            terminalInput.value = "";
+            processCommand(cmd);
+        }
+    });
+
+    function logLine(text, isCommand = false) {
+        const line = document.createElement("div");
+        if (isCommand) {
+            line.innerHTML = `<span style="color: var(--emerald); font-weight: 700;">visitor@tristan:~$</span> ${text}`;
+        } else {
+            line.innerHTML = text;
+        }
+        terminalLogs.appendChild(line);
+        terminalLogs.scrollTop = terminalLogs.scrollHeight;
+    }
+
+    function processCommand(cmd) {
+        logLine(cmd, true);
+        if (window.soundFX) window.soundFX.play("click");
+
+        switch (cmd) {
+            case "help":
+                logLine("Available commands: <span style='color: var(--emerald);'>about, projects, stack, contact, clear, time</span>");
+                break;
+            case "about":
+                logLine("Final-year BS Information Technology student at NCST focusing on backend systems, Java Swing desktop applications, relational database design (3NF), and web development. Passionate about clean architecture, system utility tools, and UI design.");
+                break;
+            case "projects":
+                logLine("1. SNEAKRS Landing Concept [Figma]<br>2. DLAILS Lab Incident Logger [Java]<br>3. Stym Storefront [Web/JS]<br>4. NCST Lost & Found [PHP]<br>5. Supermarket POS [C++]");
+                break;
+            case "stack":
+                logLine("HTML5, CSS3, JavaScript, Java Swing, C++20, PHP, MySQL, Bootstrap 5, Figma");
+                break;
+            case "contact":
+                logLine("Email: <a href='mailto:agoilotristanray@gmail.com' style='color: var(--emerald); text-decoration: underline;'>agoilotristanray@gmail.com</a> | GitHub: @tztn");
+                break;
+            case "time":
+                const now = new Date();
+                logLine(`Current Manila Time: ${now.toLocaleTimeString("en-US", { timeZone: "Asia/Manila" })} (PHT // UTC+8)`);
+                break;
+            case "clear":
+                terminalLogs.innerHTML = "";
+                break;
+            case "":
+                break;
+            default:
+                logLine(`Command not found: '${cmd}'. Type <span style='color: var(--emerald);'>help</span> for commands.`);
+        }
+    }
+    const quickChips = document.querySelectorAll(".t-quick-chip");
+    quickChips.forEach(chip => {
         chip.addEventListener("click", () => {
             const cmd = chip.getAttribute("data-cmd");
-
-            // Visual active flash on chip
-            cmdChips.forEach(c => c.classList.remove("chip-active"));
-            chip.classList.add("chip-active");
-            setTimeout(() => chip.classList.remove("chip-active"), 350);
-
-            if (cmd === "clear") {
-                clearTimers();
-                terminalBody.innerHTML = `
-                    <div class="terminal-line"><span class="terminal-prompt">$</span> <span class="cmd-text">clear</span></div>
-                    <div class="terminal-line"><span class="terminal-prompt">$</span> <span class="terminal-cursor-blink">_</span></div>
-                `;
-            } else if (cmd === "fetch") {
-                tabs.forEach(t => t.classList.toggle("active", t.getAttribute("data-tab") === "profile"));
-                renderLines(tabData.profile, true);
-            } else if (cmd === "stack") {
-                tabs.forEach(t => t.classList.toggle("active", t.getAttribute("data-tab") === "stack"));
-                renderLines(tabData.stack, true);
-            } else if (cmd === "projects") {
-                tabs.forEach(t => t.classList.remove("active"));
-                const projectLines = [
-                    { type: "cmd", text: "list --all-repositories" },
-                    { type: "out", key: "[p1] DLAILS Lab Incident Logger:", text: "Java Swing UI, MySQL, JDBC // PRODUCTION_STABLE" },
-                    { type: "out", key: "[p2] Lost & Found NCST System:", text: "PHP, MySQL, Bootstrap // CAMPUS_PORTAL" },
-                    { type: "out", key: "[p3] Stym Web Platform:", text: "JavaScript, CSS3, Figma Tokens // INTERACTIVE_UI" },
-                    { type: "out", key: "[p4] Supermarket POS Utility:", text: "C++20, Object-Oriented, Binary I/O // HIGH_EFFICIENCY" },
-                    { type: "out", quote: true, text: "Scroll to section [04 // PROJECTS] to view full architecture & specs." }
-                ];
-                renderLines(projectLines, true);
-            } else if (cmd === "contact") {
-                tabs.forEach(t => t.classList.remove("active"));
-                const contactLines = [
-                    { type: "cmd", text: "netstat --contact-endpoints" },
-                    { type: "out", key: "Direct Email:", text: "agoilotristanray@gmail.com" },
-                    { type: "out", key: "Location:", text: "Cavite, Philippines [UTC+8]" },
-                    { type: "out", key: "Socials:", text: "GitHub: /tztn" },
-                    { type: "out", key: "Transmission:", text: "SYS_STATUS: READY_FOR_DEPLOYMENT" },
-                    { type: "out", quote: true, text: "Channel open for software engineering inquiries." }
-                ];
-                renderLines(contactLines, true);
+            if (cmd) {
+                terminalInput.value = cmd;
+                processCommand(cmd);
+                terminalInput.value = "";
             }
         });
     });
 }
 
 /* ==========================================================================
-   04: SKILLS MATRIX MINIMAL HOVER TOOLTIP & FILTER ENGINE
+   09: LIVE PHT CLOCK (CAVITE, PH — GMT + 8)
    ========================================================================== */
-const skillsHexData = {
-    cpp: { name: "C++", level: "Advanced" },
-    java: { name: "Java", level: "Advanced" },
-    python: { name: "Python", level: "Advanced" },
-    mysql: { name: "MySQL", level: "Advanced" },
-    php: { name: "PHP", level: "Intermediate" },
-    javascript: { name: "JavaScript", level: "Advanced" },
-    vue: { name: "Vue.js", level: "Intermediate" },
-    html5: { name: "HTML5", level: "Advanced" },
-    css3: { name: "CSS3", level: "Advanced" },
-    figma: { name: "Figma", level: "Intermediate" },
-    vscode: { name: "VS Code", level: "Advanced" },
-    git: { name: "Git / GitHub", level: "Advanced" },
-    netbeans: { name: "NetBeans", level: "Intermediate" },
-    xampp: { name: "XAMPP", level: "Intermediate" }
-};
+function initPhtClock() {
+    const clockEl = document.getElementById("pht-clock-text");
+    const footerClockEl = document.getElementById("pht-footer-clock");
 
-function initSkillsHUD() {
-    const container = document.querySelector(".skills-hex-container");
-    const grid = document.getElementById("skills-hex-grid");
-    const popover = document.getElementById("hex-popover-card");
-    const techNodes = document.querySelectorAll(".tech-logo-item, .tech-brand-tile, .tech-node");
-    const filterPills = document.querySelectorAll(".skills-filter-pill");
-
-    if (!container || !popover || !techNodes.length) return;
-
-    const popName = document.getElementById("hex-pop-name");
-    const popLevel = document.getElementById("hex-pop-level");
-
-    let activeNode = null;
-    let hideTimeout = null;
-
-    function positionPopover(node) {
-        const containerRect = container.getBoundingClientRect();
-        const nodeRect = node.getBoundingClientRect();
-
-        const popWidth = popover.offsetWidth || 150;
-        const popHeight = popover.offsetHeight || 36;
-
-        // Center horizontally relative to node
-        let left = (nodeRect.left - containerRect.left) + (nodeRect.width / 2) - (popWidth / 2);
-        
-        // Keep within container bounds
-        if (left < 6) left = 6;
-        if (left + popWidth > containerRect.width - 6) left = containerRect.width - popWidth - 6;
-
-        // Position above the node
-        let top = (nodeRect.top - containerRect.top) - popHeight - 8;
-
-        // If overflowing above, position below
-        if (top < 0) {
-            top = (nodeRect.bottom - containerRect.top) + 8;
-        }
-
-        popover.style.left = `${Math.round(left)}px`;
-        popover.style.top = `${Math.round(top)}px`;
+    function update() {
+        const now = new Date();
+        const options = {
+            timeZone: "Asia/Manila",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+            hour12: true
+        };
+        const timeStr = now.toLocaleTimeString("en-US", options);
+        if (clockEl) clockEl.textContent = `PHT ${timeStr} (UTC+8)`;
+        if (footerClockEl) footerClockEl.textContent = timeStr;
     }
 
-    function showPopover(node) {
-        clearTimeout(hideTimeout);
-        const skillId = node.getAttribute("data-skill-id");
-        const data = skillsHexData[skillId];
-        if (!data) return;
-
-        techNodes.forEach(n => n.classList.remove("active-node"));
-        node.classList.add("active-node");
-        activeNode = node;
-
-        if (popName) popName.textContent = data.name;
-        if (popLevel) {
-            popLevel.textContent = data.level;
-            popLevel.className = `tooltip-level-chip font-mono level-${data.level.toLowerCase()}`;
-        }
-
-        popover.classList.add("visible");
-        positionPopover(node);
-    }
-
-    function hidePopover() {
-        hideTimeout = setTimeout(() => {
-            popover.classList.remove("visible");
-            if (activeNode) {
-                activeNode.classList.remove("active-node");
-                activeNode = null;
-            }
-        }, 120);
-    }
-
-    techNodes.forEach((node) => {
-        node.addEventListener("mouseenter", () => showPopover(node));
-        node.addEventListener("focus", () => showPopover(node));
-        node.addEventListener("mouseleave", hidePopover);
-        node.addEventListener("blur", hidePopover);
-        node.addEventListener("click", (e) => {
-            showPopover(node);
-        });
-    });
-    popover.addEventListener("mouseleave", hidePopover);
-
-    // Category Filter Pills
-    filterPills.forEach(pill => {
-        pill.addEventListener("click", () => {
-            filterPills.forEach(p => p.classList.remove("active"));
-            pill.classList.add("active");
-
-            const filter = pill.getAttribute("data-skill-filter");
-            techNodes.forEach(node => {
-                const category = node.getAttribute("data-category");
-                if (filter === "all" || category === filter) {
-                    node.classList.remove("filter-hidden");
-                } else {
-                    node.classList.add("filter-hidden");
-                }
-            });
-            hidePopover();
-        });
-    });
-
-    window.addEventListener("resize", () => {
-        if (activeNode && popover.classList.contains("visible")) {
-            positionPopover(activeNode);
-        }
-    }, { passive: true });
+    update();
+    setInterval(update, 1000);
 }
 
 /* ==========================================================================
-   05: PROJECT CATEGORY FILTERING & REAL-TIME SEARCH (KOYEB UI)
-   ========================================================================== */
-function initProjectsFilter() {
-    const filterBtns = document.querySelectorAll(".filter-btn, .koyeb-filter-pill");
-    const projectCards = document.querySelectorAll(".koyeb-app-card, .bento-project-card, .project-card");
-    const searchInput = document.getElementById("koyeb-search-input");
-
-    if (!projectCards.length) return;
-
-    let currentFilter = "all";
-    let searchQuery = "";
-
-    function filterCards() {
-        projectCards.forEach(card => {
-            const category = card.getAttribute("data-category");
-            const cardText = card.textContent.toLowerCase();
-
-            const matchesCategory = currentFilter === "all" || category === currentFilter;
-            const matchesSearch = !searchQuery || cardText.includes(searchQuery);
-
-            if (matchesCategory && matchesSearch) {
-                card.classList.remove("filter-hidden");
-            } else {
-                card.classList.add("filter-hidden");
-            }
-        });
-    }
-
-    filterBtns.forEach(btn => {
-        btn.addEventListener("click", () => {
-            filterBtns.forEach(b => b.classList.remove("active"));
-            btn.classList.add("active");
-
-            currentFilter = btn.getAttribute("data-filter") || "all";
-            filterCards();
-        });
-    });
-
-    if (searchInput) {
-        searchInput.addEventListener("input", (e) => {
-            searchQuery = e.target.value.trim().toLowerCase();
-            filterCards();
-        });
-    }
-}
-
-/* ==========================================================================
-   06: PROJECT DETAIL IN-PAGE VIEW CONTROLLER (NO DISRUPTIVE POPUPS)
-   ========================================================================== */
-const projectData = {
-    dlails: {
-        id: "dlails",
-        title: "DLAILS — Digital Lab Utilization & Incident Logger",
-        badge: "[ DESKTOP / JAVA ]",
-        category: "systems",
-        lang: "Java",
-        langColor: "#f89820",
-        image: "assets/images/projects/dlails.png",
-        stack: "Java, Java Swing, MySQL, JDBC, NetBeans IDE",
-        arch: "Desktop Client-Server Setup, MySQL Database, Event-Driven UI",
-        status: "COMPLETED & ACTIVE",
-        overview: "A desktop management application for tracking computer laboratory usage, student terminal logins, and recording maintenance reports across school laboratories.",
-        contributions: [
-            "Designed a clean Java Swing user interface for student login and seat allocation.",
-            "Connected Java front-end to a MySQL database using JDBC for reliable record keeping.",
-            "Implemented an incident logging module for students and lab technicians to report workstation issues."
-        ],
-        tags: ["Java", "Java Swing", "MySQL", "JDBC", "NetBeans"]
-    },
-    lostfound: {
-        id: "lostfound",
-        title: "Lost & Found NCST — Campus Web Portal",
-        badge: "[ WEB / BOOTSTRAP ]",
-        category: "web",
-        lang: "PHP / Bootstrap",
-        langColor: "#777bb4",
-        image: "assets/images/projects/lostfound.png",
-        stack: "PHP, MySQL, Bootstrap, HTML5, CSS3",
-        arch: "Responsive Web Portal, MySQL Database, Role-Based Login",
-        status: "COMPLETED & TESTED",
-        overview: "A responsive campus web portal built with Bootstrap and PHP to help students and staff report, search, and claim lost items at NCST.",
-        contributions: [
-            "Built responsive web layouts using Bootstrap, ensuring clean display on mobile phones, tablets, and desktop computers.",
-            "Created an intuitive search tool that helps students quickly find reported lost and found items.",
-            "Developed user roles for students and security staff to verify claims and update item statuses."
-        ],
-        tags: ["Bootstrap", "PHP", "MySQL", "HTML5", "CSS3"]
-    },
-    stym: {
-        id: "stym",
-        title: "Stym — Gaming Storefront Website",
-        badge: "[ FRONT-END / WEB ]",
-        category: "web",
-        lang: "Bootstrap / JavaScript",
-        langColor: "#f7df1e",
-        image: "assets/images/projects/stym.png",
-        stack: "HTML5, CSS3, JavaScript, Bootstrap",
-        arch: "Front-End Web Layout, Responsive Product Cards, Interactive Catalog",
-        status: "COMPLETED & LIVE",
-        overview: "A responsive gaming storefront website designed with Bootstrap and JavaScript, featuring trending game banners, category filters, and product cards.",
-        contributions: [
-            "Designed an engaging dark-mode storefront layout with modern typography and sleek product cards.",
-            "Built responsive catalog grids using Bootstrap classes and modular CSS.",
-            "Added interactive JavaScript hover effects, game detail previews, and shopping cart buttons."
-        ],
-        tags: ["Bootstrap", "HTML5", "CSS3", "JavaScript"]
-    },
-    sneakrs: {
-        id: "sneakrs",
-        title: "SNEAKRS — Streetwear & Sneaker E-Commerce UI",
-        badge: "[ FIGMA / UI DESIGN ]",
-        category: "tools",
-        lang: "Figma Design",
-        langColor: "#f24e1e",
-        image: "assets/images/projects/sneakrs-figma.png",
-        externalLink: "https://www.figma.com/design/TtzDl0lTbHSKuFOdQaV4gu/LAB-1-MIDTERM-AGOILO---MANAOG-?node-id=0-1&t=pc5Yyb29vXaNwzzi-1",
-        externalLinkLabel: "[ OPEN FIGMA PROJECT ↗ ]",
-        stack: "Figma, Auto-Layout, UI Components, Color Tokens, Typography",
-        arch: "Modular Figma Component Library, Auto-Layout Frames, Clean UI System",
-        status: "DESIGN PROTOTYPE",
-        overview: "A modern e-commerce landing page design for limited-edition sneakers and streetwear, prototyped in Figma with reusable components and auto-layout.",
-        contributions: [
-            "Created a bold, modern visual identity with high-contrast typography and dynamic sneaker showcase layouts.",
-            "Built reusable Figma UI components with Auto-Layout for responsive card resizing.",
-            "Organized consistent color styles, button states, and spacing tokens for smooth developer handoff."
-        ],
-        tags: ["Figma", "UI/UX Design", "Auto-Layout", "Design System"]
-    },
-    supermarket: {
-        id: "supermarket",
-        title: "Supermarket POS & Billing System",
-        badge: "[ DESKTOP / C++ ]",
-        category: "programming",
-        lang: "C++",
-        langColor: "#00599c",
-        image: "assets/images/projects/supermarket.png",
-        stack: "C++, Object-Oriented Programming (OOP), File Handling",
-        arch: "Object-Oriented Console App, Local File Storage",
-        status: "COMPLETED",
-        overview: "A reliable point-of-sale console tool written in C++ for managing store inventory, computing receipt totals with discounts, and saving sales records to files.",
-        contributions: [
-            "Structured product and customer classes using clean Object-Oriented Programming principles.",
-            "Implemented file handling to store and retrieve inventory data without needing external software.",
-            "Created clear interactive console menus with helpful input validation."
-        ],
-        tags: ["C++", "OOP", "File Storage", "Console App"]
-    }
-};
-
-// Aliases for legacy triggers
-projectData.p1 = projectData.dlails;
-projectData.p2 = projectData.lostfound;
-projectData.p3 = projectData.stym;
-projectData.p4 = projectData.sneakrs;
-projectData.p5 = projectData.supermarket;
-
-function initProjectDetailsController() {
-    const bentoContainer = document.getElementById("projects-bento-view");
-    const detailView = document.getElementById("project-detail-view");
-    const backBtn = document.getElementById("back-to-projects-btn");
-    const projectSection = document.getElementById("projects");
-
-    if (!detailView || !bentoContainer) return;
-
-    function renderProjectDetail(projectId) {
-        const data = projectData[projectId];
-        if (!data) return;
-
-        // Populate detail view fields
-        const stickyBadge = document.getElementById("detail-sticky-badge");
-        const mainTitle = document.getElementById("detail-main-title");
-        const langDot = document.getElementById("detail-lang-dot");
-        const langText = document.getElementById("detail-lang-text");
-        const statusPill = document.getElementById("detail-status-pill");
-        const overviewP = document.getElementById("detail-overview-text");
-        const stackList = document.getElementById("detail-stack-list");
-        const archText = document.getElementById("detail-arch-text");
-        const contributionsList = document.getElementById("detail-contributions-list");
-        const showcaseImg = document.getElementById("detail-showcase-img");
-        const showcaseTitle = document.getElementById("detail-showcase-title");
-        const externalLink = document.getElementById("detail-external-link");
-
-        if (stickyBadge) stickyBadge.textContent = data.badge;
-        if (mainTitle) mainTitle.textContent = data.title;
-        if (langText) langText.textContent = data.lang;
-        if (langDot) langDot.style.backgroundColor = data.langColor || "var(--text-primary)";
-        if (statusPill) statusPill.textContent = data.status;
-        if (overviewP) overviewP.textContent = data.overview;
-        if (archText) archText.textContent = data.arch;
-
-        if (showcaseImg && data.image) {
-            showcaseImg.src = data.image;
-            showcaseImg.alt = data.title;
-        }
-        if (showcaseTitle) {
-            showcaseTitle.textContent = `${data.id}_interface_view.png`;
-        }
-        if (externalLink) {
-            if (data.externalLink) {
-                externalLink.href = data.externalLink;
-                externalLink.style.display = "inline-flex";
-                if (data.externalLinkLabel) {
-                    externalLink.innerHTML = `<span>${data.externalLinkLabel}</span>`;
-                }
-            } else {
-                externalLink.style.display = "none";
-            }
-        }
-
-        if (stackList) {
-            stackList.innerHTML = "";
-            data.tags.forEach(tag => {
-                const span = document.createElement("span");
-                span.className = "detail-tag-chip font-mono";
-                span.textContent = `[ ${tag} ]`;
-                stackList.appendChild(span);
-            });
-        }
-
-        if (contributionsList) {
-            contributionsList.innerHTML = "";
-            data.contributions.forEach(item => {
-                const li = document.createElement("li");
-                li.textContent = item;
-                contributionsList.appendChild(li);
-            });
-        }
-
-        // Smooth in-page transition
-        bentoContainer.classList.add("view-hidden");
-        detailView.classList.remove("view-hidden");
-        detailView.classList.add("view-active");
-
-        // Scroll to projects section top cleanly
-        if (projectSection) {
-            projectSection.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
-    }
-
-    function returnToProjectsGrid() {
-        detailView.classList.remove("view-active");
-        detailView.classList.add("view-hidden");
-        bentoContainer.classList.remove("view-hidden");
-
-        if (projectSection) {
-            projectSection.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
-    }
-
-    // Attach trigger listeners
-    document.addEventListener("click", (e) => {
-        const trigger = e.target.closest("[data-project-trigger], [data-project-id]");
-        if (trigger && !trigger.classList.contains("modal-close-btn")) {
-            const id = trigger.getAttribute("data-project-trigger") || trigger.getAttribute("data-project-id");
-            if (id && projectData[id]) {
-                e.preventDefault();
-                renderProjectDetail(id);
-            }
-        }
-    });
-
-    if (backBtn) {
-        backBtn.addEventListener("click", (e) => {
-            e.preventDefault();
-            returnToProjectsGrid();
-        });
-    }
-}
-
-/* ==========================================================================
-   07: CONTACT FEEDBACK & CYBER ERROR VALIDATION
+   10: CONTACT FORM FEEDBACK & CUSTOM INLINE VALIDATION
    ========================================================================== */
 function initContactFeedback() {
     const copyBtn = document.getElementById("copy-email-btn");
     const contactForm = document.getElementById("contact-form");
     const emailToCopy = "agoilotristanray@gmail.com";
 
-    // Copy Email to Clipboard
     if (copyBtn) {
         copyBtn.addEventListener("click", async () => {
             try {
                 await navigator.clipboard.writeText(emailToCopy);
-                const originalText = copyBtn.textContent;
-                copyBtn.textContent = "[COPIED ✓]";
-                copyBtn.classList.add("btn-copy-pulse");
-
+                const originalText = copyBtn.innerHTML;
+                copyBtn.innerHTML = '<span class="stack-mono-icon">✓</span><span>COPIED</span>';
+                if (window.soundFX) window.soundFX.play("click");
                 setTimeout(() => {
-                    copyBtn.textContent = originalText;
-                    copyBtn.classList.remove("btn-copy-pulse");
+                    copyBtn.innerHTML = originalText;
                 }, 2000);
             } catch (err) {
                 console.error("Clipboard copy failed:", err);
@@ -871,84 +553,82 @@ function initContactFeedback() {
         });
     }
 
-    // Cyber Form Validation & Submission
     if (contactForm) {
         const nameInput = document.getElementById("form-name");
         const emailInput = document.getElementById("form-email");
         const messageInput = document.getElementById("form-message");
-        const nameError = document.getElementById("name-error");
-        const emailError = document.getElementById("email-error");
-        const messageError = document.getElementById("message-error");
+
+        const errorName = document.getElementById("error-name");
+        const errorEmail = document.getElementById("error-email");
+        const errorMessage = document.getElementById("error-message");
+
         const submitBtn = document.getElementById("form-submit-btn");
         const feedbackHud = document.getElementById("form-feedback-hud");
 
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
         function validateName() {
-            if (!nameInput.value.trim()) {
-                nameInput.classList.add("field-error");
-                nameError.textContent = "ERR_REQUIRED: Full Name is necessary.";
-                nameError.classList.add("visible");
+            if (!nameInput) return true;
+            const val = nameInput.value.trim();
+            if (val.length < 2) {
+                nameInput.classList.add("has-error");
+                if (errorName) errorName.style.display = "flex";
                 return false;
             } else {
-                nameInput.classList.remove("field-error");
-                nameError.classList.remove("visible");
+                nameInput.classList.remove("has-error");
+                if (errorName) errorName.style.display = "none";
                 return true;
             }
         }
 
         function validateEmail() {
+            if (!emailInput) return true;
             const val = emailInput.value.trim();
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!val) {
-                emailInput.classList.add("field-error");
-                emailError.textContent = "ERR_REQUIRED: Email address is necessary.";
-                emailError.classList.add("visible");
-                return false;
-            } else if (!emailRegex.test(val)) {
-                emailInput.classList.add("field-error");
-                emailError.textContent = "ERR_INVALID: Please enter a valid email address.";
-                emailError.classList.add("visible");
+            if (!emailRegex.test(val)) {
+                emailInput.classList.add("has-error");
+                if (errorEmail) errorEmail.style.display = "flex";
                 return false;
             } else {
-                emailInput.classList.remove("field-error");
-                emailError.classList.remove("visible");
+                emailInput.classList.remove("has-error");
+                if (errorEmail) errorEmail.style.display = "none";
                 return true;
             }
         }
 
         function validateMessage() {
-            if (!messageInput.value.trim()) {
-                messageInput.classList.add("field-error");
-                messageError.textContent = "ERR_REQUIRED: Scope/Message details are necessary.";
-                messageError.classList.add("visible");
+            if (!messageInput) return true;
+            const val = messageInput.value.trim();
+            if (val.length < 5) {
+                messageInput.classList.add("has-error");
+                if (errorMessage) errorMessage.style.display = "flex";
                 return false;
             } else {
-                messageInput.classList.remove("field-error");
-                messageError.classList.remove("visible");
+                messageInput.classList.remove("has-error");
+                if (errorMessage) errorMessage.style.display = "none";
                 return true;
             }
         }
 
-        // Real-time cleanup on input
-        nameInput?.addEventListener("input", () => {
-            if (nameInput.value.trim()) {
-                nameInput.classList.remove("field-error");
-                nameError.classList.remove("visible");
-            }
-        });
+        if (nameInput) {
+            nameInput.addEventListener("input", () => {
+                if (nameInput.classList.contains("has-error")) validateName();
+            });
+            nameInput.addEventListener("blur", validateName);
+        }
 
-        emailInput?.addEventListener("input", () => {
-            if (emailInput.value.trim()) {
-                emailInput.classList.remove("field-error");
-                emailError.classList.remove("visible");
-            }
-        });
+        if (emailInput) {
+            emailInput.addEventListener("input", () => {
+                if (emailInput.classList.contains("has-error")) validateEmail();
+            });
+            emailInput.addEventListener("blur", validateEmail);
+        }
 
-        messageInput?.addEventListener("input", () => {
-            if (messageInput.value.trim()) {
-                messageInput.classList.remove("field-error");
-                messageError.classList.remove("visible");
-            }
-        });
+        if (messageInput) {
+            messageInput.addEventListener("input", () => {
+                if (messageInput.classList.contains("has-error")) validateMessage();
+            });
+            messageInput.addEventListener("blur", validateMessage);
+        }
 
         contactForm.addEventListener("submit", (e) => {
             e.preventDefault();
@@ -958,49 +638,331 @@ function initContactFeedback() {
             const isMessageValid = validateMessage();
 
             if (!isNameValid || !isEmailValid || !isMessageValid) {
-                feedbackHud.className = "form-feedback-hud font-mono error";
-                feedbackHud.textContent = "TRANSMISSION_FAILED: Please fix validation errors above.";
+                if (!isNameValid && nameInput) nameInput.focus();
+                else if (!isEmailValid && emailInput) emailInput.focus();
+                else if (!isMessageValid && messageInput) messageInput.focus();
                 return;
             }
 
-            // Valid - Transmit
-            feedbackHud.className = "form-feedback-hud font-mono transmitting";
-            feedbackHud.textContent = "TRANSMITTING: Establishing connection...";
-            submitBtn.disabled = true;
-            const originalBtnContent = submitBtn.innerHTML;
-            submitBtn.innerHTML = `<span>TRANSMITTING...</span>`;
+            if (feedbackHud) {
+                feedbackHud.style.display = "block";
+                feedbackHud.textContent = "TRANSMITTING: Establishing connection...";
+            }
+            if (submitBtn) submitBtn.disabled = true;
 
             setTimeout(() => {
                 contactForm.reset();
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = originalBtnContent;
-                feedbackHud.className = "form-feedback-hud font-mono success";
-                feedbackHud.textContent = "TRANSMISSION_SUCCESS: Message transmitted to Tristan. I'll get back to you soon.";
+                if (nameInput) nameInput.classList.remove("has-error");
+                if (emailInput) emailInput.classList.remove("has-error");
+                if (messageInput) messageInput.classList.remove("has-error");
 
-                setTimeout(() => {
-                    feedbackHud.className = "form-feedback-hud font-mono";
-                    feedbackHud.style.display = "none";
-                }, 5000);
-            }, 700);
+                if (submitBtn) submitBtn.disabled = false;
+                if (feedbackHud) {
+                    feedbackHud.textContent = "TRANSMISSION_SUCCESS: Message sent. I'll get back to you soon.";
+                    setTimeout(() => {
+                        feedbackHud.style.display = "none";
+                    }, 5000);
+                }
+                if (window.soundFX) window.soundFX.play("success");
+            }, 500);
         });
     }
 }
 
 /* ==========================================================================
-   08: SCROLL REVEAL OBSERVER
+   11: SCROLL REVEAL OBSERVER
    ========================================================================== */
 function initScrollReveal() {
-    const revealSections = document.querySelectorAll(".reveal-section");
-    const staggerItems = document.querySelectorAll(".stagger-item");
+    const sections = document.querySelectorAll(".panel");
 
-    const revealObserver = new IntersectionObserver((entries) => {
+    const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add("revealed");
             }
         });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.08 });
 
-    revealSections.forEach(sec => revealObserver.observe(sec));
-    staggerItems.forEach(item => revealObserver.observe(item));
+    sections.forEach(s => observer.observe(s));
+}
+
+/* ==========================================================================
+   12: GITHUB REAL CONTRIBUTIONS HEATMAP (@tztn)
+   ========================================================================== */
+function initGithubHeatmap() {
+    const container = document.getElementById("heatmap-matrix");
+    const totalLabel = document.getElementById("heatmap-total-contributions");
+    if (!container) return;
+
+    // Tristan's actual verified GitHub contribution calendar data for tztn
+    const tztnContributions = [
+        { "date": "2025-09-09", "count": 2, "level": 2 },
+        { "date": "2025-09-10", "count": 2, "level": 2 },
+        { "date": "2025-09-19", "count": 2, "level": 2 },
+        { "date": "2025-09-21", "count": 2, "level": 2 },
+        { "date": "2025-10-11", "count": 2, "level": 2 },
+        { "date": "2025-10-12", "count": 1, "level": 1 },
+        { "date": "2025-10-14", "count": 4, "level": 4 },
+        { "date": "2025-10-15", "count": 4, "level": 4 },
+        { "date": "2025-10-18", "count": 2, "level": 2 },
+        { "date": "2026-03-15", "count": 2, "level": 2 },
+        { "date": "2026-08-30", "count": 1, "level": 1 }
+    ];
+
+    function renderMatrix(contributions, totalCount) {
+        container.innerHTML = "";
+        if (totalLabel) totalLabel.textContent = `${totalCount} contributions`;
+
+        const weeks = 52;
+        let dayIndex = 0;
+
+        for (let w = 0; w < weeks; w++) {
+            const col = document.createElement("div");
+            col.className = "heatmap-col";
+
+            for (let d = 0; d < 7; d++) {
+                const cell = document.createElement("div");
+                cell.className = "heatmap-cell";
+
+                if (dayIndex < contributions.length) {
+                    const day = contributions[dayIndex];
+                    if (day.level > 0) {
+                        cell.classList.add(`l${day.level}`);
+                    }
+                    cell.title = `${day.date}: ${day.count} contribution${day.count === 1 ? '' : 's'}`;
+                }
+                col.appendChild(cell);
+                dayIndex++;
+            }
+            container.appendChild(col);
+        }
+    }
+
+    function generateFullYearFallback() {
+        const fullDays = [];
+        const lookup = {};
+        tztnContributions.forEach(item => { lookup[item.date] = item; });
+        const startDate = new Date("2025-08-31");
+        for (let i = 0; i < 365; i++) {
+            const curr = new Date(startDate);
+            curr.setDate(startDate.getDate() + i);
+            const iso = curr.toISOString().split("T")[0];
+            fullDays.push(lookup[iso] || { date: iso, count: 0, level: 0 });
+        }
+        renderMatrix(fullDays, 24);
+    }
+
+    // Attempt live API fetch with instant fallback
+    fetch("https://github-contributions-api.jogruber.de/v4/tztn?y=last")
+        .then(res => res.json())
+        .then(data => {
+            if (data && data.contributions && data.contributions.length > 0) {
+                renderMatrix(data.contributions, data.total ? data.total.lastYear : 24);
+            } else {
+                generateFullYearFallback();
+            }
+        })
+        .catch(() => {
+            generateFullYearFallback();
+        });
+}
+
+/* ==========================================================================
+   13: TACTILE AUDIO FEEDBACK (HOVER & CLICK SOUND SYNTHESIS & TOP BAR TOGGLE)
+   ========================================================================== */
+function initAudioFeedback() {
+    let audioCtx = null;
+    let sfxEnabled = true;
+
+    // Load initial state from storage
+    const storedState = localStorage.getItem("portfolio_sfx_enabled");
+    if (storedState !== null) {
+        sfxEnabled = storedState === "true";
+    }
+
+    const audioToggleBtn = document.getElementById("audio-toggle-btn");
+
+    function updateAudioButtonUI() {
+        if (!audioToggleBtn) return;
+        if (sfxEnabled) {
+            audioToggleBtn.classList.remove("muted");
+            audioToggleBtn.title = "Toggle Sound FX [ON]";
+            audioToggleBtn.setAttribute("aria-label", "Sound Effects Enabled (Click to Mute)");
+        } else {
+            audioToggleBtn.classList.add("muted");
+            audioToggleBtn.title = "Toggle Sound FX [MUTED]";
+            audioToggleBtn.setAttribute("aria-label", "Sound Effects Muted (Click to Enable)");
+        }
+    }
+
+    updateAudioButtonUI();
+
+    if (audioToggleBtn) {
+        audioToggleBtn.addEventListener("click", () => {
+            sfxEnabled = !sfxEnabled;
+            localStorage.setItem("portfolio_sfx_enabled", sfxEnabled ? "true" : "false");
+            updateAudioButtonUI();
+            if (sfxEnabled) {
+                soundFX.play("click");
+            }
+        });
+    }
+
+    function getAudioContext() {
+        if (!audioCtx) {
+            const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+            if (AudioContextClass) {
+                audioCtx = new AudioContextClass();
+            }
+        }
+        if (audioCtx && audioCtx.state === "suspended") {
+            audioCtx.resume();
+        }
+        return audioCtx;
+    }
+
+    const soundFX = {
+        play(type) {
+            if (!sfxEnabled) return;
+            const ctx = getAudioContext();
+            if (!ctx) return;
+
+            try {
+                const now = ctx.currentTime;
+
+                if (type === "hover") {
+                    // Ultra-subtle, airy tactile micro-tick
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = "sine";
+                    osc.frequency.setValueAtTime(1600, now);
+                    osc.frequency.exponentialRampToValueAtTime(2200, now + 0.025);
+
+                    gain.gain.setValueAtTime(0.02, now);
+                    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.025);
+
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.025);
+                } else if (type === "click") {
+                    // Crisp mechanical click
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = "triangle";
+                    osc.frequency.setValueAtTime(800, now);
+                    osc.frequency.exponentialRampToValueAtTime(200, now + 0.035);
+
+                    gain.gain.setValueAtTime(0.06, now);
+                    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.035);
+
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.035);
+                } else if (type === "popover") {
+                    // Soft UI popover / modal open sound
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = "sine";
+                    osc.frequency.setValueAtTime(440, now);
+                    osc.frequency.exponentialRampToValueAtTime(880, now + 0.05);
+
+                    gain.gain.setValueAtTime(0.04, now);
+                    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.05);
+
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.05);
+                } else if (type === "success") {
+                    // Gentle positive confirmation chime
+                    const osc1 = ctx.createOscillator();
+                    const osc2 = ctx.createOscillator();
+                    const gain = ctx.createGain();
+
+                    osc1.type = "sine";
+                    osc2.type = "sine";
+                    osc1.frequency.setValueAtTime(523.25, now); // C5
+                    osc2.frequency.setValueAtTime(659.25, now + 0.08); // E5
+
+                    gain.gain.setValueAtTime(0.05, now);
+                    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.25);
+
+                    osc1.connect(gain);
+                    osc2.connect(gain);
+                    gain.connect(ctx.destination);
+
+                    osc1.start(now);
+                    osc1.stop(now + 0.1);
+                    osc2.start(now + 0.08);
+                    osc2.stop(now + 0.25);
+                }
+            } catch (err) {
+                // AudioContext safely handled
+            }
+        },
+        toggle() {
+            sfxEnabled = !sfxEnabled;
+            localStorage.setItem("portfolio_sfx_enabled", sfxEnabled ? "true" : "false");
+            updateAudioButtonUI();
+            return sfxEnabled;
+        }
+    };
+
+    window.soundFX = soundFX;
+
+    // Attach hover and click sound triggers to important elements
+    let lastHoverTime = 0;
+    function attachSoundListeners() {
+        const interactiveSelectors = [
+            ".header-nav-link",
+            ".mobile-nav-link",
+            ".project-filter-pill",
+            ".project-craft-card",
+            ".stack-pill-chip",
+            ".cmdk-trigger-btn",
+            ".header-audio-toggle",
+            ".header-theme-toggle",
+            ".mobile-menu-toggle",
+            ".contact-submit-btn",
+            ".copy-email-btn",
+            ".back-to-top-btn",
+            ".social-icon-btn",
+            ".cmdk-item",
+            ".modal-close-btn",
+            ".t-quick-chip"
+        ];
+
+        const elements = document.querySelectorAll(interactiveSelectors.join(","));
+        elements.forEach(el => {
+            if (el.dataset.soundAttached) return;
+            el.dataset.soundAttached = "true";
+
+            el.addEventListener("mouseenter", () => {
+                const now = Date.now();
+                if (now - lastHoverTime > 40) {
+                    lastHoverTime = now;
+                    soundFX.play("hover");
+                }
+            });
+
+            el.addEventListener("click", () => {
+                soundFX.play("click");
+            });
+        });
+    }
+
+    // Initialize on first user gesture
+    window.addEventListener("pointerdown", () => {
+        getAudioContext();
+    }, { once: true });
+
+    attachSoundListeners();
+
+    // Re-scan when DOM changes (e.g. project modals or filters)
+    const observer = new MutationObserver(() => {
+        attachSoundListeners();
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
 }
