@@ -139,7 +139,7 @@
 
     <div class="app-container">
         <!-- Centered Main Content Area Wrapper (CAD Grid Paper Architecture) -->
-        <div class="main-content-wrapper">
+        <div class="main-content-wrapper" id="main-content-wrapper">
             <main class="main-content">
                 <!-- ==========================================================
                      PANEL 01: OVERVIEW & PROFILE
@@ -156,85 +156,99 @@
                         <div class="hero-cad-layout">
                             <div class="hero-left-profile">
                                 <div class="hero-identity">
-                                    <h1 class="hero-name"
-                                        style="font-size: 1.85rem; font-weight: 800; letter-spacing: -0.03em; color: var(--text-primary); margin: 0;">
-                                        Tristan Ray Agoilo</h1>
+                                    <h1 class="hero-name">Tristan Ray Agoilo</h1>
                                 </div>
-                                <p class="hero-bio-motto"
-                                    style="font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6; margin-top: 8px;">
+                                <p class="hero-bio-motto">
                                     Building with care. Clean code, responsive interfaces, and practical software
                                     systems. Small details matter.
                                 </p>
                             </div>
                         </div>
 
-                        <!-- Technical Metadata Grid (Two-Column Key-Value Table) -->
+                        <!-- Technical Metadata Grid (Refined Engineering Key-Value Spec Matrix) -->
                         <div class="tech-metadata-table">
-                            <!-- Row 1 -->
+                            <!-- Cell 1: Title -->
                             <div class="meta-row-item">
-                                <svg class="meta-key-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path
-                                        d="M20 7h-7L10 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z" />
-                                </svg>
-                                <span class="meta-key">Title:</span>
+                                <div class="meta-key-group">
+                                    <svg class="meta-key-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+                                        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+                                    </svg>
+                                    <span class="meta-key font-mono">TITLE</span>
+                                </div>
                                 <span class="meta-val">Front-End Developer &amp; UI Designer</span>
                             </div>
 
+                            <!-- Cell 2: Local Time -->
                             <div class="meta-row-item">
-                                <svg class="meta-key-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="12" cy="12" r="10" />
-                                    <polyline points="12 6 12 12 16 14" />
-                                </svg>
-                                <span class="meta-key">Local Time:</span>
-                                <span class="meta-val" id="pht-clock-text">PHT --:--:-- (UTC+8)</span>
+                                <div class="meta-key-group">
+                                    <svg class="meta-key-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="10" />
+                                        <polyline points="12 6 12 12 16 14" />
+                                    </svg>
+                                    <span class="meta-key font-mono">LOCAL TIME</span>
+                                </div>
+                                <div class="meta-val meta-time-val">
+                                    <span class="time-live-dot"></span>
+                                    <span id="pht-clock-text">PHT --:--:-- (UTC+8)</span>
+                                </div>
                             </div>
 
-                            <!-- Row 2 -->
+                            <!-- Cell 3: Location -->
                             <div class="meta-row-item">
-                                <svg class="meta-key-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-                                    <circle cx="12" cy="10" r="3" />
-                                </svg>
-                                <span class="meta-key">Location:</span>
-                                <span class="meta-val">Dasmariñas City, Cavite</span>
+                                <div class="meta-key-group">
+                                    <svg class="meta-key-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                                        <circle cx="12" cy="10" r="3" />
+                                    </svg>
+                                    <span class="meta-key font-mono">LOCATION</span>
+                                </div>
+                                <span class="meta-val">Dasmariñas City, Cavite, PH</span>
                             </div>
 
+                            <!-- Cell 4: Email -->
                             <div class="meta-row-item">
-                                <svg class="meta-key-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <rect width="20" height="16" x="2" y="4" rx="2" />
-                                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-                                </svg>
-                                <span class="meta-key">Email:</span>
-                                <span class="meta-val"><a
-                                        href="mailto:agoilotristanray@gmail.com">agoilotristanray@gmail.com</a></span>
+                                <div class="meta-key-group">
+                                    <svg class="meta-key-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect width="20" height="16" x="2" y="4" rx="2" />
+                                        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                                    </svg>
+                                    <span class="meta-key font-mono">EMAIL</span>
+                                </div>
+                                <span class="meta-val"><a href="mailto:agoilotristanray@gmail.com" class="meta-link font-mono">agoilotristanray@gmail.com</a></span>
                             </div>
 
-                            <!-- Row 3 -->
+                            <!-- Cell 5: Personal URL -->
                             <div class="meta-row-item">
-                                <svg class="meta-key-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="12" cy="12" r="10" />
-                                    <line x1="2" y1="12" x2="22" y2="12" />
-                                    <path
-                                        d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-                                </svg>
-                                <span class="meta-key">Personal URL:</span>
+                                <div class="meta-key-group">
+                                    <svg class="meta-key-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="10" />
+                                        <line x1="2" y1="12" x2="22" y2="12" />
+                                        <path
+                                            d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                                    </svg>
+                                    <span class="meta-key font-mono">PERSONAL URL</span>
+                                </div>
                                 <span class="meta-val"><a href="https://github.com/tztn" target="_blank"
-                                        rel="noopener noreferrer">tztn.github.io</a></span>
+                                        rel="noopener noreferrer" class="meta-link font-mono">tztn.github.io ↗</a></span>
                             </div>
 
+                            <!-- Cell 6: Focus -->
                             <div class="meta-row-item">
-                                <svg class="meta-key-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <polygon points="12 2 2 7 12 12 22 7 12 2" />
-                                    <polyline points="2 17 12 22 22 17" />
-                                    <polyline points="2 12 12 17 22 12" />
-                                </svg>
-                                <span class="meta-key">Focus:</span>
+                                <div class="meta-key-group">
+                                    <svg class="meta-key-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polygon points="12 2 2 7 12 12 22 7 12 2" />
+                                        <polyline points="2 17 12 22 22 17" />
+                                        <polyline points="2 12 12 17 22 12" />
+                                    </svg>
+                                    <span class="meta-key font-mono">FOCUS</span>
+                                </div>
                                 <span class="meta-val">Web &amp; Systems Architecture</span>
                             </div>
                         </div>
@@ -331,46 +345,17 @@
                     </div>
 
                     <div class="panel-content">
-                        <!-- Category Filter Pills -->
-                        <div class="projects-filter-bar">
-                            <button type="button" class="project-filter-pill active" data-filter="all">All (05)</button>
-                            <button type="button" class="project-filter-pill" data-filter="web">Web &amp; Bootstrap
-                                (02)</button>
-                            <button type="button" class="project-filter-pill" data-filter="tools">Figma &amp; UI
-                                (01)</button>
-                            <button type="button" class="project-filter-pill" data-filter="systems">Systems &amp; OOP
-                                (02)</button>
-                        </div>
-
-                        <!-- Project Cards Grid -->
+                        <!-- Project Cards Grid (Minimal Reference Grid Layout) -->
                         <div class="projects-grid" id="projects-grid">
                             <!-- Project 1: SNEAKRS Figma Design -->
                             <article class="project-craft-card" data-category="tools" data-project-trigger="sneakrs">
                                 <div class="project-media-wrap">
                                     <img src="assets/images/projects/sneakrs-figma.png"
                                         alt="SNEAKRS UI Concept Prototype" loading="lazy">
-                                    <span class="project-type-badge">FIGMA / UI</span>
                                 </div>
                                 <div class="project-content-body">
-                                    <h3 class="project-card-title">
-                                        <span>SNEAKRS Landing Concept</span>
-                                        <svg class="project-card-arrow" viewBox="0 0 24 24" fill="none"
-                                            stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
-                                            stroke-linejoin="round">
-                                            <line x1="7" y1="17" x2="17" y2="7" />
-                                            <polyline points="7 7 17 7 17 17" />
-                                        </svg>
-                                    </h3>
-                                    <p class="project-card-desc">
-                                        Streetwear &amp; sneaker storefront prototype designed in Figma with auto-layout
-                                        components, color tokens, and bold typography.
-                                    </p>
-                                    <div class="project-card-tags">
-                                        <span class="project-tag">Figma</span>
-                                        <span class="project-tag">Auto-Layout</span>
-                                        <span class="project-tag">Tokens</span>
-                                        <span class="project-tag">UI/UX</span>
-                                    </div>
+                                    <h3 class="project-card-title">SNEAKRS Landing Concept &amp; UI Design</h3>
+                                    <p class="project-card-meta">21.06.2025</p>
                                 </div>
                             </article>
 
@@ -378,28 +363,10 @@
                             <article class="project-craft-card" data-category="systems" data-project-trigger="dlails">
                                 <div class="project-media-wrap">
                                     <img src="assets/images/projects/dlails.png" alt="DLAILS Lab Logger" loading="lazy">
-                                    <span class="project-type-badge">JAVA / SWING</span>
                                 </div>
                                 <div class="project-content-body">
-                                    <h3 class="project-card-title">
-                                        <span>DLAILS Lab Incident Logger</span>
-                                        <svg class="project-card-arrow" viewBox="0 0 24 24" fill="none"
-                                            stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
-                                            stroke-linejoin="round">
-                                            <line x1="7" y1="17" x2="17" y2="7" />
-                                            <polyline points="7 7 17 7 17 17" />
-                                        </svg>
-                                    </h3>
-                                    <p class="project-card-desc">
-                                        Desktop management system for computer lab utilization, student station
-                                        allocations, and technician maintenance records.
-                                    </p>
-                                    <div class="project-card-tags">
-                                        <span class="project-tag">Java</span>
-                                        <span class="project-tag">Swing GUI</span>
-                                        <span class="project-tag">Telemetry</span>
-                                        <span class="project-tag">OOP</span>
-                                    </div>
+                                    <h3 class="project-card-title">DLAILS Lab Incident Logger &amp; Station Manager</h3>
+                                    <p class="project-card-meta">27.03.2025</p>
                                 </div>
                             </article>
 
@@ -407,28 +374,10 @@
                             <article class="project-craft-card" data-category="web" data-project-trigger="stym">
                                 <div class="project-media-wrap">
                                     <img src="assets/images/projects/stym.png" alt="Stym Gaming Store" loading="lazy">
-                                    <span class="project-type-badge">WEB / JS</span>
                                 </div>
                                 <div class="project-content-body">
-                                    <h3 class="project-card-title">
-                                        <span>Stym Gaming Storefront</span>
-                                        <svg class="project-card-arrow" viewBox="0 0 24 24" fill="none"
-                                            stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
-                                            stroke-linejoin="round">
-                                            <line x1="7" y1="17" x2="17" y2="7" />
-                                            <polyline points="7 7 17 7 17 17" />
-                                        </svg>
-                                    </h3>
-                                    <p class="project-card-desc">
-                                        Modern, responsive gaming store website featuring trending title showcases,
-                                        dynamic catalog grids, and clean navigation.
-                                    </p>
-                                    <div class="project-card-tags">
-                                        <span class="project-tag">HTML5</span>
-                                        <span class="project-tag">CSS3</span>
-                                        <span class="project-tag">JavaScript</span>
-                                        <span class="project-tag">Responsive</span>
-                                    </div>
+                                    <h3 class="project-card-title">Stym Responsive Digital Game Storefront</h3>
+                                    <p class="project-card-meta">04.01.2025</p>
                                 </div>
                             </article>
 
@@ -437,28 +386,10 @@
                                 <div class="project-media-wrap">
                                     <img src="assets/images/projects/lostfound.png" alt="NCST Lost & Found"
                                         loading="lazy">
-                                    <span class="project-type-badge">BOOTSTRAP / PHP</span>
                                 </div>
                                 <div class="project-content-body">
-                                    <h3 class="project-card-title">
-                                        <span>NCST Lost &amp; Found Portal</span>
-                                        <svg class="project-card-arrow" viewBox="0 0 24 24" fill="none"
-                                            stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
-                                            stroke-linejoin="round">
-                                            <line x1="7" y1="17" x2="17" y2="7" />
-                                            <polyline points="7 7 17 7 17 17" />
-                                        </svg>
-                                    </h3>
-                                    <p class="project-card-desc">
-                                        Responsive campus web portal built with Bootstrap for item reporting, keyword
-                                        search, and claim verification records.
-                                    </p>
-                                    <div class="project-card-tags">
-                                        <span class="project-tag">Bootstrap 5</span>
-                                        <span class="project-tag">PHP</span>
-                                        <span class="project-tag">MySQL</span>
-                                        <span class="project-tag">Relational DB</span>
-                                    </div>
+                                    <h3 class="project-card-title">NCST Campus Lost &amp; Found Web Portal</h3>
+                                    <p class="project-card-meta">18.11.2024</p>
                                 </div>
                             </article>
 
@@ -468,30 +399,23 @@
                                 <div class="project-media-wrap">
                                     <img src="assets/images/projects/supermarket.png" alt="Supermarket POS"
                                         loading="lazy">
-                                    <span class="project-type-badge">C++20 / SYSTEMS</span>
                                 </div>
                                 <div class="project-content-body">
-                                    <h3 class="project-card-title">
-                                        <span>Supermarket POS &amp; Inventory</span>
-                                        <svg class="project-card-arrow" viewBox="0 0 24 24" fill="none"
-                                            stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
-                                            stroke-linejoin="round">
-                                            <line x1="7" y1="17" x2="17" y2="7" />
-                                            <polyline points="7 7 17 7 17 17" />
-                                        </svg>
-                                    </h3>
-                                    <p class="project-card-desc">
-                                        Reliable point-of-sale console application for inventory management, algorithmic
-                                        bill calculations, and purchase logs.
-                                    </p>
-                                    <div class="project-card-tags">
-                                        <span class="project-tag">C++20</span>
-                                        <span class="project-tag">Data Structures</span>
-                                        <span class="project-tag">File Streams</span>
-                                        <span class="project-tag">CLI</span>
-                                    </div>
+                                    <h3 class="project-card-title">Supermarket POS &amp; Inventory System</h3>
+                                    <p class="project-card-meta">15.09.2024</p>
                                 </div>
                             </article>
+                        </div>
+
+                        <!-- All Projects Bottom Footer Button (Reference Style) -->
+                        <div class="projects-grid-footer">
+                            <a href="https://github.com/tztn" target="_blank" rel="noopener noreferrer" class="projects-all-btn">
+                                <span>All projects</span>
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </a>
                         </div>
                     </div>
                 </section>
@@ -903,6 +827,15 @@
                 </footer>
             </main>
         </div>
+
+        <!-- ==========================================================
+             STANDALONE PROJECT DETAIL PAGE VIEW (CHANHDAI / SHADCN REFERENCE)
+             ========================================================== -->
+        <div class="project-standalone-wrapper" id="project-standalone-view" style="display: none;">
+            <div class="standalone-container" id="standalone-container">
+                <!-- Populated dynamically by main.js with image 1 & image 2 exact design -->
+            </div>
+        </div>
     </div>
 
     <!-- ==========================================================
@@ -1128,19 +1061,6 @@
                     <span><kbd class="cmdk-hint-kbd">esc</kbd> Close</span>
                 </div>
                 <span>Tristan Ray Portfolio</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- ==========================================================
-         INTERACTIVE PROJECT DETAIL MODAL DIALOG
-         ========================================================== -->
-    <div class="modal-backdrop" id="project-modal" aria-hidden="true" role="dialog" aria-modal="true">
-        <div class="modal-dialog">
-            <button type="button" class="modal-close-btn" id="modal-close-btn"
-                aria-label="Close Project Modal">&times;</button>
-            <div class="modal-body-content" id="modal-body-content">
-                <!-- Populated dynamically by main.js -->
             </div>
         </div>
     </div>

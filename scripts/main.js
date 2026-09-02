@@ -254,141 +254,380 @@ function initCommandPalette() {
 }
 
 /* ==========================================================================
-   05: PROJECT DATA & MODAL CONTROLLER
+   05: PROJECT DATA & STANDALONE PAGE CONTROLLER (CHANHDAI EXACT REFERENCE)
    ========================================================================== */
+const projectOrder = ["sneakrs", "dlails", "stym", "lostfound", "supermarket"];
+
 const projectData = {
     sneakrs: {
-        title: "SNEAKRS Landing Concept",
+        id: "sneakrs",
+        title: "SNEAKRS Landing Concept & UI Design",
         badge: "FIGMA / UI",
-        desc: "Streetwear & sneaker storefront prototype designed in Figma with auto-layout components, color tokens, and bold typography.",
-        architecture: "Built purely in Figma using auto-layout 5.0, variables for dark/light theme switching, and interactive components with smart animate spring transitions.",
+        lead: "A high-fidelity streetwear and sneaker storefront concept prototyped in Figma with dynamic design tokens, responsive auto-layout structures, and interactive spring animations.",
+        story: "Designed to push the boundary between high-end editorial aesthetics and functional e-commerce UX. It explores fluid typographic scaling, dark/light theme color variables, and rapid prototyping workflows using modern Figma auto-layout components.",
+        desc: "The concept focuses on lightning-fast product discoverability, curated streetwear drops, and tactile drawer micro-interactions that elevate brand trust and consumer engagement.",
+        architecture: "Constructed in Figma utilizing Auto-Layout 5.0, unified token variables (spacing, typography, border-radius, shadows), and interactive state components with smart animate spring curve physics.",
         contributions: [
-            "Crafted fluid responsive grid frames from 320px mobile to 1440px desktop.",
-            "Established unified design tokens for spacing, typography scale, and elevation shadows.",
-            "Designed animated cart drawer interactions and hover zoom micro-interactions."
+            "Crafted fluid responsive grid frames from 320px mobile viewport to 1440px ultra-wide desktop.",
+            "Established centralized color token variables with 1-click light/dark mode preview switching.",
+            "Built interactive cart drawer with quantity counters and spring-animated checkout progress.",
+            "Designed typography scale utilizing Geist font family with high-contrast display weights."
         ],
-        tags: ["Figma", "Auto-Layout", "Design Tokens", "UI/UX", "Interactive Prototype"],
+        date: "2025-06-21",
+        domain: "tztn.github.io/sneakrs",
+        domainSummary: "Streetwear storefront concept with Figma auto-layout 5.0 tokens.",
+        buildHash: "65327da",
+        categoryLabel: "Figma / UI Design",
+        deployedOn: "Figma Community",
+        tags: ["Figma", "Design Tokens", "Auto-Layout 5.0", "UI/UX", "Interactive Prototype"],
         img: "assets/images/projects/sneakrs-figma.png",
         externalLink: "https://www.figma.com/@tristanray"
     },
     dlails: {
-        title: "DLAILS Lab Incident Logger",
+        id: "dlails",
+        title: "DLAILS Lab Incident Logger & Station Manager",
         badge: "JAVA / SWING",
-        desc: "Desktop management system for computer lab utilization, student station allocations, and technician maintenance records.",
-        architecture: "Developed using pure Java Swing with MVC pattern, custom Look & Feel renderers, thread-safe file I/O operations, and SQL persistence layer.",
+        lead: "A practical desktop telemetry and station utilization management system designed for campus computer laboratories and hardware maintenance auditing.",
+        story: "Built to solve real-world computer laboratory management challenges at NCST, replacing manual paper logbooks with an automated, thread-safe desktop telemetry system.",
+        desc: "DLAILS provides laboratory custodians and instructors with real-time workstation allocation monitoring, automated student time tracking, and instant diagnostic maintenance reports.",
+        architecture: "Developed with pure Java Swing implementing the Model-View-Controller (MVC) architecture, custom FlatLaf Look & Feel skinning, JDBC connection pooling, and serialized disk logs.",
         contributions: [
-            "Architected station utilization matrices with real-time seat reservation locks.",
-            "Implemented CSV/PDF diagnostic report exports for laboratory coordinators.",
-            "Built searchable incident audit logging with priority tagging."
+            "Architected dynamic station utilization grid with real-time seat reservation locks.",
+            "Implemented automated CSV and formatted PDF diagnostic incident report exports.",
+            "Engineered searchable audit log system with priority level filtering and student ID search.",
+            "Optimized SQL queries for fast lookup across 10,000+ attendance records."
         ],
-        tags: ["Java", "Swing GUI", "Telemetry", "File Streams", "OOP Architecture"],
+        date: "2025-03-27",
+        domain: "tztn.github.io/dlails",
+        domainSummary: "Desktop computer lab management & technician incident logging system.",
+        buildHash: "f9241b8",
+        categoryLabel: "Java Desktop / Swing",
+        deployedOn: "Java Runtime (JVM 17)",
+        tags: ["Java 17", "Swing GUI", "MySQL", "JDBC", "File Streams", "OOP"],
         img: "assets/images/projects/dlails.png",
         externalLink: "https://github.com/tztn"
     },
     stym: {
-        title: "Stym Gaming Storefront",
+        id: "stym",
+        title: "Stym Responsive Digital Game Storefront",
         badge: "WEB / JS",
-        desc: "Modern, responsive gaming store website featuring trending title showcases, dynamic catalog grids, and clean navigation.",
-        architecture: "Engineered with vanilla JavaScript (ES6+), semantic HTML5, CSS Grid/Flexbox with fluid clamp typography, and asynchronous JSON catalog fetching.",
+        lead: "A modern, responsive gaming storefront website featuring trending title showcases, dynamic catalog grids, and clean tactile navigation.",
+        story: "Inspired by modern digital game distribution platforms like Steam and Epic Games, Stym delivers a clean, focused user experience optimized for discoverability and high visual impact.",
+        desc: "Includes client-side genre filtering, dynamic sorting by price and release date, interactive media carousels, and persistent cart checkout powered by Web Storage.",
+        architecture: "Engineered purely with vanilla JavaScript (ES6+), semantic HTML5, CSS Grid with fluid clamp typography, and asynchronous JSON catalog fetching.",
         contributions: [
-            "Built client-side search filtering by genre, price range, and platform tags.",
-            "Implemented persistent cart storage using Web Storage API (localStorage).",
-            "Designed responsive hero carousel with touch swipe gestures."
+            "Built instant client-side catalog filtering by genre, price threshold, and platform badges.",
+            "Implemented persistent shopping cart state management using Web Storage API (localStorage).",
+            "Designed fluid responsive hero showcase carousel with smooth touch gesture support.",
+            "Engineered modular badge tagging system for discounts, DLCs, and system requirements."
         ],
-        tags: ["HTML5", "CSS3", "JavaScript (ES6+)", "Responsive UI", "Web Storage"],
+        date: "2025-01-04",
+        domain: "tztn.github.io/stym",
+        domainSummary: "Responsive digital gaming storefront with client-side catalog search.",
+        buildHash: "a4819ce",
+        categoryLabel: "Front-End / Web",
+        deployedOn: "GitHub Pages",
+        tags: ["HTML5", "CSS3", "JavaScript (ES6+)", "Responsive Design", "Web Storage"],
         img: "assets/images/projects/stym.png",
         externalLink: "https://github.com/tztn"
     },
     lostfound: {
-        title: "NCST Lost & Found Portal",
+        id: "lostfound",
+        title: "NCST Campus Lost & Found Web Portal",
         badge: "BOOTSTRAP / PHP",
-        desc: "Responsive campus web portal built with Bootstrap for item reporting, keyword search, and claim verification records.",
-        architecture: "Constructed with PHP MVC backend, normalized MySQL database (3NF), PDO prepared statements for SQL injection prevention, and Bootstrap 5 frontend.",
+        lead: "A campus-wide reporting and claim verification web portal built with Bootstrap 5 and PHP for tracking misplaced items and securing student recoveries.",
+        story: "Engineered to streamline campus safety operations at NCST, enabling students and staff to immediately report lost possessions and verify claims securely with photographic evidence.",
+        desc: "Features role-based access control for administrative item verification, instant keyword searching with categorical pills, and automated claim status notifications.",
+        architecture: "Constructed with PHP MVC backend, normalized MySQL database schema (3NF), PDO prepared statements for SQL injection prevention, and responsive Bootstrap 5 components.",
         contributions: [
-            "Designed responsive item card feeds with instant categorical filter pills.",
-            "Engineered secure student submission forms with image file uploads and verification.",
-            "Implemented admin dashboard for claim approvals and campus safety audits."
+            "Designed responsive item card feed with instant categorical filter pills and search index.",
+            "Engineered secure student submission forms with image file uploads and MIME type validation.",
+            "Implemented administrative dashboard for claim approvals and audit trail logging.",
+            "Structured relational database tables with foreign key constraints ensuring data integrity."
         ],
-        tags: ["Bootstrap 5", "PHP", "MySQL", "3NF Normalization", "Relational DB"],
+        date: "2024-11-18",
+        domain: "tztn.github.io/ncst-lost-found",
+        domainSummary: "Campus web portal for lost item tracking and claim verification.",
+        buildHash: "c7193de",
+        categoryLabel: "Bootstrap & PHP",
+        deployedOn: "Apache / XAMPP",
+        tags: ["Bootstrap 5", "PHP 8", "MySQL", "PDO", "3NF Relational DB", "Web App"],
         img: "assets/images/projects/lostfound.png",
         externalLink: "https://github.com/tztn"
     },
     supermarket: {
-        title: "Supermarket POS & Inventory",
+        id: "supermarket",
+        title: "Supermarket POS & Inventory System",
         badge: "C++20 / SYSTEMS",
-        desc: "Reliable point-of-sale console application for inventory management, algorithmic bill calculations, and purchase logs.",
-        architecture: "Written in ISO C++20 with custom dynamic array structures, robust binary file serialization, exception handling, and formatted CLI receipt printing.",
+        lead: "A reliable point-of-sale console application for retail inventory management, logarithmic barcode binary search, and automated purchase auditing.",
+        story: "Developed to demonstrate robust low-level systems programming in C++20, emphasizing deterministic memory management, custom data structures, and binary file persistence.",
+        desc: "Performs real-time barcode lookups, calculates sales taxes and promotional discounts, manages stock replenishment thresholds, and formats ASCII receipts for thermal printing.",
+        architecture: "Written in ISO C++20 with custom dynamic array structures, robust binary file serialization, structured exception handling, and formatted CLI tables.",
         contributions: [
-            "Implemented algorithmic barcode/SKU binary search for low latency lookups.",
-            "Built tax calculations, tiered promotional discounts, and receipt generator.",
-            "Created auto-backup routine for transaction history and stock depletion alert."
+            "Implemented algorithmic barcode/SKU binary search ensuring low latency product queries.",
+            "Built calculation routines for tiered promotional discounts and itemized receipt generation.",
+            "Created automated binary backup routines for transaction history and stock depletion alerts.",
+            "Engineered interactive console menu UI with strict input sanitation and validation."
         ],
-        tags: ["C++20", "Data Structures", "File Streams", "CLI Systems", "OOP"],
+        date: "2024-09-15",
+        domain: "tztn.github.io/supermarket-pos",
+        domainSummary: "CLI Point of Sale application with binary serialization and inventory search.",
+        buildHash: "3b8417f",
+        categoryLabel: "C++20 / Systems",
+        deployedOn: "Native Windows / CLI",
+        tags: ["C++20", "Data Structures", "Binary I/O", "CLI Systems", "OOP"],
         img: "assets/images/projects/supermarket.png",
         externalLink: "https://github.com/tztn"
     }
 };
 
+let currentActiveProjectId = null;
+
 function initProjectDetailsController() {
-    const modal = document.getElementById("project-modal");
-    const modalContent = document.getElementById("modal-body-content");
-    const closeBtn = document.getElementById("modal-close-btn");
+    const mainWrapper = document.getElementById("main-content-wrapper");
+    const standaloneView = document.getElementById("project-standalone-view");
+    const standaloneContainer = document.getElementById("standalone-container");
     const triggers = document.querySelectorAll("[data-project-trigger]");
 
-    if (!modal || !modalContent) return;
+    if (!standaloneView || !standaloneContainer) return;
 
-    window.openProjectModal = function (projectId) {
+    function renderProjectStandalone(projectId) {
         const data = projectData[projectId];
         if (!data) return;
 
-        modalContent.innerHTML = `
-            <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 12px;">
-                <span class="project-type-badge font-mono" style="position: static;">${data.badge}</span>
-                <a href="${data.externalLink}" target="_blank" rel="noopener noreferrer" style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-primary); text-decoration: underline;">Open Repository ↗</a>
+        currentActiveProjectId = projectId;
+        const currentIndex = projectOrder.indexOf(projectId);
+        const prevId = projectOrder[(currentIndex - 1 + projectOrder.length) % projectOrder.length];
+        const nextId = projectOrder[(currentIndex + 1) % projectOrder.length];
+
+        standaloneContainer.innerHTML = `
+            <!-- Top Actions Bar (Image 1 reference match) -->
+            <div class="proj-standalone-topbar">
+                <button type="button" class="proj-back-btn" id="proj-back-btn" aria-label="Back to projects">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                    <span>Projects</span>
+                </button>
+
+                <div class="proj-nav-actions">
+                    <button type="button" class="proj-action-btn proj-icon-btn" id="proj-prev-btn" title="Previous Project: ${projectData[prevId].title}">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="15 18 9 12 15 6"></polyline>
+                        </svg>
+                    </button>
+
+                    <button type="button" class="proj-action-btn proj-icon-btn" id="proj-next-btn" title="Next Project: ${projectData[nextId].title}">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </button>
+                </div>
             </div>
-            <h2 style="font-size: 1.25rem; font-weight: 800; color: var(--text-primary); margin-bottom: 10px;">${data.title}</h2>
-            <div style="width: 100%; height: 200px; border-radius: 6px; overflow: hidden; margin-bottom: 16px; border: 1px solid var(--border);">
-                <img src="${data.img}" alt="${data.title}" style="width: 100%; height: 100%; object-fit: cover;">
-            </div>
-            <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 14px;">${data.desc}</p>
-            <div style="background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 6px; padding: 12px; margin-bottom: 14px;">
-                <div style="font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; color: var(--text-muted); margin-bottom: 4px;">// ARCHITECTURE</div>
-                <p style="font-size: 0.8rem; color: var(--text-primary); line-height: 1.5;">${data.architecture}</p>
-            </div>
-            <div style="margin-bottom: 14px;">
-                <div style="font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; color: var(--text-muted); margin-bottom: 6px;">// KEY HIGHLIGHTS</div>
-                <ul style="padding-left: 18px; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.6;">
-                    ${data.contributions.map(c => `<li>${c}</li>`).join('')}
-                </ul>
-            </div>
-            <div style="display: flex; flex-wrap: wrap; gap: 4px;">
-                ${data.tags.map(t => `<span class="project-tag">${t}</span>`).join('')}
-            </div>
+
+            <!-- Standalone Article Content (Image 1 reference match) -->
+            <article class="proj-standalone-article">
+                <h1 class="proj-standalone-title">${data.title}</h1>
+                
+                <div class="proj-standalone-narrative">
+                    <p class="proj-lead-text">${data.lead}</p>
+                    <p>${data.story}</p>
+                </div>
+
+                <!-- Showcase Media Box -->
+                <div class="proj-standalone-media">
+                    <img src="${data.img}" alt="${data.title}" loading="eager">
+                </div>
+
+                <!-- Deep Dive Content -->
+                <div class="proj-standalone-body">
+                    <p class="proj-body-p">${data.desc}</p>
+
+                    <div class="proj-section-block">
+                        <div class="proj-block-heading font-mono">// ARCHITECTURE &amp; DESIGN SYSTEM</div>
+                        <p class="proj-block-desc">${data.architecture}</p>
+                    </div>
+
+                    <div class="proj-section-block">
+                        <div class="proj-block-heading font-mono">// KEY IMPLEMENTATIONS &amp; HIGHLIGHTS</div>
+                        <ul class="proj-highlights-list font-mono">
+                            ${data.contributions.map(item => `<li>${item}</li>`).join('')}
+                        </ul>
+                    </div>
+
+                    <div class="proj-action-links">
+                        <a href="${data.externalLink}" target="_blank" rel="noopener noreferrer" class="proj-primary-link font-mono">
+                            <span>View Source / Repository</span>
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                <polyline points="15 3 21 3 21 9"></polyline>
+                                <line x1="10" y1="14" x2="21" y2="3"></line>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Bottom CAD Engineering Specs Matrix (Image 2 exact match) -->
+                <div class="proj-spec-table-container">
+                    <div class="proj-spec-header-row font-mono">
+                        <span class="proj-spec-domain">${data.domain}</span>
+                        <span class="proj-spec-summary">${data.domainSummary}</span>
+                    </div>
+
+                    <div class="proj-spec-matrix">
+                        <div class="proj-spec-cell">
+                            <span class="proj-spec-k font-mono">CRAFTED BY</span>
+                            <span class="proj-spec-v font-mono"><a href="https://github.com/tztn" target="_blank" rel="noopener noreferrer">@tztn</a></span>
+                        </div>
+                        <div class="proj-spec-cell">
+                            <span class="proj-spec-k font-mono">DATE</span>
+                            <span class="proj-spec-v font-mono">${data.date}</span>
+                        </div>
+                        <div class="proj-spec-cell">
+                            <span class="proj-spec-k font-mono">CATEGORY</span>
+                            <span class="proj-spec-v font-mono">${data.categoryLabel}</span>
+                        </div>
+                        <div class="proj-spec-cell">
+                            <span class="proj-spec-k font-mono">DEPLOYED ON</span>
+                            <span class="proj-spec-v font-mono"><span class="deploy-delta">▲</span> ${data.deployedOn}</span>
+                        </div>
+                        <div class="proj-spec-cell">
+                            <span class="proj-spec-k font-mono">SOURCE CODE</span>
+                            <span class="proj-spec-v font-mono"><a href="${data.externalLink}" target="_blank" rel="noopener noreferrer">GitHub</a></span>
+                        </div>
+                        <div class="proj-spec-cell">
+                            <span class="proj-spec-k font-mono">STATUS</span>
+                            <div class="proj-spec-status font-mono">
+                                <span class="status-dot"></span> Active &amp; Verified
+                            </div>
+                        </div>
+                        <div class="proj-spec-cell proj-spec-cell-wide">
+                            <span class="proj-spec-k font-mono">STACK</span>
+                            <div class="proj-spec-stack-list font-mono">
+                                ${data.tags.map(t => `<span>${t}</span>`).join(' • ')}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Bar with Monogram & Links (Image 2) -->
+                    <div class="proj-spec-bottom-bar">
+                        <div class="proj-brand-monogram">
+                            <svg class="pixel-logo-svg" viewBox="0 0 32 16" fill="currentColor" style="width: 26px; height: 13px;">
+                                <rect x="0" y="0" width="13" height="3.5" />
+                                <rect x="5" y="3.5" width="3.5" height="12.5" />
+                                <rect x="16" y="0" width="3.5" height="16" />
+                                <rect x="19.5" y="0" width="7" height="3.5" />
+                                <rect x="23" y="3.5" width="3.5" height="4" />
+                                <rect x="19.5" y="7.5" width="7" height="3.5" />
+                                <rect x="23" y="11" width="3.5" height="5" />
+                            </svg>
+                        </div>
+                        <div class="proj-bottom-socials">
+                            <a href="https://github.com/tztn" target="_blank" rel="noopener noreferrer">GitHub</a>
+                            <a href="mailto:agoilotristanray@gmail.com">Email</a>
+                            <a href="https://discord.com" target="_blank" rel="noopener noreferrer">Discord</a>
+                        </div>
+                    </div>
+                </div>
+            </article>
         `;
 
-        modal.classList.add("open");
-        if (window.soundFX) window.soundFX.play("popover");
-    };
+        // Bind in-page actions
+        const backBtn = document.getElementById("proj-back-btn");
+        const prevBtn = document.getElementById("proj-prev-btn");
+        const nextBtn = document.getElementById("proj-next-btn");
 
-    function closeModal() {
-        modal.classList.remove("open");
+        if (backBtn) {
+            backBtn.addEventListener("click", () => {
+                showMainOverview();
+            });
+        }
+
+        if (prevBtn) {
+            prevBtn.addEventListener("click", () => {
+                openStandaloneProject(prevId);
+            });
+        }
+
+        if (nextBtn) {
+            nextBtn.addEventListener("click", () => {
+                openStandaloneProject(nextId);
+            });
+        }
     }
 
-    if (closeBtn) closeBtn.addEventListener("click", closeModal);
-    modal.addEventListener("click", (e) => {
-        if (e.target === modal) closeModal();
-    });
+    function openStandaloneProject(projectId) {
+        if (!projectData[projectId]) return;
+        renderProjectStandalone(projectId);
+        if (mainWrapper) mainWrapper.style.display = "none";
+        standaloneView.style.display = "block";
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        window.history.pushState(null, "", "#project/" + projectId);
+        if (window.soundFX) window.soundFX.play("click");
+    }
 
-    document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape" && modal.classList.contains("open")) closeModal();
-    });
+    function showMainOverview() {
+        currentActiveProjectId = null;
+        standaloneView.style.display = "none";
+        if (mainWrapper) mainWrapper.style.display = "";
+        window.history.pushState(null, "", "#projects");
+        const projectsEl = document.getElementById("projects");
+        if (projectsEl) {
+            projectsEl.scrollIntoView({ behavior: "smooth" });
+        }
+        if (window.soundFX) window.soundFX.play("click");
+    }
 
+    window.openProjectModal = function (projectId) {
+        openStandaloneProject(projectId);
+    };
+
+    window.openStandaloneProject = openStandaloneProject;
+    window.showMainOverview = showMainOverview;
+
+    // Trigger buttons on project cards
     triggers.forEach(card => {
         card.addEventListener("click", () => {
             const id = card.getAttribute("data-project-trigger");
-            if (id) window.openProjectModal(id);
+            if (id) openStandaloneProject(id);
         });
     });
+
+    // Keyboard navigation (← / → for next/prev project, ESC for back)
+    document.addEventListener("keydown", (e) => {
+        if (!currentActiveProjectId || standaloneView.style.display === "none") return;
+
+        if (e.key === "Escape") {
+            showMainOverview();
+        } else if (e.key === "ArrowLeft") {
+            const idx = projectOrder.indexOf(currentActiveProjectId);
+            const prev = projectOrder[(idx - 1 + projectOrder.length) % projectOrder.length];
+            openStandaloneProject(prev);
+        } else if (e.key === "ArrowRight") {
+            const idx = projectOrder.indexOf(currentActiveProjectId);
+            const next = projectOrder[(idx + 1) % projectOrder.length];
+            openStandaloneProject(next);
+        }
+    });
+
+    // Hash change handler for direct links and browser back/forward
+    function handleHashRouting() {
+        const hash = window.location.hash;
+        if (hash && hash.startsWith("#project/")) {
+            const id = hash.replace("#project/", "");
+            if (projectData[id]) {
+                openStandaloneProject(id);
+            }
+        } else if (standaloneView.style.display === "block") {
+            currentActiveProjectId = null;
+            standaloneView.style.display = "none";
+            if (mainWrapper) mainWrapper.style.display = "";
+        }
+    }
+
+    window.addEventListener("hashchange", handleHashRouting);
+    handleHashRouting();
 }
 
 /* ==========================================================================
