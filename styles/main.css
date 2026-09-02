@@ -3,23 +3,24 @@
    ========================================================================== */
 
 :root {
-    /* Blueprint Light Mode */
-    --bg-primary: #FBFBF9;
-    --bg-secondary: #F4F4EE;
+    /* Warm Ivory & Sand Blueprint Palette (Harmonized with Portrait) */
+    --bg-primary: #FAF8F5;
+    --bg-secondary: #F3EFE9;
     --bg-card: #FFFFFF;
-    --bg-card-hover: #F8F8F4;
-    --text-primary: #121212;
-    --text-secondary: #555555;
-    --text-muted: #888888;
-    --border: #E6E6E0;
-    --border-hover: #121212;
-    --border-light: #EFEFE9;
-    --accent: #121212;
+    --bg-card-hover: #F0EBE3;
+    --text-primary: #1C1815;
+    --text-secondary: #584F47;
+    --text-muted: #8E8379;
+    --border: #E5DFC9;
+    --border-hover: #1C1815;
+    --border-light: #EFE9D9;
+    --accent: #8E2235;
+    --accent-hover: #751B2B;
     --accent-contrast: #FFFFFF;
     --emerald: #10b981;
     --emerald-glow: rgba(16, 185, 129, 0.2);
-    --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 2px 8px rgba(0, 0, 0, 0.02);
-    --card-shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.08);
+    --card-shadow: 0 1px 3px rgba(30, 24, 20, 0.04), 0 2px 8px rgba(30, 24, 20, 0.02);
+    --card-shadow-hover: 0 4px 16px rgba(30, 24, 20, 0.08);
 
     /* Dimensions */
     --header-height: 56px;
@@ -36,20 +37,21 @@
     --transition-theme: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
 }
 
-/* Dark Mode Tokens */
+/* Dark Mode Tokens (Warm Espresso / Obsidian Palette) */
 html.dark {
-    --bg-primary: #09090B;
-    --bg-secondary: #121215;
-    --bg-card: #18181B;
-    --bg-card-hover: #222226;
-    --text-primary: #FAFAFA;
-    --text-secondary: #A1A1AA;
-    --text-muted: #71717A;
-    --border: #27272A;
-    --border-hover: #FAFAFA;
-    --border-light: #18181D;
-    --accent: #FAFAFA;
-    --accent-contrast: #09090B;
+    --bg-primary: #12100E;
+    --bg-secondary: #1A1714;
+    --bg-card: #201C18;
+    --bg-card-hover: #29241F;
+    --text-primary: #F7F4EF;
+    --text-secondary: #B6ABA0;
+    --text-muted: #7D7368;
+    --border: #2E2822;
+    --border-hover: #F7F4EF;
+    --border-light: #1D1A16;
+    --accent: #D4485D;
+    --accent-hover: #E35D72;
+    --accent-contrast: #12100E;
     --emerald: #10b981;
     --emerald-glow: rgba(16, 185, 129, 0.25);
     --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
@@ -107,18 +109,6 @@ svg {
     width: 100%;
     position: relative;
     z-index: 1;
-}
-
-/* Fullscreen Background Canvas */
-.bg-canvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    pointer-events: none;
-    z-index: 0;
-    opacity: 0.25;
 }
 
 /* Utility Classes */

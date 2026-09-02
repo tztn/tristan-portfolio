@@ -3,110 +3,19 @@
    ========================================================================== */
 
 document.addEventListener("DOMContentLoaded", () => {
-    initInteractiveCanvas();
     initAudioFeedback();
+    initIsometricFigTracking();
+    initPronounceAudio();
     initCommandPalette();
     initPhtClock();
     initGithubHeatmap();
     initProjectsFilter();
     initProjectDetailsController();
+    initStackStandaloneController();
     initTerminalHud();
     initContactFeedback();
     initScrollReveal();
 });
-
-/* ==========================================================================
-   01: INTERACTIVE PARTICLE CONSTELLATION CANVAS
-   ========================================================================== */
-function initInteractiveCanvas() {
-    const canvas = document.getElementById("bg-canvas");
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-
-    let width = (canvas.width = window.innerWidth);
-    let height = (canvas.height = window.innerHeight);
-
-    let particles = [];
-    const isMobile = window.innerWidth < 768;
-    const particleCount = isMobile ? 30 : 60;
-    const maxDistance = isMobile ? 80 : 120;
-    let mouse = { x: null, y: null };
-
-    window.addEventListener("mousemove", (e) => {
-        mouse.x = e.clientX;
-        mouse.y = e.clientY;
-    });
-
-    window.addEventListener("mouseleave", () => {
-        mouse.x = null;
-        mouse.y = null;
-    });
-
-    window.addEventListener("resize", () => {
-        width = canvas.width = window.innerWidth;
-        height = canvas.height = window.innerHeight;
-    });
-
-    class Particle {
-        constructor() {
-            this.x = Math.random() * width;
-            this.y = Math.random() * height;
-            this.vx = (Math.random() - 0.5) * 0.4;
-            this.vy = (Math.random() - 0.5) * 0.4;
-            this.radius = Math.random() * 1.5 + 0.8;
-        }
-
-        update() {
-            this.x += this.vx;
-            this.y += this.vy;
-
-            if (this.x < 0 || this.x > width) this.vx *= -1;
-            if (this.y < 0 || this.y > height) this.vy *= -1;
-        }
-
-        draw() {
-            const isDark = document.documentElement.classList.contains("dark");
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-            ctx.fillStyle = isDark ? "rgba(240, 240, 245, 0.4)" : "rgba(30, 30, 35, 0.3)";
-            ctx.fill();
-        }
-    }
-
-    for (let i = 0; i < particleCount; i++) {
-        particles.push(new Particle());
-    }
-
-    function animate() {
-        ctx.clearRect(0, 0, width, height);
-
-        const isDark = document.documentElement.classList.contains("dark");
-        const lineColor = isDark ? "rgba(240, 240, 245," : "rgba(40, 40, 45,";
-
-        for (let i = 0; i < particles.length; i++) {
-            particles[i].update();
-            particles[i].draw();
-
-            for (let j = i + 1; j < particles.length; j++) {
-                const dx = particles[i].x - particles[j].x;
-                const dy = particles[i].y - particles[j].y;
-                const dist = Math.sqrt(dx * dx + dy * dy);
-
-                if (dist < maxDistance) {
-                    const alpha = (1 - dist / maxDistance) * 0.15;
-                    ctx.beginPath();
-                    ctx.moveTo(particles[i].x, particles[i].y);
-                    ctx.lineTo(particles[j].x, particles[j].y);
-                    ctx.strokeStyle = `${lineColor} ${alpha})`;
-                    ctx.lineWidth = 0.6;
-                    ctx.stroke();
-                }
-            }
-        }
-        requestAnimationFrame(animate);
-    }
-    animate();
-}
 
 /* ==========================================================================
    02: COMMAND PALETTE (CMDK // ⌘K / Ctrl+K)
@@ -238,11 +147,13 @@ function initCommandPalette() {
             if (el) el.scrollIntoView({ behavior: "smooth" });
         } else if (action === "project" && target) {
             if (window.openProjectModal) window.openProjectModal(target);
+        } else if (action === "stack-dir") {
+            if (window.openStandaloneStack) window.openStandaloneStack(target || "all");
         } else if (action === "theme") {
             const themeBtn = document.getElementById("theme-toggle-desktop");
             if (themeBtn) themeBtn.click();
         } else if (action === "sfx") {
-            const sfxBtn = document.getElementById("sfx-toggle-btn");
+            const sfxBtn = document.getElementById("audio-toggle-btn");
             if (sfxBtn) sfxBtn.click();
         } else if (action === "copy-email") {
             const copyBtn = document.getElementById("copy-email-btn");
@@ -455,17 +366,6 @@ function initProjectDetailsController() {
                             ${data.contributions.map(item => `<li>${item}</li>`).join('')}
                         </ul>
                     </div>
-
-                    <div class="proj-action-links">
-                        <a href="${data.externalLink}" target="_blank" rel="noopener noreferrer" class="proj-primary-link font-mono">
-                            <span>View Source / Repository</span>
-                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                                <polyline points="15 3 21 3 21 9"></polyline>
-                                <line x1="10" y1="14" x2="21" y2="3"></line>
-                            </svg>
-                        </a>
-                    </div>
                 </div>
 
                 <!-- Bottom CAD Engineering Specs Matrix (Image 2 exact match) -->
@@ -631,6 +531,159 @@ function initProjectDetailsController() {
 }
 
 /* ==========================================================================
+   05B: TECH STACK STANDALONE DIRECTORY CONTROLLER
+   ========================================================================== */
+function initStackStandaloneController() {
+    const stackView = document.getElementById("stack-standalone-view");
+    const stackContainer = document.getElementById("standalone-stack-container");
+    const mainWrapper = document.getElementById("main-content-wrapper");
+    const projectView = document.getElementById("project-standalone-view");
+    const openBtn = document.getElementById("open-stack-standalone-btn");
+    const marqueeWrapper = document.getElementById("stack-marquee-wrapper");
+
+    if (!stackView || !stackContainer) return;
+
+    const stackCategories = [
+        {
+            label: "FRONTEND",
+            items: [
+                "JavaScript", "TypeScript", "React", "Next.js", "Vue.js", "Tailwind CSS",
+                "SCSS", "Styled Components", "Vite", "Webpack", "ESLint", "Prettier"
+            ]
+        },
+        {
+            label: "BACKEND",
+            items: [
+                "Node.js", "Python", "Java", "PHP", "Express.js", "NestJS",
+                "FastAPI", "Spring Boot", "Laravel", "PostgreSQL", "MySQL", "MongoDB",
+                "DynamoDB", "OAuth", "JWT", "LDAP", "REST", "GraphQL",
+                "gRPC", "AWS Lambda"
+            ]
+        },
+        {
+            label: "DEVOPS & CLOUD",
+            items: [
+                "AWS", "GCP", "Azure", "GitHub Actions", "Jenkins", "GitLab CI",
+                "Terraform", "AWS CloudFormation", "Docker", "Kubernetes", "Prometheus",
+                "Grafana", "Datadog"
+            ]
+        },
+        {
+            label: "AI & MACHINE LEARNING",
+            items: [
+                "TensorFlow", "PyTorch", "LangChain", "Transformers", "OpenAI",
+                "Anthropic", "Mistral", "Hugging Face", "LlamaIndex", "AutoGPT",
+                "Claude Code", "Codex"
+            ]
+        }
+    ];
+
+    function renderStackDirectory() {
+        stackContainer.innerHTML = `
+            <div class="proj-standalone-topbar">
+                <button type="button" class="proj-back-btn font-mono" id="stack-back-btn">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                    <span>Back to Overview</span>
+                </button>
+                <div class="proj-standalone-cat-badge font-mono">
+                    <span>Tristan Ray // Tech Stack</span>
+                </div>
+            </div>
+
+            <article class="stack-ref-article">
+                <h1 class="stack-ref-main-title font-sans">tech stack</h1>
+                
+                <p class="stack-ref-narrative">
+                    The tools, frameworks, and platforms I reach for — across the front end, back end, infrastructure, and AI.
+                </p>
+
+                ${stackCategories.map(cat => `
+                    <div class="stack-ref-group">
+                        <div class="stack-ref-group-label font-mono">${cat.label}</div>
+                        <div class="stack-ref-pills-wrap">
+                            ${cat.items.map(item => `
+                                <span class="stack-ref-pill font-mono">${item}</span>
+                            `).join('')}
+                        </div>
+                    </div>
+                `).join('')}
+            </article>
+        `;
+
+        // Wire up Back button
+        const backBtn = document.getElementById("stack-back-btn");
+        if (backBtn) {
+            backBtn.addEventListener("click", () => {
+                closeStandaloneStack();
+            });
+        }
+    }
+
+    function openStandaloneStack() {
+        if (projectView) projectView.style.display = "none";
+        renderStackDirectory();
+        if (mainWrapper) mainWrapper.style.display = "none";
+        stackView.style.display = "block";
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        window.history.pushState(null, "", "#stack-dir");
+        if (window.soundFX) window.soundFX.play("popover");
+    }
+
+    function closeStandaloneStack() {
+        stackView.style.display = "none";
+        if (mainWrapper) mainWrapper.style.display = "";
+        window.history.pushState(null, "", "#stack");
+        const stackEl = document.getElementById("stack");
+        if (stackEl) {
+            stackEl.scrollIntoView({ behavior: "smooth" });
+        }
+        if (window.soundFX) window.soundFX.play("click");
+    }
+
+    window.openStandaloneStack = openStandaloneStack;
+    window.closeStandaloneStack = closeStandaloneStack;
+
+    // Trigger button "All stack"
+    if (openBtn) {
+        openBtn.addEventListener("click", () => {
+            openStandaloneStack("all");
+        });
+    }
+
+    // Trigger on marquee wrapper or marquee items
+    if (marqueeWrapper) {
+        marqueeWrapper.addEventListener("click", () => {
+            openStandaloneStack("all");
+        });
+    }
+
+    // Keyboard navigation (ESC for back)
+    document.addEventListener("keydown", (e) => {
+        if (stackView.style.display === "block" && e.key === "Escape") {
+            closeStandaloneStack();
+        }
+    });
+
+    // Hash change handler
+    function handleStackHash() {
+        const hash = window.location.hash;
+        if (hash === "#stack-dir" || hash.startsWith("#stack-dir/")) {
+            const cat = hash.replace("#stack-dir/", "").replace("#stack-dir", "") || "all";
+            openStandaloneStack(cat);
+        } else if (stackView.style.display === "block" && !hash.startsWith("#project/")) {
+            stackView.style.display = "none";
+            if (mainWrapper) mainWrapper.style.display = "";
+        }
+    }
+
+    window.addEventListener("hashchange", handleStackHash);
+    handleStackHash();
+}
+
+/* ==========================================================================
    06: PROJECTS FILTER
    ========================================================================== */
 function initProjectsFilter() {
@@ -671,80 +724,363 @@ function initComponentDemos() {
 }
 
 /* ==========================================================================
-   08: INTERACTIVE CLI TERMINAL HUD
+   08: INTERACTIVE CLI TERMINAL HUD (SINGLE-VIEW CONTENT SWAP)
    ========================================================================== */
 function initTerminalHud() {
     const terminalInput = document.getElementById("terminal-cli-input");
-    const terminalLogs = document.getElementById("terminal-output-logs");
-    if (!terminalInput || !terminalLogs) return;
+    const activeViewContainer = document.getElementById("terminal-active-view");
+    const screenBody = document.getElementById("terminal-screen-body");
+    const promptBar = document.getElementById("terminal-prompt-bar");
+    if (!terminalInput || !activeViewContainer) return;
+
+    if (promptBar) {
+        promptBar.addEventListener("click", () => {
+            terminalInput.focus();
+        });
+    }
+
+    // Command History & Autocomplete
+    const commandHistory = [];
+    let historyIndex = -1;
+    let typingTimer = null;
+
+    const availableCommands = [
+        "help",
+        "projects",
+        "about",
+        "stack",
+        "skills",
+        "contact",
+        "whoami",
+        "time",
+        "clear",
+        "open 01",
+        "open 02",
+        "open 03",
+        "open 04",
+        "open 05"
+    ];
+
+    const projectMap = {
+        "1": "sneakrs",
+        "01": "sneakrs",
+        "sneakrs": "sneakrs",
+        "2": "lostfound",
+        "02": "lostfound",
+        "lostfound": "lostfound",
+        "3": "dlails",
+        "03": "dlails",
+        "dlails": "dlails",
+        "4": "stym",
+        "04": "stym",
+        "stym": "stym",
+        "5": "pos",
+        "05": "pos",
+        "pos": "pos"
+    };
+
+    function cancelTyping() {
+        if (typingTimer) {
+            clearInterval(typingTimer);
+            typingTimer = null;
+        }
+    }
 
     terminalInput.addEventListener("keydown", (e) => {
         if (e.key === "Enter") {
-            const cmd = terminalInput.value.trim().toLowerCase();
+            cancelTyping();
+            const rawCmd = terminalInput.value;
+            const cmd = rawCmd.trim().toLowerCase();
+            if (cmd) {
+                commandHistory.push(rawCmd);
+                historyIndex = commandHistory.length;
+            }
             terminalInput.value = "";
             processCommand(cmd);
+        } else if (e.key === "ArrowUp") {
+            e.preventDefault();
+            if (commandHistory.length > 0 && historyIndex > 0) {
+                historyIndex--;
+                terminalInput.value = commandHistory[historyIndex];
+            } else if (commandHistory.length > 0 && historyIndex === 0) {
+                terminalInput.value = commandHistory[0];
+            }
+        } else if (e.key === "ArrowDown") {
+            e.preventDefault();
+            if (historyIndex < commandHistory.length - 1) {
+                historyIndex++;
+                terminalInput.value = commandHistory[historyIndex];
+            } else {
+                historyIndex = commandHistory.length;
+                terminalInput.value = "";
+            }
+        } else if (e.key === "Tab") {
+            e.preventDefault();
+            const val = terminalInput.value.trim().toLowerCase();
+            if (!val) return;
+            const matches = availableCommands.filter(c => c.startsWith(val));
+            if (matches.length === 1) {
+                terminalInput.value = matches[0];
+            } else if (matches.length > 1) {
+                renderActiveView("tab autocomplete", [
+                    `<div>Matching commands:</div>`,
+                    `<div style="margin-top: 4px; display: flex; flex-wrap: wrap; gap: 6px;">${matches.map(m => `<span class="term-tag">${m}</span>`).join("")}</div>`
+                ]);
+            }
+        } else if (e.key === "l" && e.ctrlKey) {
+            e.preventDefault();
+            clearTerminal();
         }
     });
 
-    function logLine(text, isCommand = false) {
-        const line = document.createElement("div");
-        if (isCommand) {
-            line.innerHTML = `<span style="color: var(--emerald); font-weight: 700;">visitor@tristan:~$</span> ${text}`;
-        } else {
-            line.innerHTML = text;
+    function escapeHtml(str) {
+        return String(str).replace(/[&<>"']/g, (m) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]));
+    }
+
+    // Single-View Content Swap Function (Replaces view with fast 120ms transition)
+    function renderActiveView(cmd, linesArray, isBannerOnly = false) {
+        if (window.soundFX) window.soundFX.play("click");
+
+        // Wipe previous active output and replace with new view
+        activeViewContainer.innerHTML = "";
+        const viewEl = document.createElement("div");
+        viewEl.className = "term-view-swap-anim";
+
+        if (!isBannerOnly) {
+            const promptLine = document.createElement("div");
+            promptLine.className = "term-cmd-line";
+            promptLine.innerHTML = `
+                <span class="term-p-user">visitor</span><span class="term-p-at">@</span><span class="term-p-host">tztn</span><span class="term-p-colon">:</span><span class="term-p-path">~</span><span class="term-p-symbol">&gt;</span>
+                <span>${escapeHtml(cmd)}</span>
+            `;
+            viewEl.appendChild(promptLine);
         }
-        terminalLogs.appendChild(line);
-        terminalLogs.scrollTop = terminalLogs.scrollHeight;
+
+        const responseBlock = document.createElement("div");
+        responseBlock.className = "term-response-block";
+        responseBlock.innerHTML = linesArray.join("");
+        viewEl.appendChild(responseBlock);
+
+        activeViewContainer.appendChild(viewEl);
+
+        // Wire project row clicks
+        const projectRows = viewEl.querySelectorAll(".term-project-row");
+        projectRows.forEach(pRow => {
+            pRow.addEventListener("click", () => {
+                const targetProj = pRow.getAttribute("data-proj-id");
+                if (targetProj && window.openProjectModal) {
+                    if (window.soundFX) window.soundFX.play("click");
+                    window.openProjectModal(targetProj);
+                }
+            });
+        });
+
+        // Reset scroll position to top of screen body
+        if (screenBody) screenBody.scrollTop = 0;
+    }
+
+    function clearTerminal() {
+        if (window.soundFX) window.soundFX.play("click");
+        renderActiveView("clear", [
+            `<div>Console cleared. Type <span class="term-cmd-highlight">help</span> or click any quick command above to load a view.</div>`
+        ]);
+    }
+
+    // Animate typing character-by-character when quick commands are clicked
+    function typeAndExecute(cmd) {
+        cancelTyping();
+        terminalInput.value = "";
+        terminalInput.focus();
+
+        let i = 0;
+        typingTimer = setInterval(() => {
+            if (i < cmd.length) {
+                terminalInput.value += cmd.charAt(i);
+                i++;
+                if (window.soundFX) window.soundFX.play("hover");
+            } else {
+                cancelTyping();
+                setTimeout(() => {
+                    const executedCmd = terminalInput.value.trim().toLowerCase();
+                    terminalInput.value = "";
+                    processCommand(executedCmd);
+                }, 80);
+            }
+        }, 25);
     }
 
     function processCommand(cmd) {
-        logLine(cmd, true);
-        if (window.soundFX) window.soundFX.play("click");
+        if (!cmd) return;
+
+        // Check for 'open <id>' command
+        if (cmd.startsWith("open ") || cmd.startsWith("view ")) {
+            const arg = cmd.split(" ")[1];
+            const targetProj = projectMap[arg];
+            if (targetProj) {
+                renderActiveView(cmd, [
+                    `<div>Opening project specification <span class="term-tag">${targetProj}</span>...</div>`
+                ]);
+                setTimeout(() => {
+                    if (window.openProjectModal) {
+                        window.openProjectModal(targetProj);
+                    }
+                }, 250);
+            } else {
+                renderActiveView(cmd, [
+                    `<div>Project not found: '${escapeHtml(arg)}'. Valid options: <code>open 01</code> through <code>open 05</code>.</div>`
+                ]);
+            }
+            return;
+        }
 
         switch (cmd) {
             case "help":
-                logLine("Available commands: <span style='color: var(--emerald);'>about, projects, stack, contact, clear, time</span>");
+                renderActiveView("help", [
+                    `<div><strong>Available Commands:</strong></div>`,
+                    `<div><span class="term-tag">projects</span> &mdash; List all featured engineering projects in structured table</div>`,
+                    `<div><span class="term-tag">open &lt;num&gt;</span> &mdash; Inspect specific project details (e.g. <code>open 01</code>)</div>`,
+                    `<div><span class="term-tag">about</span> &mdash; Bio narrative, education & engineering principles</div>`,
+                    `<div><span class="term-tag">stack</span> &mdash; View complete categorized technical stack matrix</div>`,
+                    `<div><span class="term-tag">skills</span> &mdash; Core architectural and design competencies</div>`,
+                    `<div><span class="term-tag">contact</span> &mdash; Direct communication channels & social links</div>`,
+                    `<div><span class="term-tag">whoami</span> &mdash; Inspect visitor session authorization state</div>`,
+                    `<div><span class="term-tag">time</span> &mdash; Current Philippine Standard Time (PHT // UTC+8)</div>`,
+                    `<div><span class="term-tag">clear</span> &mdash; Reset and clear screen content (Ctrl+L)</div>`
+                ]);
                 break;
+
             case "about":
-                logLine("Final-year BS Information Technology student at NCST focusing on backend systems, Java Swing desktop applications, relational database design (3NF), and web development. Passionate about clean architecture, system utility tools, and UI design.");
+            case "bio":
+                renderActiveView(cmd, [
+                    `<div><strong>Tristan Ray Agoilo</strong> &mdash; Front-End Developer & UI Designer</div>`,
+                    `<div style="margin-top: 4px; line-height: 1.65;">Front-End Developer and UI Designer pursuing a BSIT degree at NCST. Focused on crafting responsive, component-driven web applications with an eye for micro-interactions, clean architecture, and modern visual design.</div>`,
+                    `<div style="margin-top: 6px; color: var(--text-muted); font-size: 0.75rem;">Type <span class="term-cmd-highlight">skills</span> or <span class="term-cmd-highlight">stack</span> to see technical proficiency.</div>`
+                ]);
                 break;
+
             case "projects":
-                logLine("1. SNEAKRS Landing Concept [Figma]<br>2. DLAILS Lab Incident Logger [Java]<br>3. Stym Storefront [Web/JS]<br>4. NCST Lost & Found [PHP]<br>5. Supermarket POS [C++]");
+            case "work":
+                renderActiveView(cmd, [
+                    `<div><strong>Featured Projects (5) &mdash; Click a row or type <code>open &lt;num&gt;</code>:</strong></div>`,
+                    `<div class="term-project-table">
+                        <div class="term-project-row" data-proj-id="sneakrs">
+                            <span class="term-proj-tag">[ 01 // FIGMA ]</span>
+                            <span class="term-proj-title">SNEAKRS Concept</span>
+                            <span class="term-proj-desc">High-contrast modern e-commerce landing experience</span>
+                            <span class="term-proj-action">open ↗</span>
+                        </div>
+                        <div class="term-project-row" data-proj-id="lostfound">
+                            <span class="term-proj-tag">[ 02 // PHP ]</span>
+                            <span class="term-proj-title">NCST Lost &amp; Found</span>
+                            <span class="term-proj-desc">Campus safety claim verification &amp; reporting portal</span>
+                            <span class="term-proj-action">open ↗</span>
+                        </div>
+                        <div class="term-project-row" data-proj-id="dlails">
+                            <span class="term-proj-tag">[ 03 // JAVA ]</span>
+                            <span class="term-proj-title">DLAILS Logger</span>
+                            <span class="term-proj-desc">Thread-safe computer lab telemetry desktop application</span>
+                            <span class="term-proj-action">open ↗</span>
+                        </div>
+                        <div class="term-project-row" data-proj-id="stym">
+                            <span class="term-proj-tag">[ 04 // JS ]</span>
+                            <span class="term-proj-title">Stym Storefront</span>
+                            <span class="term-proj-desc">Component-driven digital asset &amp; software store</span>
+                            <span class="term-proj-action">open ↗</span>
+                        </div>
+                        <div class="term-project-row" data-proj-id="pos">
+                            <span class="term-proj-tag">[ 05 // C++ ]</span>
+                            <span class="term-proj-title">Supermarket POS</span>
+                            <span class="term-proj-desc">High-throughput inventory &amp; checkout engine</span>
+                            <span class="term-proj-action">open ↗</span>
+                        </div>
+                    </div>`
+                ]);
                 break;
+
             case "stack":
-                logLine("HTML5, CSS3, JavaScript, Java Swing, C++20, PHP, MySQL, Bootstrap 5, Figma");
+            case "tech":
+                renderActiveView(cmd, [
+                    `<div><strong>Technical Stack Matrix:</strong></div>`,
+                    `<div>• <strong>Frontend:</strong> React, Next.js, TypeScript, JavaScript (ES6+), Tailwind CSS, Vite, HTML5, CSS3</div>`,
+                    `<div>• <strong>Backend:</strong> Express.js, FastAPI, Node.js, Java (Swing), PHP, C++20</div>`,
+                    `<div>• <strong>Databases:</strong> MySQL, PostgreSQL, MongoDB, Relational Normalization (3NF)</div>`,
+                    `<div>• <strong>Tools &amp; Cloud:</strong> Git, GitHub, Docker, Vercel, Figma, VS Code, PostHog, OpenAI API</div>`
+                ]);
                 break;
+
+            case "skills":
+                renderActiveView(cmd, [
+                    `<div><strong>Core Architectural &amp; Design Competencies:</strong></div>`,
+                    `<div>• <strong>UI Engineering:</strong> Component Architecture, Design Systems, Micro-Interactions, Responsive Layouts</div>`,
+                    `<div>• <strong>Backend &amp; Systems:</strong> RESTful API Design, Multi-Threading, System Telemetry, 3NF Schema Optimization</div>`,
+                    `<div>• <strong>Methodologies:</strong> Clean Architecture, Pixel-Precision, Separation of Concerns, Performance Tuning</div>`
+                ]);
+                break;
+
             case "contact":
-                logLine("Email: <a href='mailto:agoilotristanray@gmail.com' style='color: var(--emerald); text-decoration: underline;'>agoilotristanray@gmail.com</a> | GitHub: @tztn");
+            case "email":
+                renderActiveView(cmd, [
+                    `<div><strong>Direct Communication:</strong></div>`,
+                    `<div>• Email: <a href="mailto:agoilotristanray@gmail.com" style="color: var(--emerald); text-decoration: underline;">agoilotristanray@gmail.com</a></div>`,
+                    `<div>• GitHub: <a href="https://github.com/tztn" target="_blank" rel="noopener noreferrer" style="color: var(--emerald); text-decoration: underline;">github.com/tztn</a></div>`,
+                    `<div>• Location: Cavite, Philippines (GMT+8)</div>`
+                ]);
                 break;
+
+            case "whoami":
+                renderActiveView(cmd, [
+                    `<div><strong>Session Identity:</strong> visitor@tztn-devbox [Guest Client]</div>`,
+                    `<div style="color: var(--text-muted); font-size: 0.72rem; margin-top: 2px;">Role: Engineering Recruiter / Design Enthusiast • Status: Authenticated • Protocol: HTTPS/TLS</div>`
+                ]);
+                break;
+
             case "time":
+            case "date":
                 const now = new Date();
-                logLine(`Current Manila Time: ${now.toLocaleTimeString("en-US", { timeZone: "Asia/Manila" })} (PHT // UTC+8)`);
+                renderActiveView(cmd, [
+                    `<div>Current Manila Time: <strong>${now.toLocaleTimeString("en-US", { timeZone: "Asia/Manila" })}</strong> (PHT // UTC+8)</div>`
+                ]);
                 break;
+
             case "clear":
-                terminalLogs.innerHTML = "";
+            case "cls":
+                clearTerminal();
                 break;
-            case "":
-                break;
+
             default:
-                logLine(`Command not found: '${cmd}'. Type <span style='color: var(--emerald);'>help</span> for commands.`);
+                renderActiveView(cmd, [
+                    `<div>Command not recognized: '<span style="color: #ef4444;">${escapeHtml(cmd)}</span>'. Type <span class="term-cmd-highlight">help</span> for all available commands.</div>`
+                ]);
         }
     }
+
+    // Initialize with Help command view on load
+    renderActiveView("help", [
+        `<div><strong>Available Commands:</strong></div>`,
+        `<div><span class="term-tag">projects</span> &mdash; List all featured engineering projects in structured table</div>`,
+        `<div><span class="term-tag">open &lt;num&gt;</span> &mdash; Inspect specific project details (e.g. <code>open 01</code>)</div>`,
+        `<div><span class="term-tag">about</span> &mdash; Bio narrative, education & engineering principles</div>`,
+        `<div><span class="term-tag">stack</span> &mdash; View complete categorized technical stack matrix</div>`,
+        `<div><span class="term-tag">skills</span> &mdash; Core architectural and design competencies</div>`,
+        `<div><span class="term-tag">contact</span> &mdash; Direct communication channels & social links</div>`,
+        `<div><span class="term-tag">whoami</span> &mdash; Inspect visitor session authorization state</div>`,
+        `<div><span class="term-tag">time</span> &mdash; Current Philippine Standard Time (PHT // UTC+8)</div>`,
+        `<div><span class="term-tag">clear</span> &mdash; Reset and clear screen content (Ctrl+L)</div>`
+    ], true);
+
     const quickChips = document.querySelectorAll(".t-quick-chip");
     quickChips.forEach(chip => {
         chip.addEventListener("click", () => {
             const cmd = chip.getAttribute("data-cmd");
             if (cmd) {
-                terminalInput.value = cmd;
-                processCommand(cmd);
-                terminalInput.value = "";
+                typeAndExecute(cmd);
             }
         });
     });
 }
 
 /* ==========================================================================
-   09: LIVE PHT CLOCK (CAVITE, PH — GMT + 8)
+   09: LIVE PHT CLOCK (CAVITE, PH — GMT + 8) & OVERVIEW FIG. 1 TRACKING
    ========================================================================== */
 function initPhtClock() {
     const clockEl = document.getElementById("pht-clock-text");
@@ -756,16 +1092,99 @@ function initPhtClock() {
             timeZone: "Asia/Manila",
             hour: "2-digit",
             minute: "2-digit",
-            second: "2-digit",
             hour12: true
         };
         const timeStr = now.toLocaleTimeString("en-US", options);
-        if (clockEl) clockEl.textContent = `PHT ${timeStr} (UTC+8)`;
+        if (clockEl) clockEl.textContent = `${timeStr} // UTC+8`;
         if (footerClockEl) footerClockEl.textContent = timeStr;
     }
 
     update();
     setInterval(update, 1000);
+}
+
+/* Cursor Tracking Animation & Tactile Click for Fig. 1 Isometric Blueprint */
+function initIsometricFigTracking() {
+    const heroZone = document.getElementById("blueprint-hero-zone");
+    const isoMesh = document.getElementById("iso-mesh-group") || document.getElementById("portrait-avatar-mesh");
+    const isoContainer = document.getElementById("isometric-fig-structure") || document.getElementById("interactive-portrait");
+
+    if (!isoMesh || !heroZone) return;
+
+    let targetRotX = 0;
+    let targetRotY = 0;
+    let currentRotX = 0;
+    let currentRotY = 0;
+    let isHovering = false;
+    let animFrame = null;
+
+    function lerp(start, end, factor) {
+        return start + (end - start) * factor;
+    }
+
+    function render() {
+        currentRotX = lerp(currentRotX, targetRotX, 0.12);
+        currentRotY = lerp(currentRotY, targetRotY, 0.12);
+
+        isoMesh.style.transform = `perspective(700px) rotateX(${currentRotX.toFixed(2)}deg) rotateY(${currentRotY.toFixed(2)}deg)`;
+
+        if (isHovering || Math.abs(currentRotX) > 0.05 || Math.abs(currentRotY) > 0.05) {
+            animFrame = requestAnimationFrame(render);
+        } else {
+            animFrame = null;
+        }
+    }
+
+    heroZone.addEventListener("mousemove", (e) => {
+        isHovering = true;
+        const rect = heroZone.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        // Normalized offsets from -1 to 1
+        const normX = (x / rect.width - 0.5) * 2;
+        const normY = (y / rect.height - 0.5) * 2;
+
+        targetRotY = normX * 18; // Yaw
+        targetRotX = -normY * 14; // Pitch
+
+        if (!animFrame) animFrame = requestAnimationFrame(render);
+    });
+
+    heroZone.addEventListener("mouseleave", () => {
+        isHovering = false;
+        targetRotX = 0;
+        targetRotY = 0;
+        if (!animFrame) animFrame = requestAnimationFrame(render);
+    });
+
+    if (isoContainer) {
+        isoContainer.addEventListener("click", () => {
+            isoContainer.classList.remove("pulse-active");
+            void isoContainer.offsetWidth; // Force reflow
+            isoContainer.classList.add("pulse-active");
+            if (window.soundFX) window.soundFX.play("click");
+        });
+
+        isoContainer.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                isoContainer.click();
+            }
+        });
+    }
+}
+
+/* Pronounce Audio Feedback (Synthesizes name pronunciation chime) */
+function initPronounceAudio() {
+    const pronounceBtn = document.getElementById("pronounce-speaker-btn");
+    if (!pronounceBtn) return;
+
+    pronounceBtn.addEventListener("click", () => {
+        if (window.soundFX) {
+            window.soundFX.play("success");
+        }
+    });
 }
 
 /* ==========================================================================
@@ -1168,6 +1587,9 @@ function initAudioFeedback() {
             ".copy-email-btn",
             ".back-to-top-btn",
             ".social-icon-btn",
+            ".social-btn-box",
+            ".interactive-portrait-container",
+            ".pronounce-speaker-btn",
             ".cmdk-item",
             ".modal-close-btn",
             ".t-quick-chip"
