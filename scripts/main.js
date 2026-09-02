@@ -1332,6 +1332,17 @@ function initContactFeedback() {
    ========================================================================== */
 function initScrollReveal() {
     const sections = document.querySelectorAll(".panel");
+    if (!sections.length) return;
+
+    // Immediately mark sections visible in viewport on initial load
+    sections.forEach((panel, idx) => {
+        const rect = panel.getBoundingClientRect();
+        const inViewport = rect.top < window.innerHeight && rect.bottom > 0;
+        if (idx === 0 || inViewport) {
+            panel.classList.add("revealed");
+        }
+        panel.classList.add("reveal-ready");
+    });
 
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -1339,7 +1350,7 @@ function initScrollReveal() {
                 entry.target.classList.add("revealed");
             }
         });
-    }, { threshold: 0.08 });
+    }, { threshold: 0.08, rootMargin: "0px 0px -40px 0px" });
 
     sections.forEach(s => observer.observe(s));
 }

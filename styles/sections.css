@@ -22,6 +22,18 @@
     display: flex;
     flex-direction: column;
     position: relative;
+    animation: contentRevealUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
+}
+
+@keyframes contentRevealUp {
+    0% {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .panel {
@@ -31,14 +43,67 @@
     border-bottom: 1px solid var(--border);
     background-color: var(--bg-primary);
     scroll-margin-top: 60px;
-    opacity: 0.92;
-    transform: translateY(10px);
-    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.panel.revealed {
     opacity: 1;
     transform: translateY(0);
+}
+
+.panel.reveal-ready:not(.revealed) {
+    opacity: 0.15;
+    transform: translateY(16px);
+    transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1), transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.panel.reveal-ready.revealed {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1), transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Staggered entrance for the Overview Panel on Page Refresh / Load */
+#home .hero-identity-left {
+    animation: heroItemFadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.08s both;
+}
+
+#home .hero-avatar-right {
+    animation: heroAvatarFadeIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.14s both;
+}
+
+#home .overview-panel-content > .sec-hatched-banner {
+    animation: heroItemFadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.18s both;
+}
+
+#home .overview-metadata-grid {
+    animation: heroItemFadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.22s both;
+}
+
+#home .overview-social-bar {
+    animation: heroItemFadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.26s both;
+}
+
+#home .github-heatmap-container {
+    animation: heroItemFadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.30s both;
+}
+
+@keyframes heroItemFadeUp {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes heroAvatarFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(12px) scale(0.97);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
 /* Unified Hatched Header System */

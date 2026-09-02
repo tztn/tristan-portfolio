@@ -50,6 +50,14 @@ function initNavigation() {
     /* 02: Scroll Spy */
     const panels = document.querySelectorAll(".panel");
 
+    // Support #overview as alias for #home
+    if (window.location.hash === "#overview") {
+        const homeSection = document.getElementById("home");
+        if (homeSection) {
+            homeSection.scrollIntoView({ behavior: "smooth" });
+        }
+    }
+
     const observerOptions = {
         root: null,
         rootMargin: "-20% 0px -65% 0px",
@@ -61,7 +69,8 @@ function initNavigation() {
             if (entry.isIntersecting) {
                 const sectionId = entry.target.id;
                 navLinks.forEach(link => {
-                    if (link.getAttribute("href") === `#${sectionId}`) {
+                    const href = link.getAttribute("href");
+                    if (href === `#${sectionId}` || (sectionId === "home" && href === "#overview")) {
                         link.classList.add("active");
                     } else {
                         link.classList.remove("active");
