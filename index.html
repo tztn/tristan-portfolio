@@ -21,7 +21,7 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/header.css">
-    <link rel="stylesheet" href="styles/sections.css">
+    <link rel="stylesheet" href="styles/sections.css?v=2">
     <link rel="stylesheet" href="styles/components.css">
 </head>
 
@@ -289,8 +289,8 @@
                                     </a>
 
                                     <!-- Email -->
-                                    <a href="mailto:agoilotristanray@gmail.com" class="social-btn-box" title="Email Tristan"
-                                        aria-label="Email Tristan">
+                                    <a href="mailto:agoilotristanray@gmail.com" class="social-btn-box"
+                                        title="Email Tristan" aria-label="Email Tristan">
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                             stroke-linecap="round" stroke-linejoin="round">
                                             <rect width="20" height="16" x="2" y="4" rx="2" />
@@ -1028,153 +1028,112 @@
                         <span class="sec-badge-tag">ACADEMICS</span>
                     </div>
 
-                    <div class="stack-table-rows">
-                        <!-- 01 Degree -->
-                        <div class="stack-table-row">
-                            <div class="stack-row-header">
-                                <span class="stack-row-num font-mono">01</span>
-                                <span class="stack-row-label">Degree</span>
+                    <div class="edu-timeline-list">
+                        <!-- Entry 01: College -->
+                        <div class="edu-card active" data-edu-card>
+                            <div class="edu-card-left">
+                                <div class="edu-icon-badge">
+                                    <svg class="edu-cap-svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                                        <path d="M6 12v5c3 3 9 3 12 0v-5" />
+                                    </svg>
+                                </div>
+                                <div class="edu-tree-line"></div>
                             </div>
-                            <div class="stack-row-pills">
-                                <span class="stack-pill-chip">
-                                    <span class="stack-chip-icon"><svg viewBox="0 0 24 24" fill="none"
+
+                            <div class="edu-card-body">
+                                <div class="edu-card-header" data-edu-toggle>
+                                    <div class="edu-title-group">
+                                        <h3 class="edu-school-name">National College of Science and Technology</h3>
+                                        <div class="edu-meta-row">
+                                            <span class="edu-meta-item">3rd Year Student</span>
+                                            <span class="edu-meta-divider">|</span>
+                                            <span class="edu-meta-item">Bachelor of Science in Information
+                                                Technology</span>
+                                        </div>
+                                    </div>
+                                    <button class="edu-toggle-btn" aria-label="Toggle details" aria-expanded="true">
+                                        <svg class="edu-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none"
                                             stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                             stroke-linejoin="round">
-                                            <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
-                                            <path d="M6 12v5c3 3 9 3 12 0v-5" />
-                                        </svg></span>
-                                    <span>BS in Information Technology (BSIT)</span>
-                                </span>
-                                <span class="stack-pill-chip">
-                                    <span class="stack-chip-icon"><svg viewBox="0 0 24 24" fill="none"
-                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                            stroke-linejoin="round">
-                                            <rect width="18" height="18" x="3" y="4" rx="2" ry="2" />
-                                            <line x1="16" y1="2" x2="16" y2="6" />
-                                            <line x1="8" y1="2" x2="8" y2="6" />
-                                            <line x1="3" y1="10" x2="21" y2="10" />
-                                        </svg></span>
-                                    <span>2022 &ndash; 2026</span>
-                                </span>
+                                            <polyline points="18 15 12 9 6 15"></polyline>
+                                        </svg>
+                                    </button>
+                                </div>
+
+                                <div class="edu-card-content">
+                                    <ul class="edu-bullet-list">
+                                        <li>Currently pursuing 3rd year in BS Information Technology.</li>
+                                        <li>Focus on backend development, systems administration, and database
+                                            architecture.</li>
+                                    </ul>
+
+                                    <div class="edu-skills-row">
+                                        <span class="edu-skill-pill">HTML</span>
+                                        <span class="edu-skill-pill">CSS</span>
+                                        <span class="edu-skill-pill">JavaScript</span>
+                                        <span class="edu-skill-pill">Java</span>
+                                        <span class="edu-skill-pill">MySQL</span>
+                                        <span class="edu-skill-pill">Python</span>
+                                        <span class="edu-skill-pill">NetBeans</span>
+                                        <span class="edu-skill-pill">Systems Design</span>
+                                        <span class="edu-skill-pill">Database Management</span>
+                                        <span class="edu-skill-pill">PHP</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                        <!-- 02 Institution -->
-                        <div class="stack-table-row">
-                            <div class="stack-row-header">
-                                <span class="stack-row-num font-mono">02</span>
-                                <span class="stack-row-label">Institution</span>
+                        <!-- Entry 02: Senior High School -->
+                        <div class="edu-card active" data-edu-card>
+                            <div class="edu-card-left">
+                                <div class="edu-icon-badge">
+                                    <svg class="edu-cap-svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                                        <path d="M6 12v5c3 3 9 3 12 0v-5" />
+                                    </svg>
+                                </div>
+                                <div class="edu-tree-line"></div>
                             </div>
-                            <div class="stack-row-pills">
-                                <span class="stack-pill-chip">
-                                    <span class="stack-chip-icon"><svg viewBox="0 0 24 24" fill="none"
-                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                            stroke-linejoin="round">
-                                            <path d="M3 21h18M3 7v14M21 7v14M6 7h12M12 3v4M9 21v-6h6v6" />
-                                        </svg></span>
-                                    <span>National College of Science and Technology (NCST)</span>
-                                </span>
-                                <span class="stack-pill-chip">
-                                    <span class="stack-chip-icon"><svg viewBox="0 0 24 24" fill="none"
-                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                            stroke-linejoin="round">
-                                            <path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z" />
-                                            <circle cx="12" cy="10" r="3" />
-                                        </svg></span>
-                                    <span>Dasmariñas City, Cavite</span>
-                                </span>
-                            </div>
-                        </div>
 
-                        <!-- 03 Coursework -->
-                        <div class="stack-table-row">
-                            <div class="stack-row-header">
-                                <span class="stack-row-num font-mono">03</span>
-                                <span class="stack-row-label">Coursework</span>
-                            </div>
-                            <div class="stack-row-pills">
-                                <span class="stack-pill-chip">
-                                    <span class="stack-chip-icon"><svg viewBox="0 0 24 24" fill="none"
-                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                            stroke-linejoin="round">
-                                            <polyline points="16 18 22 12 16 6" />
-                                            <polyline points="8 6 2 12 8 18" />
-                                        </svg></span>
-                                    <span>Web Engineering & Architecture</span>
-                                </span>
-                                <span class="stack-pill-chip">
-                                    <span class="stack-chip-icon"><svg viewBox="0 0 24 24" fill="none"
-                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                            stroke-linejoin="round">
-                                            <circle cx="12" cy="12" r="10" />
-                                            <path d="M12 6v6l4 2" />
-                                        </svg></span>
-                                    <span>Data Structures & Algorithms</span>
-                                </span>
-                                <span class="stack-pill-chip">
-                                    <span class="stack-chip-icon"><svg viewBox="0 0 24 24" fill="none"
-                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                            stroke-linejoin="round">
-                                            <rect width="18" height="18" x="3" y="3" rx="2" />
-                                            <path d="M9 9h6v6H9z" />
-                                        </svg></span>
-                                    <span>OOP & Software Design</span>
-                                </span>
-                                <span class="stack-pill-chip">
-                                    <span class="stack-chip-icon"><svg viewBox="0 0 24 24" fill="none"
-                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                            stroke-linejoin="round">
-                                            <ellipse cx="12" cy="5" rx="9" ry="3" />
-                                            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
-                                            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
-                                        </svg></span>
-                                    <span>Database Systems (3NF)</span>
-                                </span>
-                                <span class="stack-pill-chip">
-                                    <span class="stack-chip-icon"><svg viewBox="0 0 24 24" fill="none"
-                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                            stroke-linejoin="round">
-                                            <path d="M18 8h1a4 4 0 0 1 0 8h-1" />
-                                            <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z" />
-                                        </svg></span>
-                                    <span>Java Desktop Systems</span>
-                                </span>
-                                <span class="stack-pill-chip">
-                                    <span class="stack-chip-icon"><svg viewBox="0 0 24 24" fill="none"
-                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                            stroke-linejoin="round">
-                                            <rect x="2" y="3" width="20" height="14" rx="2" />
-                                            <line x1="8" y1="21" x2="16" y2="21" />
-                                            <line x1="12" y1="17" x2="12" y2="21" />
-                                        </svg></span>
-                                    <span>HCI & UI Design</span>
-                                </span>
-                            </div>
-                        </div>
+                            <div class="edu-card-body">
+                                <div class="edu-card-header" data-edu-toggle>
+                                    <div class="edu-title-group">
+                                        <h3 class="edu-school-name">Emmanuel Resurreccion Congressional Integrated High
+                                            School</h3>
+                                        <div class="edu-meta-row">
+                                            <span class="edu-meta-item">Senior High School Graduate</span>
+                                            <span class="edu-meta-divider">|</span>
+                                            <span class="edu-meta-item">Science, Technology, Engineering, and
+                                                Mathematics (STEM)</span>
+                                        </div>
+                                    </div>
+                                    <button class="edu-toggle-btn" aria-label="Toggle details" aria-expanded="true">
+                                        <svg class="edu-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="18 15 12 9 6 15"></polyline>
+                                        </svg>
+                                    </button>
+                                </div>
 
-                        <!-- 04 Standing -->
-                        <div class="stack-table-row">
-                            <div class="stack-row-header">
-                                <span class="stack-row-num font-mono">04</span>
-                                <span class="stack-row-label">Standing</span>
-                            </div>
-                            <div class="stack-row-pills">
-                                <span class="stack-pill-chip">
-                                    <span class="stack-chip-icon"><svg viewBox="0 0 24 24" fill="currentColor">
-                                            <polygon
-                                                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                                        </svg></span>
-                                    <span>Senior Standing (3rd/4th Year)</span>
-                                </span>
-                                <span class="stack-pill-chip">
-                                    <span class="stack-chip-icon"><svg viewBox="0 0 24 24" fill="none"
-                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                            stroke-linejoin="round">
-                                            <circle cx="12" cy="8" r="7" />
-                                            <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88" />
-                                        </svg></span>
-                                    <span>Academic Scholar</span>
-                                </span>
+                                <div class="edu-card-content">
+                                    <ul class="edu-bullet-list">
+                                        <li>Graduated With Honors.</li>
+                                        <li>Completed specialized track in STEM curriculum.</li>
+                                    </ul>
+
+                                    <div class="edu-skills-row">
+                                        <span class="edu-skill-pill">Research</span>
+                                        <span class="edu-skill-pill">Applied Sciences</span>
+                                        <span class="edu-skill-pill">Pre-Calculus</span>
+                                        <span class="edu-skill-pill">Basic Programming</span>
+                                        <span class="edu-skill-pill">Statistics</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

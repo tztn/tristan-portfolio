@@ -230,16 +230,26 @@
     stroke: var(--bg-primary);
 }
 
-.sun-icon { display: block; }
-.moon-icon { display: none; }
+.sun-icon {
+    display: block;
+}
+
+.moon-icon {
+    display: none;
+}
 
 /* Dark mode active toggle state */
 html.dark .toggle-thumb {
     transform: translateX(20px);
 }
 
-html.dark .sun-icon { display: none; }
-html.dark .moon-icon { display: block; }
+html.dark .sun-icon {
+    display: none;
+}
+
+html.dark .moon-icon {
+    display: block;
+}
 
 /* Responsive Mobile Navigation */
 @media (max-width: 1023px) {

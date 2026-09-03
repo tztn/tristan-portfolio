@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initTerminalHud();
     initContactFeedback();
     initScrollReveal();
+    initEducationAccordion();
 });
 
 /* ==========================================================================
@@ -1603,7 +1604,9 @@ function initAudioFeedback() {
             ".pronounce-speaker-btn",
             ".cmdk-item",
             ".modal-close-btn",
-            ".t-quick-chip"
+            ".t-quick-chip",
+            ".edu-card-header",
+            ".edu-skill-pill"
         ];
 
         const elements = document.querySelectorAll(interactiveSelectors.join(","));
@@ -1637,4 +1640,25 @@ function initAudioFeedback() {
         attachSoundListeners();
     });
     observer.observe(document.body, { childList: true, subtree: true });
+}
+
+/* ==========================================================================
+   EDUCATION ACCORDION TOGGLE
+   ========================================================================== */
+function initEducationAccordion() {
+    const eduCards = document.querySelectorAll("[data-edu-card]");
+    eduCards.forEach(card => {
+        const toggleBtn = card.querySelector("[data-edu-toggle]");
+        if (!toggleBtn) return;
+
+        toggleBtn.addEventListener("click", () => {
+            const isActive = card.classList.contains("active");
+            card.classList.toggle("active");
+
+            const btn = card.querySelector(".edu-toggle-btn");
+            if (btn) {
+                btn.setAttribute("aria-expanded", (!isActive).toString());
+            }
+        });
+    });
 }
