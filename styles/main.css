@@ -1,30 +1,32 @@
 /* ==========================================================================
-   DESIGN TOKENS & BASE SYSTEM (CAD ENGINEERING BLUEPRINT / CHANHDAI STYLE)
+   DESIGN TOKENS & BASE SYSTEM (CHANHDAI.COM AUTHENTIC CAD ARCHITECTURE)
    ========================================================================== */
 
 :root {
-    /* Warm Ivory & Sand Blueprint Palette (Harmonized with Portrait) */
-    --bg-primary: #FAF8F5;
-    --bg-secondary: #F3EFE9;
+    /* Chanh Dai Design System Palette - Light Mode */
+    --bg-primary: #FFFFFF;
+    --bg-secondary: #FAFAFA;
     --bg-card: #FFFFFF;
-    --bg-card-hover: #F0EBE3;
-    --text-primary: #1C1815;
-    --text-secondary: #584F47;
-    --text-muted: #8E8379;
-    --border: #E5DFC9;
-    --border-hover: #1C1815;
-    --border-light: #EFE9D9;
+    --bg-card-hover: #F4F4F5;
+    --text-primary: #09090B;
+    --text-secondary: #52525B;
+    --text-muted: #71717B;
+    --border: #E4E4E7;
+    --border-hover: #09090B;
+    --border-light: #F4F4F5;
+    --line: #E5E5E9;
+    --stripe-color: rgba(228, 228, 231, 0.65);
     --accent: #8E2235;
     --accent-hover: #751B2B;
     --accent-contrast: #FFFFFF;
     --emerald: #10b981;
     --emerald-glow: rgba(16, 185, 129, 0.2);
-    --card-shadow: 0 1px 3px rgba(30, 24, 20, 0.04), 0 2px 8px rgba(30, 24, 20, 0.02);
-    --card-shadow-hover: 0 4px 16px rgba(30, 24, 20, 0.08);
+    --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 2px 8px rgba(0, 0, 0, 0.02);
+    --card-shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.08);
 
     /* Dimensions */
     --header-height: 56px;
-    --max-content-width: 760px;
+    --max-content-width: 768px;
 
     /* Fonts */
     --font-sans: 'Geist', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -34,28 +36,44 @@
     /* Transitions */
     --transition-fast: 0.15s cubic-bezier(0.16, 1, 0.3, 1);
     --transition-medium: 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-    --transition-theme: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+    --transition-theme: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
-/* Dark Mode Tokens (Warm Espresso / Obsidian Palette) */
+@supports (color: color-mix(in oklab, red, red)) {
+    :root {
+        --line: color-mix(in oklab, var(--border) 72%, var(--bg-primary));
+        --stripe-color: color-mix(in oklab, var(--line) 56%, transparent);
+    }
+}
+
+/* Chanh Dai Design System Palette - Dark Mode (#09090b Obsidian) */
 html.dark {
-    --bg-primary: #12100E;
-    --bg-secondary: #1A1714;
-    --bg-card: #201C18;
-    --bg-card-hover: #29241F;
-    --text-primary: #F7F4EF;
-    --text-secondary: #B6ABA0;
-    --text-muted: #7D7368;
-    --border: #2E2822;
-    --border-hover: #F7F4EF;
-    --border-light: #1D1A16;
+    --bg-primary: #09090B;
+    --bg-secondary: #18181B;
+    --bg-card: #121215;
+    --bg-card-hover: #18181B;
+    --text-primary: #FAFAFA;
+    --text-secondary: #A1A1AA;
+    --text-muted: #71717B;
+    --border: #27272A;
+    --border-hover: #FAFAFA;
+    --border-light: #1F1F23;
+    --line: #222226;
+    --stripe-color: rgba(39, 39, 42, 0.7);
     --accent: #D4485D;
     --accent-hover: #E35D72;
-    --accent-contrast: #12100E;
+    --accent-contrast: #09090B;
     --emerald: #10b981;
     --emerald-glow: rgba(16, 185, 129, 0.25);
-    --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-    --card-shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.6);
+    --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    --card-shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.7);
+}
+
+@supports (color: color-mix(in oklab, red, red)) {
+    html.dark {
+        --line: color-mix(in oklab, var(--border) 72%, var(--bg-primary));
+        --stripe-color: color-mix(in oklab, var(--line) 56%, transparent);
+    }
 }
 
 /* Reset */
@@ -73,6 +91,7 @@ html {
     background-color: var(--bg-primary);
     color: var(--text-primary);
     transition: var(--transition-theme);
+    overflow-x: clip;
 }
 
 body {
@@ -81,15 +100,10 @@ body {
     background-color: var(--bg-primary);
     color: var(--text-primary);
     min-height: 100vh;
-    overflow-x: hidden;
+    overflow-x: clip;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     transition: var(--transition-theme);
-    /* Blueprint Grid Paper Background */
-    background-image:
-        linear-gradient(to right, var(--border-light) 1px, transparent 1px),
-        linear-gradient(to bottom, var(--border-light) 1px, transparent 1px);
-    background-size: 32px 32px;
 }
 
 img {
@@ -109,6 +123,48 @@ svg {
     width: 100%;
     position: relative;
     z-index: 1;
+    overflow-x: clip;
+}
+
+/* ==========================================================================
+   CHANHDAI SCREEN LINE SYSTEM & FULL-BLEED ARCHITECTURAL LINES
+   ========================================================================== */
+
+.screen-line-top {
+    position: relative;
+}
+
+.screen-line-top::before {
+    content: "";
+    z-index: 0;
+    background-color: var(--line);
+    width: 200vw;
+    height: 1px;
+    position: absolute;
+    top: 0;
+    left: -100vw;
+    pointer-events: none;
+}
+
+.screen-line-bottom {
+    position: relative;
+}
+
+.screen-line-bottom::after {
+    content: "";
+    z-index: 0;
+    background-color: var(--line);
+    width: 200vw;
+    height: 1px;
+    position: absolute;
+    bottom: 0;
+    left: -100vw;
+    pointer-events: none;
+}
+
+.screen-line-top-border::before,
+.screen-line-bottom-border::after {
+    background-color: var(--border);
 }
 
 /* Utility Classes */

@@ -1,108 +1,70 @@
-// Prevent FOUC (Flash of Unstyled Content)
-(() => {
-    const cachedTheme = localStorage.getItem("theme");
-    const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    if (cachedTheme === "dark" || (!cachedTheme && systemPrefersDark)) {
-        document.documentElement.classList.add("dark");
-    } else {
-        document.documentElement.classList.remove("dark");
+/* ==========================================================================
+   THEME TOGGLE SYSTEM (CHANHDAI SYSTEM / LIGHT & DARK OBSIDIAN)
+   ========================================================================== */
+
+(function () {
+    const THEME_STORAGE_KEY = 'portfolio_theme';
+
+    function getPreferredTheme() {
+        const storedTheme = localStorage.getItem(THEME_STORAGE_KEY);
+        if (storedTheme === 'dark' || storedTheme === 'light') {
+            return storedTheme;
+        }
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     }
-})();
 
-function initTheme() {
-    const toggleDesktopBtn = document.getElementById("theme-toggle-desktop");
-    const htmlElement = document.documentElement;
-
-    function applyTheme(isDark) {
-        if (isDark) {
-            htmlElement.classList.add("dark");
-            localStorage.setItem("theme", "dark");
+    function applyTheme(theme) {
+        if (theme === 'dark') {
+            document.documentElement.classList.add('dark');
+            document.documentElement.style.colorScheme = 'dark';
         } else {
-            htmlElement.classList.remove("dark");
-            localStorage.setItem("theme", "light");
+            document.documentElement.classList.remove('dark');
+            document.documentElement.style.colorScheme = 'light';
         }
     }
 
-    function animateButton(btn) {
-        if (!btn) return;
-        btn.classList.add("animating");
-        setTimeout(() => {
-            btn.classList.remove("animating");
-        }, 800);
-    }
+    function toggleTheme() {
+        const isDark = document.documentElement.classList.contains('dark');
+        const nextTheme = isDark ? 'light' : 'dark';
+        localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
+        applyTheme(nextTheme);
 
-    function toggleTheme(e) {
-        const isDark = htmlElement.classList.contains("dark");
-        const nextIsDark = !isDark;
-        const triggerBtn = e?.currentTarget || toggleDesktopBtn;
-
-        animateButton(triggerBtn);
-
-        // Check if View Transitions API is supported and motion is not reduced
-        const supportsViewTransitions = Boolean(document.startViewTransition) && 
-            !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-        if (!supportsViewTransitions) {
-            applyTheme(nextIsDark);
-            return;
+        // Sound effect integration if audio system exists
+        if (window.playPortfolioSound) {
+            window.playPortfolioSound('click');
         }
-
-        // Circular ripple origin from button position or viewport center
-        let x = window.innerWidth / 2;
-        let y = window.innerHeight / 2;
-
-        if (triggerBtn) {
-            const rect = triggerBtn.getBoundingClientRect();
-            x = rect.left + rect.width / 2;
-            y = rect.top + rect.height / 2;
-        } else if (e?.clientX && e?.clientY) {
-            x = e.clientX;
-            y = e.clientY;
-        }
-
-        // Calculate distance to furthest corner of screen
-        const endRadius = Math.hypot(
-            Math.max(x, window.innerWidth - x),
-            Math.max(y, window.innerHeight - y)
-        );
-
-        const transition = document.startViewTransition(() => {
-            applyTheme(nextIsDark);
-        });
-
-        transition.ready.then(() => {
-            const clipPath = [
-                `circle(0px at ${x}px ${y}px)`,
-                `circle(${endRadius}px at ${x}px ${y}px)`
-            ];
-
-            document.documentElement.animate(
-                {
-                    clipPath: clipPath
-                },
-                {
-                    duration: 800,
-                    easing: "cubic-bezier(0.25, 1, 0.4, 1)",
-                    pseudoElement: "::view-transition-new(root)"
-                }
-            );
-        });
     }
 
-    if (toggleDesktopBtn) {
-        toggleDesktopBtn.addEventListener("click", toggleTheme);
-    }
+    // Apply preferred theme on initial script execution
+    applyTheme(getPreferredTheme());
 
-    // System theme change listener
-    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
-        if (!localStorage.getItem("theme")) {
-            applyTheme(e.matches);
+    // Listen for system theme changes if user has not explicitly set a preference
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        if (!localStorage.getItem(THEME_STORAGE_KEY)) {
+            applyTheme(e.matches ? 'dark' : 'light');
         }
     });
-}
 
-if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initTheme);
-} else {
-    initTheme();
-}
+    // Wire up theme toggles when DOM is interactive
+    function initThemeListeners() {
+        const toggleButtons = document.querySelectorAll(
+            '#theme-toggle-desktop, .header-theme-toggle, [data-action="toggle-theme"]'
+        );
+
+        toggleButtons.forEach((btn) => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                toggleTheme();
+            });
+        });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initThemeListeners);
+    } else {
+        initThemeListeners();
+    }
+
+    // Expose toggleTheme globally for cmdk or other scripts
+    window.toggleTheme = toggleTheme;
+})();

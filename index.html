@@ -23,6 +23,23 @@
     <link rel="stylesheet" href="styles/header.css">
     <link rel="stylesheet" href="styles/sections.css?v=2">
     <link rel="stylesheet" href="styles/components.css">
+
+    <!-- Anti-FOUC Theme Initialization (Chanh Dai Instant Theme Sync) -->
+    <script>
+        (function () {
+            try {
+                var theme = localStorage.getItem('portfolio_theme');
+                var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                if (theme === 'dark' || (!theme && prefersDark)) {
+                    document.documentElement.classList.add('dark');
+                    document.documentElement.style.colorScheme = 'dark';
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    document.documentElement.style.colorScheme = 'light';
+                }
+            } catch (e) { }
+        })();
+    </script>
 </head>
 
 <body>

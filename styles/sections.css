@@ -10,11 +10,12 @@
     position: relative;
     z-index: 2;
     padding: 0 16px 100px 16px;
+    overflow-x: clip;
 }
 
 .main-content {
     width: 100%;
-    max-width: var(--max-content-width, 760px);
+    max-width: var(--max-content-width, 768px);
     margin: 0 auto;
     border-left: 1px solid var(--border);
     border-right: 1px solid var(--border);
@@ -46,6 +47,19 @@
     scroll-margin-top: 60px;
     opacity: 1;
     transform: translateY(0);
+    position: relative;
+}
+
+.panel::after {
+    content: "";
+    z-index: 0;
+    background-color: var(--border);
+    width: 200vw;
+    height: 1px;
+    position: absolute;
+    bottom: -1px;
+    left: -100vw;
+    pointer-events: none;
 }
 
 .panel.reveal-ready:not(.revealed) {
@@ -109,17 +123,46 @@
     }
 }
 
-/* Unified Hatched Header System */
-.sec-hatched-banner {
+/* Unified Chanh Dai Full-Bleed Hatched Stripe System */
+.sec-hatched-banner,
+.stripe-divider {
     width: 100%;
-    height: 18px;
-    background-image: repeating-linear-gradient(45deg,
-            var(--border) 0,
-            var(--border) 1px,
-            transparent 0,
-            transparent 8px);
+    height: 32px;
+    position: relative;
     border-bottom: 1px solid var(--border);
     flex-shrink: 0;
+    background-color: var(--bg-primary);
+}
+
+.sec-hatched-banner::before,
+.stripe-divider::before {
+    content: "";
+    z-index: 0;
+    width: 200vw;
+    height: 100%;
+    position: absolute;
+    left: -100vw;
+    top: 0;
+    background-image: repeating-linear-gradient(315deg,
+            var(--stripe-color) 0,
+            var(--stripe-color) 1px,
+            transparent 0,
+            transparent 50%);
+    background-size: 10px 10px;
+    pointer-events: none;
+}
+
+.sec-hatched-banner::after,
+.stripe-divider::after {
+    content: "";
+    z-index: 1;
+    background-color: var(--border);
+    width: 200vw;
+    height: 1px;
+    position: absolute;
+    bottom: -1px;
+    left: -100vw;
+    pointer-events: none;
 }
 
 .sec-title-box {
@@ -130,6 +173,19 @@
     align-items: baseline;
     justify-content: space-between;
     gap: 12px;
+    position: relative;
+}
+
+.sec-title-box::after {
+    content: "";
+    z-index: 0;
+    background-color: var(--line);
+    width: 200vw;
+    height: 1px;
+    position: absolute;
+    bottom: -1px;
+    left: -100vw;
+    pointer-events: none;
 }
 
 .sec-main-title {
@@ -173,7 +229,19 @@
     background-color: var(--bg-primary);
     gap: 24px;
     min-height: 160px;
-    overflow: hidden;
+    position: relative;
+}
+
+.overview-hero-profile-row::after {
+    content: "";
+    z-index: 0;
+    background-color: var(--line);
+    width: 200vw;
+    height: 1px;
+    position: absolute;
+    bottom: -1px;
+    left: -100vw;
+    pointer-events: none;
 }
 
 .hero-identity-left {
@@ -242,6 +310,19 @@ html.dark .profile-static-img {
     grid-template-columns: repeat(2, 1fr);
     border-bottom: 1px solid var(--border);
     background-color: var(--bg-primary);
+    position: relative;
+}
+
+.overview-metadata-grid::after {
+    content: "";
+    z-index: 0;
+    background-color: var(--line);
+    width: 200vw;
+    height: 1px;
+    position: absolute;
+    bottom: -1px;
+    left: -100vw;
+    pointer-events: none;
 }
 
 .meta-column {
@@ -307,6 +388,19 @@ html.dark .profile-static-img {
     padding: 14px 24px;
     border-bottom: 1px solid var(--border);
     background-color: var(--bg-primary);
+    position: relative;
+}
+
+.overview-social-bar::after {
+    content: "";
+    z-index: 0;
+    background-color: var(--line);
+    width: 200vw;
+    height: 1px;
+    position: absolute;
+    bottom: -1px;
+    left: -100vw;
+    pointer-events: none;
 }
 
 .social-right-combo {
@@ -595,6 +689,32 @@ html.dark .heatmap-cell.l4 {
     border-right: none;
 }
 
+.project-craft-card:nth-child(odd)::after {
+    content: "";
+    z-index: 0;
+    background-color: var(--line);
+    width: 200vw;
+    height: 1px;
+    position: absolute;
+    bottom: -1px;
+    left: -100vw;
+    pointer-events: none;
+}
+
+@media (max-width: 640px) {
+    .project-craft-card::after {
+        content: "";
+        z-index: 0;
+        background-color: var(--line);
+        width: 200vw;
+        height: 1px;
+        position: absolute;
+        bottom: -1px;
+        left: -100vw;
+        pointer-events: none;
+    }
+}
+
 .project-craft-card:hover {
     background: var(--bg-card-hover);
 }
@@ -603,10 +723,11 @@ html.dark .heatmap-cell.l4 {
     position: relative;
     width: 100%;
     aspect-ratio: 16 / 9.5;
-    background: #09090b;
+    background: var(--bg-secondary);
     border-radius: 12px;
     overflow: hidden;
     border: 1px solid var(--border);
+    transition: border-color var(--transition-fast), background-color var(--transition-fast);
 }
 
 .project-media-wrap img {
@@ -614,10 +735,24 @@ html.dark .heatmap-cell.l4 {
     height: 100%;
     object-fit: cover;
     display: block;
-    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    filter: grayscale(100%) contrast(0.92) opacity(0.8);
+    transition: filter 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.project-craft-card:hover .project-media-wrap img {
+html.dark .project-media-wrap img {
+    filter: grayscale(100%) contrast(0.9) brightness(0.85) opacity(0.75);
+}
+
+.project-craft-card:hover .project-media-wrap,
+.project-craft-card:focus-visible .project-media-wrap {
+    border-color: var(--border-hover);
+}
+
+.project-craft-card:hover .project-media-wrap img,
+.project-craft-card:focus-visible .project-media-wrap img {
+    filter: grayscale(0%) contrast(1) brightness(1) opacity(1);
     transform: scale(1.03);
 }
 
@@ -657,6 +792,20 @@ html.dark .heatmap-cell.l4 {
     padding: 24px 0 8px;
     margin-top: 0;
     background: transparent;
+    position: relative;
+    border-top: 1px solid var(--border);
+}
+
+.projects-grid-footer::before {
+    content: "";
+    z-index: 0;
+    background-color: var(--line);
+    width: 200vw;
+    height: 1px;
+    position: absolute;
+    top: -1px;
+    left: -100vw;
+    pointer-events: none;
 }
 
 .projects-all-btn {
@@ -1235,6 +1384,20 @@ html.dark .heatmap-cell.l4 {
     justify-content: center;
     align-items: center;
     padding: 24px 0 20px;
+    position: relative;
+    border-top: 1px solid var(--border);
+}
+
+.stack-grid-footer::before {
+    content: "";
+    z-index: 0;
+    background-color: var(--line);
+    width: 200vw;
+    height: 1px;
+    position: absolute;
+    top: -1px;
+    left: -100vw;
+    pointer-events: none;
 }
 
 .stack-all-btn {
@@ -1457,11 +1620,30 @@ html.dark .heatmap-cell.l4 {
     width: 100%;
     border-bottom: 1px solid var(--border);
     transition: background-color var(--transition-fast);
+    position: relative;
+}
+
+.stack-table-row::after,
+.cad-table-row::after {
+    content: "";
+    z-index: 0;
+    background-color: var(--line);
+    width: 200vw;
+    height: 1px;
+    position: absolute;
+    bottom: -1px;
+    left: -100vw;
+    pointer-events: none;
 }
 
 .stack-table-row:last-child,
 .cad-table-row:last-child {
     border-bottom: none;
+}
+
+.stack-table-row:last-child::after,
+.cad-table-row:last-child::after {
+    display: none;
 }
 
 .stack-row-header,
@@ -1829,6 +2011,29 @@ html.dark .cad-row-num {
     gap: 16px;
     background: transparent;
     transition: all var(--transition-fast);
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+}
+
+.edu-card:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.edu-card::after {
+    content: "";
+    z-index: 0;
+    background-color: var(--line);
+    width: 200vw;
+    height: 1px;
+    position: absolute;
+    bottom: -1px;
+    left: -100vw;
+    pointer-events: none;
+}
+
+.edu-card:last-child::after {
+    display: none;
 }
 
 /* Left tree & icon badge column */
