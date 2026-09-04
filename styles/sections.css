@@ -405,11 +405,9 @@ html.dark .profile-static-img {
     pointer-events: none;
 }
 
-.social-follow-label {
+.social-follow-label,
+.callout-annotation {
     position: absolute;
-    left: calc(100% + 14px);
-    top: 50%;
-    transform: translateY(-50%);
     display: flex;
     align-items: center;
     gap: 8px;
@@ -419,8 +417,80 @@ html.dark .profile-static-img {
     z-index: 10;
 }
 
+.social-follow-label {
+    left: calc(100% + 14px);
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.callout-annotation.callout-left {
+    right: calc(100% + 14px);
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.callout-annotation.callout-right {
+    left: calc(100% + 14px);
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.callout-annotation.callout-projects {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.callout-annotation.callout-stack {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.callout-annotation.callout-stack-all {
+    right: calc(50% + 78px);
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.callout-annotation.callout-about {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.callout-annotation.callout-bio {
+    top: 24px;
+    transform: none;
+}
+
+.callout-annotation.callout-principles {
+    top: 24px;
+    transform: none;
+}
+
+.callout-annotation.callout-education {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.callout-annotation.callout-terminal {
+    bottom: 12px;
+    top: auto;
+    transform: none;
+}
+
+.callout-annotation.callout-contact {
+    top: 24px;
+    transform: none;
+}
+
 @media (max-width: 1080px) {
-    .social-follow-label {
+    .social-follow-label,
+    .callout-annotation:not(.callout-stack-all) {
+        display: none;
+    }
+}
+
+@media (max-width: 640px) {
+    .callout-annotation.callout-stack-all {
         display: none;
     }
 }
@@ -434,11 +504,20 @@ html.dark .profile-static-img {
     display: inline-block;
 }
 
+.callout-annotation.callout-left .follow-hand-text {
+    transform: rotate(-2.5deg);
+}
+
+.callout-annotation.callout-right .follow-hand-text {
+    transform: rotate(2deg);
+}
+
 .follow-arrow-svg {
     width: 38px;
     height: 18px;
     color: var(--text-muted);
     overflow: visible;
+    flex-shrink: 0;
 }
 
 .social-buttons-row {
