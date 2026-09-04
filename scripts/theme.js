@@ -11,7 +11,6 @@
 
 function initTheme() {
     const toggleDesktopBtn = document.getElementById("theme-toggle-desktop");
-    const toggleMobileBtn = document.getElementById("theme-toggle-mobile");
     const htmlElement = document.documentElement;
 
     function applyTheme(isDark) {
@@ -35,7 +34,7 @@ function initTheme() {
     function toggleTheme(e) {
         const isDark = htmlElement.classList.contains("dark");
         const nextIsDark = !isDark;
-        const triggerBtn = e?.currentTarget || toggleDesktopBtn || toggleMobileBtn;
+        const triggerBtn = e?.currentTarget || toggleDesktopBtn;
 
         animateButton(triggerBtn);
 
@@ -92,9 +91,6 @@ function initTheme() {
 
     if (toggleDesktopBtn) {
         toggleDesktopBtn.addEventListener("click", toggleTheme);
-    }
-    if (toggleMobileBtn) {
-        toggleMobileBtn.addEventListener("click", toggleTheme);
     }
 
     // System theme change listener

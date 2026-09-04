@@ -2927,10 +2927,11 @@ html.dark .cad-row-num {
     }
 }
 
-height: auto;
-display: block;
-user-select: none;
--webkit-user-select: none;
+.fluid-wireframe {
+    height: auto;
+    display: block;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 .fluid-wireframe-stroke {
