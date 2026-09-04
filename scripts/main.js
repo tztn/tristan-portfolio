@@ -35,11 +35,13 @@ function initCommandPalette() {
         input.value = "";
         filterItems("");
         input.focus();
+        if (window.lenis) window.lenis.stop();
         if (window.soundFX) window.soundFX.play("popover");
     }
 
     function closeCmdk() {
         overlay.classList.remove("open");
+        if (window.lenis) window.lenis.start();
     }
 
     if (triggerBtn) {
@@ -145,7 +147,13 @@ function initCommandPalette() {
 
         if (action === "navigate" && target) {
             const el = document.querySelector(target);
-            if (el) el.scrollIntoView({ behavior: "smooth" });
+            if (el) {
+                if (window.lenis) {
+                    window.lenis.scrollTo(el, { offset: -24, duration: 1.15 });
+                } else {
+                    el.scrollIntoView({ behavior: "smooth" });
+                }
+            }
         } else if (action === "project" && target) {
             if (window.openProjectModal) window.openProjectModal(target);
         } else if (action === "stack-dir") {
@@ -1516,20 +1524,25 @@ function initAudioFeedback() {
                     osc.start(now);
                     osc.stop(now + 0.025);
                 } else if (type === "click") {
-                    // Crisp mechanical click
-                    const osc = ctx.createOscillator();
-                    const gain = ctx.createGain();
-                    osc.type = "triangle";
-                    osc.frequency.setValueAtTime(800, now);
-                    osc.frequency.exponentialRampToValueAtTime(200, now + 0.035);
+                    // @soundcn/click-soft tactile sound
+                    if (window.soundcn && window.soundcn.playClickSoft) {
+                        window.soundcn.playClickSoft({ volume: 0.6 });
+                    } else {
+                        // Crisp mechanical click fallback
+                        const osc = ctx.createOscillator();
+                        const gain = ctx.createGain();
+                        osc.type = "triangle";
+                        osc.frequency.setValueAtTime(800, now);
+                        osc.frequency.exponentialRampToValueAtTime(200, now + 0.035);
 
-                    gain.gain.setValueAtTime(0.06, now);
-                    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.035);
+                        gain.gain.setValueAtTime(0.06, now);
+                        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.035);
 
-                    osc.connect(gain);
-                    gain.connect(ctx.destination);
-                    osc.start(now);
-                    osc.stop(now + 0.035);
+                        osc.connect(gain);
+                        gain.connect(ctx.destination);
+                        osc.start(now);
+                        osc.stop(now + 0.035);
+                    }
                 } else if (type === "popover") {
                     // Soft UI popover / modal open sound
                     const osc = ctx.createOscillator();
@@ -1581,6 +1594,7 @@ function initAudioFeedback() {
     };
 
     window.soundFX = soundFX;
+    window.playPortfolioSound = (type) => soundFX.play(type);
 
     // Attach hover and click sound triggers to important elements
     let lastHoverTime = 0;

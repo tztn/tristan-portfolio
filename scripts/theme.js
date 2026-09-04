@@ -1,5 +1,5 @@
 /* ==========================================================================
-   THEME TOGGLE SYSTEM (CHANHDAI SYSTEM / LIGHT & DARK OBSIDIAN)
+   THEME TOGGLE SYSTEM (60 FPS VIEW TRANSITIONS & CHANHDAI OBSIDIAN CAD)
    ========================================================================== */
 
 (function () {
@@ -23,15 +23,85 @@
         }
     }
 
-    function toggleTheme() {
+    function toggleTheme(event) {
         const isDark = document.documentElement.classList.contains('dark');
         const nextTheme = isDark ? 'light' : 'dark';
-        localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
-        applyTheme(nextTheme);
 
-        // Sound effect integration if audio system exists
+        // Play tactile click sound
         if (window.playPortfolioSound) {
             window.playPortfolioSound('click');
+        } else if (window.soundcn && window.soundcn.playClickSoft) {
+            window.soundcn.playClickSoft({ volume: 0.6 });
+        }
+
+        const applyNextTheme = () => {
+            localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
+            applyTheme(nextTheme);
+        };
+
+        // Fallback 60fps CSS transition
+        const triggerCssFallback = () => {
+            document.documentElement.classList.add('theme-transitioning');
+            applyNextTheme();
+            setTimeout(() => {
+                document.documentElement.classList.remove('theme-transitioning');
+            }, 450);
+        };
+
+        // Check if View Transitions API is supported and user doesn't request reduced motion
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!document.startViewTransition || prefersReducedMotion) {
+            triggerCssFallback();
+            return;
+        }
+
+        // Compute origin coordinates for the circular expansion
+        let x = window.innerWidth / 2;
+        let y = 0;
+
+        if (event && event.clientX !== undefined && event.clientY !== undefined && (event.clientX !== 0 || event.clientY !== 0)) {
+            x = event.clientX;
+            y = event.clientY;
+        } else {
+            const toggleBtn = document.getElementById('theme-toggle-desktop') || document.querySelector('.header-theme-toggle');
+            if (toggleBtn) {
+                const rect = toggleBtn.getBoundingClientRect();
+                x = rect.left + rect.width / 2;
+                y = rect.top + rect.height / 2;
+            }
+        }
+
+        const endRadius = Math.hypot(
+            Math.max(x, window.innerWidth - x),
+            Math.max(y, window.innerHeight - y)
+        );
+
+        try {
+            const transition = document.startViewTransition(() => {
+                applyNextTheme();
+            });
+
+            transition.ready.then(() => {
+                const clipPath = [
+                    `circle(0px at ${x}px ${y}px)`,
+                    `circle(${endRadius}px at ${x}px ${y}px)`
+                ];
+
+                document.documentElement.animate(
+                    {
+                        clipPath: clipPath
+                    },
+                    {
+                        duration: 480,
+                        easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+                        pseudoElement: '::view-transition-new(root)'
+                    }
+                );
+            }).catch(() => {
+                // Audio or layout safe fallback
+            });
+        } catch (e) {
+            triggerCssFallback();
         }
     }
 
@@ -54,7 +124,7 @@
         toggleButtons.forEach((btn) => {
             btn.addEventListener('click', (e) => {
                 e.preventDefault();
-                toggleTheme();
+                toggleTheme(e);
             });
         });
     }
@@ -66,5 +136,5 @@
     }
 
     // Expose toggleTheme globally for cmdk or other scripts
-    window.toggleTheme = toggleTheme;
+    window.toggleTheme = (event) => toggleTheme(event);
 })();

@@ -66,12 +66,14 @@
     opacity: 0.15;
     transform: translateY(16px);
     transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1), transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
 }
 
 .panel.reveal-ready.revealed {
     opacity: 1;
     transform: translateY(0);
     transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1), transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
 }
 
 /* Staggered entrance for the Overview Panel on Page Refresh / Load */
@@ -403,17 +405,24 @@ html.dark .profile-static-img {
     pointer-events: none;
 }
 
-.social-right-combo {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-}
-
 .social-follow-label {
+    position: absolute;
+    left: calc(100% + 14px);
+    top: 50%;
+    transform: translateY(-50%);
     display: flex;
     align-items: center;
     gap: 8px;
+    white-space: nowrap;
     user-select: none;
+    pointer-events: none;
+    z-index: 10;
+}
+
+@media (max-width: 1080px) {
+    .social-follow-label {
+        display: none;
+    }
 }
 
 .follow-hand-text {
@@ -737,8 +746,8 @@ html.dark .heatmap-cell.l4 {
     display: block;
     filter: grayscale(100%) contrast(0.92) opacity(0.8);
     transition: filter 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-                opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-                transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 html.dark .project-media-wrap img {
