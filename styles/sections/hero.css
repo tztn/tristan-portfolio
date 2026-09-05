@@ -1,4 +1,4 @@
-﻿/* ==========================================================================
+/* ==========================================================================
    CAD BLUEPRINT SECTIONS & PANELS (CHANHDAI EXACT COMPLETE ENGINEERING STRUCTURE)
    ========================================================================== */
 
@@ -191,17 +191,20 @@
 }
 
 .sec-main-title {
+    font-family: var(--font-sans);
     font-size: 2.2rem;
-    font-weight: 800;
-    letter-spacing: -0.035em;
+    font-weight: 700;
+    letter-spacing: -0.02em;
     color: var(--text-primary);
     line-height: 1.1;
 }
 
 .sec-badge-tag {
     font-family: var(--font-mono);
-    font-size: 0.72rem;
+    font-size: 0.75rem;
     font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
     color: var(--text-muted);
 }
 
@@ -255,6 +258,7 @@
 }
 
 .overview-profile-name {
+    font-family: var(--font-sans);
     font-size: 2.35rem;
     font-weight: 800;
     letter-spacing: -0.035em;
@@ -341,6 +345,7 @@ html.dark .profile-static-img {
     align-items: center;
     gap: 9px;
     padding: 9px 24px;
+    font-family: var(--font-mono);
     font-size: 0.82rem;
     color: var(--text-primary);
     transition: background-color var(--transition-fast);
@@ -371,6 +376,7 @@ html.dark .profile-static-img {
     overflow: hidden;
     text-overflow: ellipsis;
     font-family: var(--font-mono);
+    line-height: 1.4;
 }
 
 .meta-item-text a {
@@ -445,12 +451,6 @@ html.dark .profile-static-img {
     transform: translateY(-50%);
 }
 
-.callout-annotation.callout-stack-all {
-    right: calc(50% + 78px);
-    top: 50%;
-    transform: translateY(-50%);
-}
-
 .callout-annotation.callout-about {
     top: 50%;
     transform: translateY(-50%);
@@ -484,19 +484,13 @@ html.dark .profile-static-img {
 
 @media (max-width: 1080px) {
     .social-follow-label,
-    .callout-annotation:not(.callout-stack-all) {
-        display: none;
-    }
-}
-
-@media (max-width: 640px) {
-    .callout-annotation.callout-stack-all {
+    .callout-annotation {
         display: none;
     }
 }
 
 .follow-hand-text {
-    font-family: var(--font-hand);
+    font-family: var(--font-handwriting, var(--font-hand));
     font-size: 1.35rem;
     color: var(--text-secondary);
     line-height: 1;

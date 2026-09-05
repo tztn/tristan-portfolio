@@ -1,4 +1,4 @@
-﻿/* ==========================================================================
+/* ==========================================================================
    PORTFOLIO INTERACTIVE LOGIC (CAD BLUEPRINT, CMDK & TERMINAL)
    ========================================================================== */
 
@@ -244,7 +244,7 @@ function initProjectDetailsController() {
                         </div>
                         <div class="proj-spec-cell">
                             <span class="proj-spec-k font-mono">DEPLOYED ON</span>
-                            <span class="proj-spec-v font-mono"><span class="deploy-delta">â–²</span> ${data.deployedOn}</span>
+                            <span class="proj-spec-v font-mono"><span class="deploy-delta">▲</span> ${data.deployedOn}</span>
                         </div>
                         <div class="proj-spec-cell">
                             <span class="proj-spec-k font-mono">SOURCE CODE</span>
@@ -259,7 +259,7 @@ function initProjectDetailsController() {
                         <div class="proj-spec-cell proj-spec-cell-wide">
                             <span class="proj-spec-k font-mono">STACK</span>
                             <div class="proj-spec-stack-list font-mono">
-                                ${data.tags.map(t => `<span>${t}</span>`).join(' â€¢ ')}
+                                ${data.tags.map(t => `<span>${t}</span>`).join(' • ')}
                             </div>
                         </div>
                     </div>
@@ -311,8 +311,42 @@ function initProjectDetailsController() {
         }
     }
 
+    const projectsDirView = document.getElementById("projects-standalone-view");
+    const openProjectsDirBtn = document.getElementById("open-projects-standalone-btn");
+    const projectsDirBackBtn = document.getElementById("projects-dir-back-btn");
+    const stackView = document.getElementById("stack-standalone-view");
+    let navigatedFromDir = false;
+
+    function openProjectsDirectory() {
+        if (stackView) stackView.style.display = "none";
+        if (standaloneView) standaloneView.style.display = "none";
+        if (mainWrapper) mainWrapper.style.display = "none";
+        if (projectsDirView) projectsDirView.style.display = "block";
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        window.history.pushState(null, "", "#projects-dir");
+        if (window.soundFX) window.soundFX.play("popover");
+    }
+
+    function closeProjectsDirectory() {
+        if (projectsDirView) projectsDirView.style.display = "none";
+        if (mainWrapper) mainWrapper.style.display = "";
+        window.history.pushState(null, "", "#projects");
+        const projectsEl = document.getElementById("projects");
+        if (projectsEl) {
+            projectsEl.scrollIntoView({ behavior: "smooth" });
+        }
+        if (window.soundFX) window.soundFX.play("click");
+    }
+
     function openStandaloneProject(projectId) {
         if (!projectData[projectId]) return;
+        if (projectsDirView && projectsDirView.style.display !== "none") {
+            navigatedFromDir = true;
+            projectsDirView.style.display = "none";
+        } else {
+            navigatedFromDir = false;
+        }
+        if (stackView) stackView.style.display = "none";
         renderProjectStandalone(projectId);
         if (mainWrapper) mainWrapper.style.display = "none";
         standaloneView.style.display = "block";
@@ -324,6 +358,16 @@ function initProjectDetailsController() {
     function showMainOverview() {
         currentActiveProjectId = null;
         standaloneView.style.display = "none";
+        if (navigatedFromDir && projectsDirView) {
+            navigatedFromDir = false;
+            projectsDirView.style.display = "block";
+            window.history.pushState(null, "", "#projects-dir");
+            window.scrollTo({ top: 0, behavior: "smooth" });
+            if (window.soundFX) window.soundFX.play("click");
+            return;
+        }
+        navigatedFromDir = false;
+        if (projectsDirView) projectsDirView.style.display = "none";
         if (mainWrapper) mainWrapper.style.display = "";
         window.history.pushState(null, "", "#projects");
         const projectsEl = document.getElementById("projects");
@@ -337,31 +381,61 @@ function initProjectDetailsController() {
         openStandaloneProject(projectId);
     };
 
+    window.openProjectsDirectory = openProjectsDirectory;
+    window.closeProjectsDirectory = closeProjectsDirectory;
     window.openStandaloneProject = openStandaloneProject;
     window.showMainOverview = showMainOverview;
 
-    // Trigger buttons on project cards
-    triggers.forEach(card => {
-        card.addEventListener("click", () => {
-            const id = card.getAttribute("data-project-trigger");
-            if (id) openStandaloneProject(id);
+    if (openProjectsDirBtn) {
+        openProjectsDirBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            openProjectsDirectory();
         });
-    });
+    }
 
-    // Keyboard navigation (â† / â†’ for next/prev project, ESC for back)
+    if (projectsDirBackBtn) {
+        projectsDirBackBtn.addEventListener("click", () => {
+            closeProjectsDirectory();
+        });
+    }
+
+    // Trigger buttons on project cards and CAD directory rows
+    function bindProjectTriggers() {
+        const allTriggers = document.querySelectorAll("[data-project-trigger]");
+        allTriggers.forEach(card => {
+            card.addEventListener("click", () => {
+                const id = card.getAttribute("data-project-trigger");
+                if (id) openStandaloneProject(id);
+            });
+            card.addEventListener("keydown", (e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    const id = card.getAttribute("data-project-trigger");
+                    if (id) openStandaloneProject(id);
+                }
+            });
+        });
+    }
+    bindProjectTriggers();
+
+    // Keyboard navigation (← / → for next/prev project, ESC for back)
     document.addEventListener("keydown", (e) => {
-        if (!currentActiveProjectId || standaloneView.style.display === "none") return;
-
         if (e.key === "Escape") {
-            showMainOverview();
-        } else if (e.key === "ArrowLeft") {
-            const idx = projectOrder.indexOf(currentActiveProjectId);
-            const prev = projectOrder[(idx - 1 + projectOrder.length) % projectOrder.length];
-            openStandaloneProject(prev);
-        } else if (e.key === "ArrowRight") {
-            const idx = projectOrder.indexOf(currentActiveProjectId);
-            const next = projectOrder[(idx + 1) % projectOrder.length];
-            openStandaloneProject(next);
+            if (standaloneView && standaloneView.style.display === "block") {
+                showMainOverview();
+            } else if (projectsDirView && projectsDirView.style.display === "block") {
+                closeProjectsDirectory();
+            }
+        } else if (standaloneView && standaloneView.style.display === "block" && currentActiveProjectId) {
+            if (e.key === "ArrowLeft") {
+                const idx = projectOrder.indexOf(currentActiveProjectId);
+                const prev = projectOrder[(idx - 1 + projectOrder.length) % projectOrder.length];
+                openStandaloneProject(prev);
+            } else if (e.key === "ArrowRight") {
+                const idx = projectOrder.indexOf(currentActiveProjectId);
+                const next = projectOrder[(idx + 1) % projectOrder.length];
+                openStandaloneProject(next);
+            }
         }
     });
 
@@ -373,9 +447,14 @@ function initProjectDetailsController() {
             if (projectData[id]) {
                 openStandaloneProject(id);
             }
-        } else if (standaloneView.style.display === "block") {
+        } else if (hash === "#projects-dir" || hash === "#projects-view") {
+            openProjectsDirectory();
+        } else if (hash === "#stack-dir" || hash === "#stack-view") {
+            if (window.openStandaloneStack) window.openStandaloneStack();
+        } else if (standaloneView.style.display === "block" || (projectsDirView && projectsDirView.style.display === "block")) {
             currentActiveProjectId = null;
             standaloneView.style.display = "none";
+            if (projectsDirView) projectsDirView.style.display = "none";
             if (mainWrapper) mainWrapper.style.display = "";
         }
     }
@@ -385,7 +464,7 @@ function initProjectDetailsController() {
 }
 
 /* ==========================================================================
-   09: LIVE PHT CLOCK (CAVITE, PH â€” GMT + 8) & OVERVIEW FIG. 1 TRACKING
+   09: LIVE PHT CLOCK (CAVITE, PH — GMT + 8) & OVERVIEW FIG. 1 TRACKING
    ========================================================================== */
 function initPhtClock() {
     const clockEl = document.getElementById("pht-clock-text");

@@ -1,4 +1,4 @@
-﻿/* ==========================================================================
+/* ==========================================================================
    04C: MOVING TECH STACK MARQUEE & STANDALONE DIRECTORY
    ========================================================================== */
 
@@ -86,10 +86,10 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 14px;
+    gap: 8px;
     min-width: 250px;
     height: 100%;
-    padding: 0 36px;
+    padding: 0 32px;
     border-right: 1px solid var(--border);
     white-space: nowrap;
     transition: background-color var(--transition-fast), color var(--transition-fast);
@@ -101,13 +101,18 @@
 }
 
 .stack-svg-icon {
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
     color: var(--text-primary);
     display: inline-flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+}
+
+.callout-stack .follow-hand-text {
+    font-family: var(--font-handwriting) !important;
+    font-style: normal !important;
 }
 
 .brand-item-name {
@@ -145,72 +150,137 @@
     cursor: pointer;
 }
 
-/* Standalone Tech Stack Reference Layout (Exact Match) */
-.stack-ref-article {
+/* ==========================================================================
+   04B: STANDALONE TECH STACK DIRECTORY VIEW (AUTHENTIC CAD GRID ARCHITECTURE)
+   ========================================================================== */
+
+.stack-standalone-wrapper {
     width: 100%;
-    padding-top: 10px;
-    padding-bottom: 50px;
+    min-height: 100vh;
+    background-color: var(--bg-primary);
+    position: relative;
+    z-index: 20;
+    transition: var(--transition-theme);
+    overflow-x: clip;
+    padding: 0 16px 100px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.stack-ref-main-title {
-    font-size: 2.25rem;
-    font-weight: 500;
-    letter-spacing: -0.025em;
-    color: var(--text-primary);
-    margin: 0 0 22px 0;
-    line-height: 1.2;
-    text-transform: lowercase;
+.stack-standalone-wrapper .standalone-container {
+    width: 100%;
+    max-width: var(--max-content-width, 768px);
+    margin: 0 auto;
+    padding: 28px 0 80px 0;
+    animation: fadeInPage 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    position: relative;
 }
 
-.stack-ref-narrative {
-    font-size: 0.98rem;
+/* Remove Sub-Nav Divider Line for clean breathing room above hatched border */
+.stack-standalone-wrapper .proj-standalone-topbar {
+    border-bottom: none !important;
+    padding-bottom: 4px;
+    margin-bottom: 24px;
+}
+
+.stack-cad-panel {
+    width: 100%;
+    max-width: var(--max-content-width, 768px);
+    margin: 0 auto;
+    border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background-color: var(--bg-primary);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.stack-cad-panel .sec-hatched-banner:first-child,
+.proj-cad-panel .sec-hatched-banner:first-child {
+    border-top: none;
+}
+
+.stack-cad-panel .sec-hatched-banner:last-child,
+.proj-cad-panel .sec-hatched-banner:last-child {
+    border-bottom: none;
+    border-top: 1px solid var(--border);
+}
+
+.stack-cad-panel .sec-hatched-banner:last-child::after,
+.proj-cad-panel .sec-hatched-banner:last-child::after {
+    top: -1px;
+    bottom: auto;
+}
+
+.stack-standalone-desc-box {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    background-color: var(--bg-primary);
+    position: relative;
+}
+
+.stack-standalone-desc-box::after {
+    content: "";
+    z-index: 0;
+    background-color: var(--line);
+    width: 200vw;
+    height: 1px;
+    position: absolute;
+    bottom: -1px;
+    left: -100vw;
+    pointer-events: none;
+}
+
+.stack-standalone-desc {
+    font-family: var(--font-sans);
+    font-size: 0.92rem;
     color: var(--text-secondary);
     line-height: 1.65;
-    margin: 0 0 42px 0;
-    max-width: 680px;
+    margin: 0;
 }
 
-.stack-ref-group {
-    margin-bottom: 38px;
-}
-
-.stack-ref-group-label {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: 14px;
-}
-
-.stack-ref-pills-wrap {
+/* Callout Annotation for Row 01 (selected builds) */
+.callout-annotation.callout-projects-prod {
+    left: calc(100% + 14px);
+    top: 18px;
+    transform: none;
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    user-select: none;
+    pointer-events: none;
+    z-index: 10;
 }
 
-.stack-ref-pill {
+.callout-annotation.callout-projects-prod .follow-hand-text {
+    font-family: var(--font-handwriting), 'Caveat', cursive !important;
+    font-style: normal !important;
+    font-weight: 500 !important;
+    font-size: 1.35rem;
+    color: var(--text-secondary);
+    line-height: 1;
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 8px 16px;
-    font-family: var(--font-mono);
-    font-size: 0.9rem;
-    color: var(--text-primary);
-    white-space: nowrap;
-    transition: border-color var(--transition-fast), background-color var(--transition-fast), transform var(--transition-fast);
-    user-select: none;
-    cursor: default;
+    gap: 5px;
+    transform: rotate(2deg);
 }
 
-.stack-ref-pill:hover {
-    border-color: var(--border-hover);
-    background-color: var(--bg-secondary);
-    transform: translateY(-1px);
+.follow-arrow-char {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    font-size: 1.15rem;
+    font-style: normal !important;
+    line-height: 1;
+    display: inline-block;
+}
+
+@media (max-width: 1080px) {
+    .callout-annotation.callout-projects-prod {
+        display: none;
+    }
 }
 
 /* ==========================================================================
@@ -436,8 +506,11 @@ html.dark .cad-row-num {
     background-color: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: 9999px;
-    font-size: 0.8125rem;
-    font-weight: 500;
+    font-family: var(--font-mono) !important;
+    font-size: 0.8125rem !important;
+    font-weight: 400 !important;
+    letter-spacing: normal !important;
+    line-height: 1.4 !important;
     color: var(--text-primary);
     text-decoration: none;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);

@@ -98,6 +98,12 @@
                     e.preventDefault();
                     closeMobileMenu();
 
+                    // If any standalone view is active, close it
+                    const standaloneWrappers = document.querySelectorAll(".project-standalone-wrapper");
+                    standaloneWrappers.forEach(w => w.style.display = "none");
+                    const mainWrapper = document.getElementById("main-content-wrapper");
+                    if (mainWrapper) mainWrapper.style.display = "";
+
                     if (window.soundFX) {
                         window.soundFX.play("click");
                     }

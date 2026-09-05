@@ -1,4 +1,4 @@
-﻿/* ==========================================================================
+/* ==========================================================================
    04: PROJECTS PANEL
    ========================================================================== */
 
@@ -229,13 +229,20 @@ html.dark .project-media-wrap img {
     position: relative;
     z-index: 20;
     transition: var(--transition-theme);
+    overflow-x: clip;
+    padding: 0 16px 100px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .standalone-container {
-    max-width: 760px;
+    width: 100%;
+    max-width: var(--max-content-width, 768px);
     margin: 0 auto;
-    padding: 28px 20px 80px 20px;
+    padding: 28px 0 80px 0;
     animation: fadeInPage 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    position: relative;
 }
 
 @keyframes fadeInPage {
@@ -252,14 +259,52 @@ html.dark .project-media-wrap img {
 
 /* Top Actions Bar */
 .proj-standalone-topbar {
+    width: 100%;
+    max-width: var(--max-content-width, 768px);
+    margin: 0 auto 24px auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-bottom: 20px;
-    margin-bottom: 32px;
+    padding-bottom: 16px;
     border-bottom: 1px solid var(--border);
     flex-wrap: wrap;
     gap: 12px;
+}
+
+/* Remove divider line beneath sub-nav in directory views for clean breathing room */
+.projects-standalone-wrapper .proj-standalone-topbar {
+    border-bottom: none !important;
+    padding-bottom: 4px;
+    margin-bottom: 24px;
+}
+
+/* Standalone Projects CAD Panel */
+.proj-cad-panel {
+    width: 100%;
+    max-width: var(--max-content-width, 768px);
+    margin: 0 auto;
+    border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background-color: var(--bg-primary);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.cad-project-row {
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color var(--transition-fast);
+}
+
+.cad-project-row:hover {
+    background-color: var(--bg-card-hover);
+}
+
+.cad-project-row:hover .cad-row-label {
+    color: var(--accent);
 }
 
 .proj-back-btn {
@@ -432,7 +477,7 @@ html.dark .project-media-wrap img {
 }
 
 .proj-highlights-list li::before {
-    content: "â–¸";
+    content: "▸";
     position: absolute;
     left: 0;
     top: 0;

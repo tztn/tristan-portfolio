@@ -1,4 +1,4 @@
-﻿/* ==========================================================================
+/* ==========================================================================
    EDUCATION TIMELINE & CARDS (REFERENCE DESIGN ACCURATE)
    ========================================================================== */
 
@@ -209,9 +209,12 @@
 .edu-skill-pill {
     display: inline-flex;
     align-items: center;
+    gap: 6px;
     font-family: var(--font-mono);
-    font-size: 0.78rem;
-    font-weight: 500;
+    font-size: 0.8125rem;
+    font-weight: 400;
+    letter-spacing: normal;
+    line-height: 1.4;
     color: var(--text-primary);
     background-color: var(--bg-card);
     border: 1px solid var(--border);

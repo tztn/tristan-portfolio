@@ -1,4 +1,4 @@
-﻿/* ==========================================================================
+/* ==========================================================================
    05B: TECH STACK STANDALONE DIRECTORY CONTROLLER
    ========================================================================== */
 function initStackStandaloneController() {
@@ -13,35 +13,24 @@ function initStackStandaloneController() {
 
     const stackCategories = [
         {
-            label: "FRONTEND",
+            index: "01",
+            label: "Frontend",
             items: [
-                "JavaScript", "TypeScript", "React", "Next.js", "Vue.js", "Tailwind CSS",
-                "SCSS", "Styled Components", "Vite", "Webpack", "ESLint", "Prettier"
+                "HTML", "CSS", "JavaScript", "Vue.js", "Tailwind CSS", "Bootstrap", "Styled Components", "Figma"
             ]
         },
         {
-            label: "BACKEND",
+            index: "02",
+            label: "Backend & Data",
             items: [
-                "Node.js", "Python", "Java", "PHP", "Express.js", "NestJS",
-                "FastAPI", "Spring Boot", "Laravel", "PostgreSQL", "MySQL", "MongoDB",
-                "DynamoDB", "OAuth", "JWT", "LDAP", "REST", "GraphQL",
-                "gRPC", "AWS Lambda"
+                "Node.js", "PHP", "Laravel", "Python", "Java", "C++", "MySQL"
             ]
         },
         {
-            label: "DEVOPS & CLOUD",
+            index: "03",
+            label: "Tools & Deployment",
             items: [
-                "AWS", "GCP", "Azure", "GitHub Actions", "Jenkins", "GitLab CI",
-                "Terraform", "AWS CloudFormation", "Docker", "Kubernetes", "Prometheus",
-                "Grafana", "Datadog"
-            ]
-        },
-        {
-            label: "AI & MACHINE LEARNING",
-            items: [
-                "TensorFlow", "PyTorch", "LangChain", "Transformers", "OpenAI",
-                "Anthropic", "Mistral", "Hugging Face", "LlamaIndex", "AutoGPT",
-                "Claude Code", "Codex"
+                "Git", "GitHub", "VS Code", "AntiGravity", "Vercel", "Netlify"
             ]
         }
     ];
@@ -61,24 +50,43 @@ function initStackStandaloneController() {
                 </div>
             </div>
 
-            <article class="stack-ref-article">
-                <h1 class="stack-ref-main-title font-sans">tech stack</h1>
-                
-                <p class="stack-ref-narrative">
-                    The tools, frameworks, and platforms I reach for â€” across the front end, back end, infrastructure, and AI.
-                </p>
+            <div class="stack-cad-panel panel">
+                <div class="sec-hatched-banner"></div>
 
-                ${stackCategories.map(cat => `
-                    <div class="stack-ref-group">
-                        <div class="stack-ref-group-label font-mono">${cat.label}</div>
-                        <div class="stack-ref-pills-wrap">
-                            ${cat.items.map(item => `
-                                <span class="stack-ref-pill font-mono">${item}</span>
-                            `).join('')}
+                <div class="sec-title-box">
+                    <h1 class="sec-main-title">Tech Stack</h1>
+                    <span class="sec-badge-tag">SYSTEMS // REGISTRY</span>
+                </div>
+
+                <div class="stack-standalone-desc-box">
+                    <p class="stack-standalone-desc">
+                        Core technologies, runtime environments, and architectural tools utilized across client applications, systems development, and database engineering.
+                    </p>
+                </div>
+
+                <div class="stack-table-rows cad-table-rows">
+                    ${stackCategories.map(cat => `
+                        <div class="stack-table-row cad-table-row">
+                            ${cat.callout ? `
+                                <div class="callout-annotation callout-right callout-stack-prod" aria-hidden="true">
+                                    <span class="font-hand follow-hand-text">production ready <span class="follow-arrow-char">↴</span></span>
+                                </div>
+                            ` : ''}
+                            <div class="stack-row-header cad-row-header">
+                                <span class="stack-row-num cad-row-num font-mono">${cat.index}</span>
+                                <span class="stack-row-label cad-row-label">${cat.label}</span>
+                            </div>
+                            <div class="stack-row-pills cad-row-pills">
+                                ${cat.items.map(item => `
+                                    <span class="stack-pill-chip cad-pill-chip">${item}</span>
+                                `).join('')}
+                            </div>
                         </div>
-                    </div>
-                `).join('')}
-            </article>
+                    `).join('')}
+                </div>
+
+                <div class="sec-hatched-banner sec-hatched-banner-bottom"></div>
+            </div>
         `;
 
         // Wire up Back button
@@ -91,6 +99,8 @@ function initStackStandaloneController() {
     }
 
     function openStandaloneStack() {
+        const projectsDirView = document.getElementById("projects-standalone-view");
+        if (projectsDirView) projectsDirView.style.display = "none";
         if (projectView) projectView.style.display = "none";
         renderStackDirectory();
         if (mainWrapper) mainWrapper.style.display = "none";

@@ -1,4 +1,4 @@
-﻿/* ==========================================================================
+/* ==========================================================================
    08: INTERACTIVE CLI TERMINAL HUD (SINGLE-VIEW CONTENT SWAP)
    ========================================================================== */
 function initTerminalHud() {
@@ -242,31 +242,31 @@ function initTerminalHud() {
                             <span class="term-proj-tag">[ 01 // FIGMA ]</span>
                             <span class="term-proj-title">SNEAKRS Concept</span>
                             <span class="term-proj-desc">High-contrast modern e-commerce landing experience</span>
-                            <span class="term-proj-action">open â†—</span>
+                            <span class="term-proj-action">open ↗</span>
                         </div>
                         <div class="term-project-row" data-proj-id="lostfound">
                             <span class="term-proj-tag">[ 02 // PHP ]</span>
                             <span class="term-proj-title">NCST Lost &amp; Found</span>
                             <span class="term-proj-desc">Campus safety claim verification &amp; reporting portal</span>
-                            <span class="term-proj-action">open â†—</span>
+                            <span class="term-proj-action">open ↗</span>
                         </div>
                         <div class="term-project-row" data-proj-id="dlails">
                             <span class="term-proj-tag">[ 03 // JAVA ]</span>
                             <span class="term-proj-title">DLAILS Logger</span>
                             <span class="term-proj-desc">Thread-safe computer lab telemetry desktop application</span>
-                            <span class="term-proj-action">open â†—</span>
+                            <span class="term-proj-action">open ↗</span>
                         </div>
                         <div class="term-project-row" data-proj-id="stym">
                             <span class="term-proj-tag">[ 04 // JS ]</span>
                             <span class="term-proj-title">Stym Storefront</span>
                             <span class="term-proj-desc">Component-driven digital asset &amp; software store</span>
-                            <span class="term-proj-action">open â†—</span>
+                            <span class="term-proj-action">open ↗</span>
                         </div>
                         <div class="term-project-row" data-proj-id="pos">
                             <span class="term-proj-tag">[ 05 // C++ ]</span>
                             <span class="term-proj-title">Supermarket POS</span>
                             <span class="term-proj-desc">High-throughput inventory &amp; checkout engine</span>
-                            <span class="term-proj-action">open â†—</span>
+                            <span class="term-proj-action">open ↗</span>
                         </div>
                     </div>`
                 ]);
@@ -276,19 +276,19 @@ function initTerminalHud() {
             case "tech":
                 renderActiveView(cmd, [
                     `<div><strong>Technical Stack Matrix:</strong></div>`,
-                    `<div>â€¢ <strong>Frontend:</strong> React, Next.js, TypeScript, JavaScript (ES6+), Tailwind CSS, Vite, HTML5, CSS3</div>`,
-                    `<div>â€¢ <strong>Backend:</strong> Express.js, FastAPI, Node.js, Java (Swing), PHP, C++20</div>`,
-                    `<div>â€¢ <strong>Databases:</strong> MySQL, PostgreSQL, MongoDB, Relational Normalization (3NF)</div>`,
-                    `<div>â€¢ <strong>Tools &amp; Cloud:</strong> Git, GitHub, Docker, Vercel, Figma, VS Code, PostHog, OpenAI API</div>`
+                    `<div>• <strong>Frontend:</strong> React, Next.js, TypeScript, JavaScript (ES6+), Tailwind CSS, Vite, HTML5, CSS3</div>`,
+                    `<div>• <strong>Backend:</strong> Express.js, FastAPI, Node.js, Java (Swing), PHP, C++20</div>`,
+                    `<div>• <strong>Databases:</strong> MySQL, PostgreSQL, MongoDB, Relational Normalization (3NF)</div>`,
+                    `<div>• <strong>Tools &amp; Cloud:</strong> Git, GitHub, Docker, Vercel, Figma, VS Code, PostHog, OpenAI API</div>`
                 ]);
                 break;
 
             case "skills":
                 renderActiveView(cmd, [
                     `<div><strong>Core Architectural &amp; Design Competencies:</strong></div>`,
-                    `<div>â€¢ <strong>UI Engineering:</strong> Component Architecture, Design Systems, Micro-Interactions, Responsive Layouts</div>`,
-                    `<div>â€¢ <strong>Backend &amp; Systems:</strong> RESTful API Design, Multi-Threading, System Telemetry, 3NF Schema Optimization</div>`,
-                    `<div>â€¢ <strong>Methodologies:</strong> Clean Architecture, Pixel-Precision, Separation of Concerns, Performance Tuning</div>`
+                    `<div>• <strong>UI Engineering:</strong> Component Architecture, Design Systems, Micro-Interactions, Responsive Layouts</div>`,
+                    `<div>• <strong>Backend &amp; Systems:</strong> RESTful API Design, Multi-Threading, System Telemetry, 3NF Schema Optimization</div>`,
+                    `<div>• <strong>Methodologies:</strong> Clean Architecture, Pixel-Precision, Separation of Concerns, Performance Tuning</div>`
                 ]);
                 break;
 
@@ -296,16 +296,16 @@ function initTerminalHud() {
             case "email":
                 renderActiveView(cmd, [
                     `<div><strong>Direct Communication:</strong></div>`,
-                    `<div>â€¢ Email: <a href="mailto:agoilotristanray@gmail.com" style="color: var(--emerald); text-decoration: underline;">agoilotristanray@gmail.com</a></div>`,
-                    `<div>â€¢ GitHub: <a href="https://github.com/tztn" target="_blank" rel="noopener noreferrer" style="color: var(--emerald); text-decoration: underline;">github.com/tztn</a></div>`,
-                    `<div>â€¢ Location: Cavite, Philippines (GMT+8)</div>`
+                    `<div>• Email: <a href="mailto:agoilotristanray@gmail.com" style="color: var(--emerald); text-decoration: underline;">agoilotristanray@gmail.com</a></div>`,
+                    `<div>• GitHub: <a href="https://github.com/tztn" target="_blank" rel="noopener noreferrer" style="color: var(--emerald); text-decoration: underline;">github.com/tztn</a></div>`,
+                    `<div>• Location: Cavite, Philippines (GMT+8)</div>`
                 ]);
                 break;
 
             case "whoami":
                 renderActiveView(cmd, [
                     `<div><strong>Session Identity:</strong> visitor@tztn-devbox [Guest Client]</div>`,
-                    `<div style="color: var(--text-muted); font-size: 0.72rem; margin-top: 2px;">Role: Engineering Recruiter / Design Enthusiast â€¢ Status: Authenticated â€¢ Protocol: HTTPS/TLS</div>`
+                    `<div style="color: var(--text-muted); font-size: 0.72rem; margin-top: 2px;">Role: Engineering Recruiter / Design Enthusiast • Status: Authenticated • Protocol: HTTPS/TLS</div>`
                 ]);
                 break;
 

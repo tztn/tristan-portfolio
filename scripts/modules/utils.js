@@ -1,4 +1,4 @@
-﻿/* ==========================================================================
+/* ==========================================================================
    10: CONTACT FORM FEEDBACK & CUSTOM INLINE VALIDATION
    ========================================================================== */
 function initContactFeedback() {
@@ -11,7 +11,7 @@ function initContactFeedback() {
             try {
                 await navigator.clipboard.writeText(emailToCopy);
                 const originalText = copyBtn.innerHTML;
-                copyBtn.innerHTML = '<span class="stack-mono-icon">âœ“</span><span>COPIED</span>';
+                copyBtn.innerHTML = '<span class="stack-mono-icon">✓</span><span>COPIED</span>';
                 if (window.soundFX) window.soundFX.play("click");
                 setTimeout(() => {
                     copyBtn.innerHTML = originalText;
