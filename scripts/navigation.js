@@ -130,13 +130,20 @@
         if (window.location.hash) {
             setTimeout(() => {
                 const hash = window.location.hash;
-                const target = hash === "#overview" ? document.getElementById("home") : document.querySelector(hash);
-                if (target) {
-                    if (lenis) {
-                        lenis.scrollTo(target, { offset: -24, duration: 1.15 });
-                    } else {
-                        target.scrollIntoView({ behavior: "smooth" });
+                if (!hash || hash.startsWith("#project/") || hash === "#projects-dir" || hash === "#projects-view" || hash === "#stack-dir" || hash === "#stack-view") {
+                    return; // Handled by standalone view routers
+                }
+                try {
+                    const target = hash === "#overview" ? document.getElementById("home") : document.querySelector(hash);
+                    if (target) {
+                        if (lenis) {
+                            lenis.scrollTo(target, { offset: -24, duration: 1.15 });
+                        } else {
+                            target.scrollIntoView({ behavior: "smooth" });
+                        }
                     }
+                } catch (e) {
+                    // Ignore invalid selector syntax in hash
                 }
             }, 100);
         }

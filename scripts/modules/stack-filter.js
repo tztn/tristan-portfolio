@@ -105,7 +105,11 @@ function initStackStandaloneController() {
         renderStackDirectory();
         if (mainWrapper) mainWrapper.style.display = "none";
         stackView.style.display = "block";
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        if (window.forceScrollToTop) {
+            window.forceScrollToTop();
+        } else {
+            window.scrollTo(0, 0);
+        }
         window.history.pushState(null, "", "#stack-dir");
         if (window.soundFX) window.soundFX.play("popover");
     }
@@ -114,9 +118,20 @@ function initStackStandaloneController() {
         stackView.style.display = "none";
         if (mainWrapper) mainWrapper.style.display = "";
         window.history.pushState(null, "", "#stack");
+        if (window.lenis) {
+            try { window.lenis.resize(); } catch (e) {}
+        }
         const stackEl = document.getElementById("stack");
         if (stackEl) {
-            stackEl.scrollIntoView({ behavior: "smooth" });
+            if (window.lenis) {
+                try {
+                    window.lenis.scrollTo(stackEl, { offset: -24, duration: 1.0 });
+                } catch (e) {
+                    stackEl.scrollIntoView({ behavior: "smooth" });
+                }
+            } else {
+                stackEl.scrollIntoView({ behavior: "smooth" });
+            }
         }
         if (window.soundFX) window.soundFX.play("click");
     }

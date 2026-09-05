@@ -49,9 +49,10 @@ function initTerminalHud() {
         "4": "stym",
         "04": "stym",
         "stym": "stym",
-        "5": "pos",
-        "05": "pos",
-        "pos": "pos"
+        "5": "supermarket",
+        "05": "supermarket",
+        "supermarket": "supermarket",
+        "pos": "supermarket"
     };
 
     function cancelTyping() {
@@ -262,7 +263,7 @@ function initTerminalHud() {
                             <span class="term-proj-desc">Component-driven digital asset &amp; software store</span>
                             <span class="term-proj-action">open ↗</span>
                         </div>
-                        <div class="term-project-row" data-proj-id="pos">
+                        <div class="term-project-row" data-proj-id="supermarket">
                             <span class="term-proj-tag">[ 05 // C++ ]</span>
                             <span class="term-proj-title">Supermarket POS</span>
                             <span class="term-proj-desc">High-throughput inventory &amp; checkout engine</span>
@@ -352,5 +353,17 @@ function initTerminalHud() {
             }
         });
     });
+
+    if (screenBody) {
+        screenBody.addEventListener("click", (e) => {
+            const row = e.target.closest(".term-project-row");
+            if (row) {
+                const projId = row.getAttribute("data-proj-id");
+                if (projId && window.openProjectModal) {
+                    window.openProjectModal(projId);
+                }
+            }
+        });
+    }
 }
 

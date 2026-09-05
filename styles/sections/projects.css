@@ -261,21 +261,14 @@ html.dark .project-media-wrap img {
 .proj-standalone-topbar {
     width: 100%;
     max-width: var(--max-content-width, 768px);
-    margin: 0 auto 24px auto;
+    margin: 0 auto 20px auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-bottom: 16px;
-    border-bottom: 1px solid var(--border);
+    padding-bottom: 4px;
+    border-bottom: none;
     flex-wrap: wrap;
     gap: 12px;
-}
-
-/* Remove divider line beneath sub-nav in directory views for clean breathing room */
-.projects-standalone-wrapper .proj-standalone-topbar {
-    border-bottom: none !important;
-    padding-bottom: 4px;
-    margin-bottom: 24px;
 }
 
 /* Standalone Projects CAD Panel */
@@ -366,148 +359,211 @@ html.dark .project-media-wrap img {
     color: var(--text-muted);
 }
 
-/* Article Styling */
-.proj-standalone-article {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-}
+/* Article & CAD Blueprint Styling */
 
-.proj-standalone-title {
-    font-size: 2.2rem;
-    font-weight: 750;
-    letter-spacing: -0.035em;
-    line-height: 1.22;
-    color: var(--text-primary);
-    margin: 0 0 20px 0;
-}
-
-.proj-standalone-narrative {
+.proj-standalone-title-box {
     display: flex;
-    flex-direction: column;
+    align-items: baseline;
+    justify-content: space-between;
     gap: 14px;
-    margin-bottom: 28px;
+    flex-wrap: wrap;
+}
+
+.proj-standalone-title-main {
+    font-size: 1.85rem;
+    font-weight: 750;
+    letter-spacing: -0.03em;
+    line-height: 1.2;
+    color: var(--text-primary);
+    margin: 0;
+    flex: 1;
+    min-width: 240px;
+}
+
+/* Narrative Section (CAD Full-Bleed Blueprint Layout) */
+.proj-standalone-narrative-box {
+    padding: 22px 24px;
+    border-bottom: 1px solid var(--border);
+    background-color: var(--bg-primary);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: relative;
+}
+
+.proj-standalone-narrative-box::after {
+    content: "";
+    z-index: 1;
+    background-color: var(--line);
+    width: 200vw;
+    height: 1px;
+    position: absolute;
+    bottom: -1px;
+    left: -100vw;
+    pointer-events: none;
 }
 
 .proj-lead-text {
-    font-size: 1.05rem;
-    line-height: 1.75;
-    color: var(--text-secondary);
-    font-weight: 400;
+    font-size: 1.02rem;
+    line-height: 1.72;
+    color: var(--text-primary);
+    font-weight: 500;
+    margin: 0;
 }
 
-.proj-standalone-narrative p {
-    font-size: 0.95rem;
+.proj-story-text {
+    font-size: 0.92rem;
     line-height: 1.7;
     color: var(--text-secondary);
+    margin: 0;
 }
 
-/* Media Box */
-.proj-standalone-media {
+/* Media Showcase Box */
+.proj-standalone-media-box {
     width: 100%;
-    border-radius: 16px;
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border);
+    position: relative;
     overflow: hidden;
-    background: #09090b;
-    border: 1px solid var(--border);
-    margin-bottom: 36px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.proj-standalone-media img {
+.proj-standalone-media-box::after {
+    content: "";
+    z-index: 1;
+    background-color: var(--line);
+    width: 200vw;
+    height: 1px;
+    position: absolute;
+    bottom: -1px;
+    left: -100vw;
+    pointer-events: none;
+}
+
+.proj-standalone-media-box img {
     width: 100%;
     height: auto;
     display: block;
     object-fit: cover;
 }
 
-/* Body Content */
+/* Deep Dive CAD Body */
 .proj-standalone-body {
     display: flex;
     flex-direction: column;
-    gap: 22px;
-    margin-bottom: 40px;
+    width: 100%;
+    background-color: var(--bg-primary);
+}
+
+.proj-standalone-desc-box {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border);
+    background-color: var(--bg-primary);
+    position: relative;
+}
+
+.proj-standalone-desc-box::after {
+    content: "";
+    z-index: 1;
+    background-color: var(--line);
+    width: 200vw;
+    height: 1px;
+    position: absolute;
+    bottom: -1px;
+    left: -100vw;
+    pointer-events: none;
 }
 
 .proj-body-p {
-    font-size: 0.95rem;
-    line-height: 1.75;
+    font-size: 0.92rem;
+    line-height: 1.72;
     color: var(--text-secondary);
-}
-
-.proj-section-block {
-    background: var(--bg-secondary);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 18px 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.proj-block-heading {
-    font-size: 0.72rem;
-    font-weight: 700;
-    color: var(--text-muted);
-    letter-spacing: 0.04em;
     margin: 0;
 }
 
-.proj-block-desc {
-    font-size: 0.88rem;
-    color: var(--text-primary);
-    line-height: 1.6;
-    margin: 0;
-}
-
-.proj-highlights-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.proj-highlights-list li {
-    font-size: 0.88rem;
-    color: var(--text-primary);
-    line-height: 1.55;
+/* Technical Deep Dive Timeline List (Education Card UI Reference) */
+.proj-details-timeline {
+    padding: 24px 24px 16px 24px;
+    background-color: var(--bg-primary);
+    width: 100%;
     position: relative;
-    padding-left: 20px;
+    border-bottom: 1px solid var(--border);
 }
 
-.proj-highlights-list li::before {
-    content: "▸";
+.proj-details-timeline::after {
+    content: "";
+    z-index: 1;
+    background-color: var(--line);
+    width: 200vw;
+    height: 1px;
     position: absolute;
-    left: 0;
-    top: 0;
-    color: var(--text-muted);
-    font-size: 0.85rem;
+    bottom: -1px;
+    left: -100vw;
+    pointer-events: none;
 }
 
-.proj-action-links {
+.proj-details-timeline .edu-card {
+    display: block;
+    width: 100%;
+    gap: 0;
+    border-bottom: 1px solid var(--border);
+    padding: 16px 0;
+    position: relative;
+    background: transparent;
+}
+
+.proj-details-timeline .edu-card:first-child {
+    padding-top: 2px;
+}
+
+.proj-details-timeline .edu-card:last-child {
+    border-bottom: none;
+    padding-bottom: 2px;
+}
+
+.proj-details-timeline .edu-card::after {
+    z-index: 1;
+}
+
+.proj-details-timeline .edu-card:last-child::after {
+    display: none;
+}
+
+.proj-details-timeline .edu-card-body {
+    width: 100%;
+}
+
+.proj-details-timeline .edu-card-header {
     display: flex;
-    gap: 12px;
-    margin-top: 6px;
-}
-
-.proj-primary-link {
-    display: inline-flex;
     align-items: center;
-    gap: 8px;
-    padding: 10px 18px;
-    background: var(--text-primary);
-    color: var(--bg-primary);
-    border-radius: 6px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    text-decoration: none;
-    transition: opacity var(--transition-fast), transform var(--transition-fast);
+    justify-content: space-between;
+    gap: 16px;
+    cursor: pointer;
+    user-select: none;
+    padding: 4px 0;
+    transition: opacity var(--transition-fast);
 }
 
-.proj-primary-link:hover {
-    opacity: 0.9;
-    transform: translateY(-2px);
+.proj-details-timeline .edu-card-header:hover {
+    opacity: 0.85;
+}
+
+.proj-details-timeline .edu-bullet-list {
+    margin: 14px 0 6px 0;
+    padding-left: 20px;
+    color: var(--text-secondary);
+    font-size: 0.90rem;
+    line-height: 1.7;
+}
+
+.proj-details-timeline .edu-bullet-list li {
+    margin-bottom: 8px;
+}
+
+.proj-details-timeline .edu-bullet-list li:last-child {
+    margin-bottom: 0;
 }
 
 /* ==========================================================================
@@ -516,11 +572,13 @@ html.dark .project-media-wrap img {
 
 .proj-spec-table-container {
     width: 100%;
-    border: 1px solid var(--border);
+    border-top: none;
+    border-bottom: 1px solid var(--border);
     background: var(--bg-card);
     display: flex;
     flex-direction: column;
-    margin-top: 16px;
+    margin-top: 0;
+    position: relative;
 }
 
 .proj-spec-header-row {
@@ -533,6 +591,19 @@ html.dark .project-media-wrap img {
     background: var(--bg-card);
     flex-wrap: wrap;
     gap: 8px;
+    position: relative;
+}
+
+.proj-spec-header-row::after {
+    content: "";
+    z-index: 1;
+    background-color: var(--line);
+    width: 200vw;
+    height: 1px;
+    position: absolute;
+    bottom: -1px;
+    left: -100vw;
+    pointer-events: none;
 }
 
 .proj-spec-domain {
@@ -640,6 +711,19 @@ html.dark .project-media-wrap img {
     background: var(--bg-card);
     flex-wrap: wrap;
     gap: 10px;
+    position: relative;
+}
+
+.proj-spec-bottom-bar::before {
+    content: "";
+    z-index: 1;
+    background-color: var(--line);
+    width: 200vw;
+    height: 1px;
+    position: absolute;
+    top: -1px;
+    left: -100vw;
+    pointer-events: none;
 }
 
 .proj-brand-monogram {

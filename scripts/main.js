@@ -166,7 +166,7 @@ function initProjectDetailsController() {
         const nextId = projectOrder[(currentIndex + 1) % projectOrder.length];
 
         standaloneContainer.innerHTML = `
-            <!-- Top Actions Bar (Image 1 reference match) -->
+            <!-- Top Actions Bar -->
             <div class="proj-standalone-topbar">
                 <button type="button" class="proj-back-btn" id="proj-back-btn" aria-label="Back to projects">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -191,38 +191,94 @@ function initProjectDetailsController() {
                 </div>
             </div>
 
-            <!-- Standalone Article Content (Image 1 reference match) -->
-            <article class="proj-standalone-article">
-                <h1 class="proj-standalone-title">${data.title}</h1>
-                
-                <div class="proj-standalone-narrative">
-                    <p class="proj-lead-text">${data.lead}</p>
-                    <p>${data.story}</p>
+            <!-- Standalone Project CAD Blueprint Panel (Matches all site sections) -->
+            <div class="proj-cad-panel panel">
+                <!-- Top Hatched CAD Strip -->
+                <div class="sec-hatched-banner"></div>
+
+                <!-- CAD Section Title Box -->
+                <div class="sec-title-box proj-standalone-title-box">
+                    <h1 class="sec-main-title proj-standalone-title-main">${data.title}</h1>
+                    <span class="sec-badge-tag font-mono">${data.badge || 'PROJECT'}</span>
                 </div>
 
-                <!-- Showcase Media Box -->
-                <div class="proj-standalone-media">
+                <!-- Narrative Overview Box (Clean CAD full-bleed layout) -->
+                <div class="proj-standalone-narrative-box">
+                    <p class="proj-lead-text">${data.lead}</p>
+                    <p class="proj-story-text">${data.story}</p>
+                </div>
+
+                <!-- Showcase Media Box (Architectural Frame) -->
+                <div class="proj-standalone-media-box">
                     <img src="${data.img}" alt="${data.title}" loading="eager">
                 </div>
 
-                <!-- Deep Dive Content -->
+                <!-- Technical Deep Dive Body (Exact Education Card UI Reference) -->
                 <div class="proj-standalone-body">
-                    <p class="proj-body-p">${data.desc}</p>
-
-                    <div class="proj-section-block">
-                        <div class="proj-block-heading font-mono">// ARCHITECTURE &amp; DESIGN SYSTEM</div>
-                        <p class="proj-block-desc">${data.architecture}</p>
+                    <div class="proj-standalone-desc-box">
+                        <p class="proj-body-p">${data.desc}</p>
                     </div>
 
-                    <div class="proj-section-block">
-                        <div class="proj-block-heading font-mono">// KEY IMPLEMENTATIONS &amp; HIGHLIGHTS</div>
-                        <ul class="proj-highlights-list font-mono">
-                            ${data.contributions.map(item => `<li>${item}</li>`).join('')}
-                        </ul>
+                    <div class="edu-timeline-list proj-details-timeline">
+                        <!-- Entry 01: Architecture & Design System (Collapsed by default) -->
+                        <div class="edu-card" data-edu-card>
+                            <div class="edu-card-body">
+                                <div class="edu-card-header" data-edu-toggle>
+                                    <div class="edu-title-group">
+                                        <h3 class="edu-school-name">Architecture &amp; Design System</h3>
+                                        <div class="edu-meta-row font-mono">
+                                            <span class="edu-meta-item">Technical Architecture</span>
+                                            <span class="edu-meta-divider">|</span>
+                                            <span class="edu-meta-item">${data.categoryLabel}</span>
+                                        </div>
+                                    </div>
+                                    <button class="edu-toggle-btn" aria-label="Toggle details" aria-expanded="false">
+                                        <svg class="edu-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="18 15 12 9 6 15"></polyline>
+                                        </svg>
+                                    </button>
+                                </div>
+
+                                <div class="edu-card-content">
+                                    <ul class="edu-bullet-list">
+                                        <li>${data.architecture}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Entry 02: Key Implementations & Highlights (Collapsed by default) -->
+                        <div class="edu-card" data-edu-card>
+                            <div class="edu-card-body">
+                                <div class="edu-card-header" data-edu-toggle>
+                                    <div class="edu-title-group">
+                                        <h3 class="edu-school-name">Key Implementations &amp; Highlights</h3>
+                                        <div class="edu-meta-row font-mono">
+                                            <span class="edu-meta-item">Core Contributions</span>
+                                            <span class="edu-meta-divider">|</span>
+                                            <span class="edu-meta-item">${data.contributions.length} Key Deliverables</span>
+                                        </div>
+                                    </div>
+                                    <button class="edu-toggle-btn" aria-label="Toggle details" aria-expanded="false">
+                                        <svg class="edu-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="18 15 12 9 6 15"></polyline>
+                                        </svg>
+                                    </button>
+                                </div>
+
+                                <div class="edu-card-content">
+                                    <ul class="edu-bullet-list">
+                                        ${data.contributions.map(item => `<li>${item}</li>`).join('')}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Bottom CAD Engineering Specs Matrix (Image 2 exact match) -->
+                <!-- Bottom CAD Engineering Specs Matrix -->
                 <div class="proj-spec-table-container">
                     <div class="proj-spec-header-row font-mono">
                         <span class="proj-spec-domain">${data.domain}</span>
@@ -264,7 +320,7 @@ function initProjectDetailsController() {
                         </div>
                     </div>
 
-                    <!-- Bottom Bar with Monogram & Links (Image 2) -->
+                    <!-- Bottom Bar with Monogram & Links -->
                     <div class="proj-spec-bottom-bar">
                         <div class="proj-brand-monogram">
                             <svg class="pixel-logo-svg" viewBox="0 0 32 16" fill="currentColor" style="width: 26px; height: 13px;">
@@ -284,8 +340,34 @@ function initProjectDetailsController() {
                         </div>
                     </div>
                 </div>
-            </article>
+
+                <!-- Bottom Hatched CAD Strip -->
+                <div class="sec-hatched-banner"></div>
+            </div>
         `;
+
+        // Initialize accordion toggles for standalone education-style cards
+        standaloneContainer.querySelectorAll("[data-edu-card]").forEach(card => {
+            const toggleHeader = card.querySelector("[data-edu-toggle]");
+            if (!toggleHeader) return;
+
+            toggleHeader.addEventListener("click", () => {
+                const isActive = card.classList.contains("active");
+                card.classList.toggle("active");
+
+                const btn = card.querySelector(".edu-toggle-btn");
+                if (btn) {
+                    btn.setAttribute("aria-expanded", (!isActive).toString());
+                }
+
+                if (window.lenis) {
+                    try { window.lenis.resize(); } catch (e) {}
+                }
+                if (window.soundFX) {
+                    try { window.soundFX.play("click"); } catch (e) {}
+                }
+            });
+        });
 
         // Bind in-page actions
         const backBtn = document.getElementById("proj-back-btn");
@@ -317,12 +399,49 @@ function initProjectDetailsController() {
     const stackView = document.getElementById("stack-standalone-view");
     let navigatedFromDir = false;
 
+    function forceScrollToTop() {
+        if (window.lenis) {
+            try {
+                window.lenis.scrollTo(0, { immediate: true });
+                window.lenis.resize();
+            } catch (e) {}
+        }
+        window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+
+        requestAnimationFrame(() => {
+            if (window.lenis) {
+                try {
+                    window.lenis.scrollTo(0, { immediate: true });
+                    window.lenis.resize();
+                } catch (e) {}
+            }
+            window.scrollTo(0, 0);
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
+        });
+
+        setTimeout(() => {
+            if (window.lenis) {
+                try {
+                    window.lenis.scrollTo(0, { immediate: true });
+                    window.lenis.resize();
+                } catch (e) {}
+            }
+            window.scrollTo(0, 0);
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
+        }, 50);
+    }
+    window.forceScrollToTop = forceScrollToTop;
+
     function openProjectsDirectory() {
         if (stackView) stackView.style.display = "none";
         if (standaloneView) standaloneView.style.display = "none";
         if (mainWrapper) mainWrapper.style.display = "none";
         if (projectsDirView) projectsDirView.style.display = "block";
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        forceScrollToTop();
         window.history.pushState(null, "", "#projects-dir");
         if (window.soundFX) window.soundFX.play("popover");
     }
@@ -331,9 +450,20 @@ function initProjectDetailsController() {
         if (projectsDirView) projectsDirView.style.display = "none";
         if (mainWrapper) mainWrapper.style.display = "";
         window.history.pushState(null, "", "#projects");
+        if (window.lenis) {
+            try { window.lenis.resize(); } catch (e) {}
+        }
         const projectsEl = document.getElementById("projects");
         if (projectsEl) {
-            projectsEl.scrollIntoView({ behavior: "smooth" });
+            if (window.lenis) {
+                try {
+                    window.lenis.scrollTo(projectsEl, { offset: -24, duration: 1.0 });
+                } catch (e) {
+                    projectsEl.scrollIntoView({ behavior: "smooth" });
+                }
+            } else {
+                projectsEl.scrollIntoView({ behavior: "smooth" });
+            }
         }
         if (window.soundFX) window.soundFX.play("click");
     }
@@ -350,7 +480,7 @@ function initProjectDetailsController() {
         renderProjectStandalone(projectId);
         if (mainWrapper) mainWrapper.style.display = "none";
         standaloneView.style.display = "block";
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        forceScrollToTop();
         window.history.pushState(null, "", "#project/" + projectId);
         if (window.soundFX) window.soundFX.play("click");
     }
@@ -362,7 +492,7 @@ function initProjectDetailsController() {
             navigatedFromDir = false;
             projectsDirView.style.display = "block";
             window.history.pushState(null, "", "#projects-dir");
-            window.scrollTo({ top: 0, behavior: "smooth" });
+            forceScrollToTop();
             if (window.soundFX) window.soundFX.play("click");
             return;
         }
@@ -370,9 +500,20 @@ function initProjectDetailsController() {
         if (projectsDirView) projectsDirView.style.display = "none";
         if (mainWrapper) mainWrapper.style.display = "";
         window.history.pushState(null, "", "#projects");
+        if (window.lenis) {
+            try { window.lenis.resize(); } catch (e) {}
+        }
         const projectsEl = document.getElementById("projects");
         if (projectsEl) {
-            projectsEl.scrollIntoView({ behavior: "smooth" });
+            if (window.lenis) {
+                try {
+                    window.lenis.scrollTo(projectsEl, { offset: -24, duration: 1.0 });
+                } catch (e) {
+                    projectsEl.scrollIntoView({ behavior: "smooth" });
+                }
+            } else {
+                projectsEl.scrollIntoView({ behavior: "smooth" });
+            }
         }
         if (window.soundFX) window.soundFX.play("click");
     }
