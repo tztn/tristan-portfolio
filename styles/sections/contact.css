@@ -1,0 +1,128 @@
+﻿/* ==========================================================================
+   10: CONTACT PANEL
+   ========================================================================== */
+
+.contact-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.contact-direct-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 8px 12px;
+    border-radius: 5px;
+}
+
+.contact-email-text {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.copy-email-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.copy-email-btn:hover {
+    border-color: var(--border-hover);
+}
+
+.contact-form-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.form-field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
+}
+
+.contact-input,
+.contact-textarea {
+    width: 100%;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 8px 12px;
+    font-family: var(--font-sans);
+    font-size: 0.82rem;
+    color: var(--text-primary);
+    outline: none;
+    transition: border-color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.contact-input:focus,
+.contact-textarea:focus {
+    border-color: var(--text-primary);
+}
+
+.contact-input.has-error,
+.contact-textarea.has-error {
+    border-color: #ef4444 !important;
+    background-color: rgba(239, 68, 68, 0.03) !important;
+}
+
+.field-error-msg {
+    font-size: 0.7rem;
+    color: #ef4444;
+    font-weight: 600;
+    margin-top: 1px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.contact-textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+.contact-submit-btn {
+    align-self: flex-start;
+    background: var(--text-primary);
+    color: var(--bg-primary);
+    border: none;
+    border-radius: 5px;
+    padding: 8px 16px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: opacity var(--transition-fast);
+}
+
+.contact-submit-btn:hover {
+    opacity: 0.9;
+}
+
+.contact-submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+

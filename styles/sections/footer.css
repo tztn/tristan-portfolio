@@ -1,0 +1,343 @@
+﻿/* ==========================================================================
+   FOOTER (CAD STYLE)
+   ========================================================================== */
+
+.app-footer {
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    background: var(--bg-primary);
+}
+
+.footer-time-widget {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.footer-time-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background-color: var(--emerald);
+}
+
+.back-to-top-btn {
+    background: none;
+    border: none;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    cursor: pointer;
+}
+
+.back-to-top-btn:hover {
+    color: var(--text-primary);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .hero-cad-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-hand-note {
+        display: none;
+    }
+
+    .tech-metadata-table {
+        grid-template-columns: 1fr;
+    }
+
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stack-matrix-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.article-back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: color var(--transition-fast);
+}
+
+.article-back-btn:hover {
+    color: var(--text-primary);
+}
+
+.article-top-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.article-action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    padding: 4px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.article-action-btn:hover {
+    border-color: var(--border-hover);
+}
+
+.article-icon-action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text-primary);
+    transition: all var(--transition-fast);
+}
+
+.article-icon-action-btn:hover {
+    border-color: var(--border-hover);
+}
+
+.article-body-wrap {
+    padding: 28px 24px;
+}
+
+.article-main-title {
+    font-size: 2.2rem;
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    color: var(--text-primary);
+    line-height: 1.15;
+    margin-bottom: 14px;
+}
+
+.article-lead-text {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+}
+
+.article-intro-block {
+    font-size: 0.9rem;
+    line-height: 1.65;
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+}
+
+.article-intro-block p {
+    margin-bottom: 12px;
+}
+
+.article-hero-frame {
+    width: 100%;
+    aspect-ratio: 16 / 9.5;
+    background: #000000;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--card-shadow);
+}
+
+.article-hero-inner {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.article-hero-inner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.article-narrative-content {
+    font-size: 0.9rem;
+    line-height: 1.68;
+    color: var(--text-secondary);
+}
+
+.article-narrative-content p {
+    margin-bottom: 14px;
+}
+
+.article-narrative-content ul {
+    padding-left: 20px;
+    margin: 16px 0;
+}
+
+.article-narrative-content li {
+    margin-bottom: 8px;
+}
+
+.article-narrative-content strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+/* Bottom Signature CAD Blueprint Specifications Table */
+.article-blueprint-spec-section {
+    margin-top: 36px;
+    border-top: 1px solid var(--border);
+    background: var(--bg-primary);
+}
+
+.spec-table-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.75rem;
+    background: var(--bg-primary);
+}
+
+.spec-header-domain {
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.spec-header-tagline {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+}
+
+.blueprint-spec-grid {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border-bottom: 1px solid var(--border);
+}
+
+.blueprint-spec-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-bottom: 1px solid var(--border);
+}
+
+.blueprint-spec-row:last-child {
+    border-bottom: none;
+}
+
+.b-spec-col {
+    padding: 10px 16px;
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.b-spec-col:last-child {
+    border-right: none;
+}
+
+.b-label {
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+}
+
+.b-val {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.b-val a {
+    color: inherit;
+    text-decoration: underline;
+}
+
+.b-spec-lower-row {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.b-stack-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-primary);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .hero-cad-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-hand-note {
+        display: none;
+    }
+
+    .tech-metadata-table {
+        grid-template-columns: 1fr;
+    }
+
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .project-craft-card {
+        border-right: none !important;
+        padding: 18px 14px;
+    }
+
+    .blueprint-spec-row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .b-spec-lower-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+.fluid-wireframe {
+    height: auto;
+    display: block;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.fluid-wireframe-stroke {
+    stroke: currentColor;
+    stroke-opacity: 0.15;
+    stroke-width: 1.5;
+    fill: none;
+}

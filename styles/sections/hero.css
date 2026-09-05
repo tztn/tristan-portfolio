@@ -1,0 +1,709 @@
+﻿/* ==========================================================================
+   CAD BLUEPRINT SECTIONS & PANELS (CHANHDAI EXACT COMPLETE ENGINEERING STRUCTURE)
+   ========================================================================== */
+
+.main-content-wrapper {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+    padding: 0 16px 100px 16px;
+    overflow-x: clip;
+}
+
+.main-content {
+    width: 100%;
+    max-width: var(--max-content-width, 768px);
+    margin: 0 auto;
+    border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    background-color: var(--bg-primary);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    animation: contentRevealUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
+}
+
+@keyframes contentRevealUp {
+    0% {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.panel {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border-bottom: 1px solid var(--border);
+    background-color: var(--bg-primary);
+    scroll-margin-top: 60px;
+    opacity: 1;
+    transform: translateY(0);
+    position: relative;
+}
+
+.panel::after {
+    content: "";
+    z-index: 0;
+    background-color: var(--border);
+    width: 200vw;
+    height: 1px;
+    position: absolute;
+    bottom: -1px;
+    left: -100vw;
+    pointer-events: none;
+}
+
+.panel.reveal-ready:not(.revealed) {
+    opacity: 0.15;
+    transform: translateY(16px);
+    transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1), transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+}
+
+.panel.reveal-ready.revealed {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1), transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+}
+
+/* Staggered entrance for the Overview Panel on Page Refresh / Load */
+#home .hero-identity-left {
+    animation: heroItemFadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.08s both;
+}
+
+#home .hero-avatar-right {
+    animation: heroAvatarFadeIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.14s both;
+}
+
+#home .overview-panel-content>.sec-hatched-banner {
+    animation: heroItemFadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.18s both;
+}
+
+#home .overview-metadata-grid {
+    animation: heroItemFadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.22s both;
+}
+
+#home .overview-social-bar {
+    animation: heroItemFadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.26s both;
+}
+
+#home .github-heatmap-container {
+    animation: heroItemFadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.30s both;
+}
+
+@keyframes heroItemFadeUp {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes heroAvatarFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(12px) scale(0.97);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Unified Chanh Dai Full-Bleed Hatched Stripe System */
+.sec-hatched-banner,
+.stripe-divider {
+    width: 100%;
+    height: 32px;
+    position: relative;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+    background-color: var(--bg-primary);
+}
+
+.sec-hatched-banner::before,
+.stripe-divider::before {
+    content: "";
+    z-index: 0;
+    width: 200vw;
+    height: 100%;
+    position: absolute;
+    left: -100vw;
+    top: 0;
+    background-image: repeating-linear-gradient(315deg,
+            var(--stripe-color) 0,
+            var(--stripe-color) 1px,
+            transparent 0,
+            transparent 50%);
+    background-size: 10px 10px;
+    pointer-events: none;
+}
+
+.sec-hatched-banner::after,
+.stripe-divider::after {
+    content: "";
+    z-index: 1;
+    background-color: var(--border);
+    width: 200vw;
+    height: 1px;
+    position: absolute;
+    bottom: -1px;
+    left: -100vw;
+    pointer-events: none;
+}
+
+.sec-title-box {
+    padding: 22px 20px 16px 20px;
+    border-bottom: 1px solid var(--border);
+    background-color: var(--bg-primary);
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    position: relative;
+}
+
+.sec-title-box::after {
+    content: "";
+    z-index: 0;
+    background-color: var(--line);
+    width: 200vw;
+    height: 1px;
+    position: absolute;
+    bottom: -1px;
+    left: -100vw;
+    pointer-events: none;
+}
+
+.sec-main-title {
+    font-size: 2.2rem;
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    color: var(--text-primary);
+    line-height: 1.1;
+}
+
+.sec-badge-tag {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.panel-content {
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* ==========================================================================
+   01: OVERVIEW & CAD BLUEPRINT (EXACT REFERENCE DESIGN)
+   ========================================================================== */
+
+.overview-panel-content {
+    padding: 0;
+    gap: 0;
+}
+
+/* Hero Profile Row: Name on Left, Cutout Picture Standing Freely on Right (No Frame, No Border, No Hover) */
+.overview-hero-profile-row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 28px 32px 0 32px;
+    border-bottom: 1px solid var(--border);
+    background-color: var(--bg-primary);
+    gap: 24px;
+    min-height: 160px;
+    position: relative;
+}
+
+.overview-hero-profile-row::after {
+    content: "";
+    z-index: 0;
+    background-color: var(--line);
+    width: 200vw;
+    height: 1px;
+    position: absolute;
+    bottom: -1px;
+    left: -100vw;
+    pointer-events: none;
+}
+
+.hero-identity-left {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+    padding-bottom: 28px;
+}
+
+.overview-profile-name {
+    font-size: 2.35rem;
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    color: var(--text-primary);
+    line-height: 1.1;
+    margin: 0;
+}
+
+.profile-tagline-mono {
+    font-family: var(--font-mono);
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin: 0;
+}
+
+.hero-avatar-right {
+    height: 150px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    border-radius: 0;
+    overflow: visible;
+    border: none;
+    background: transparent;
+    box-shadow: none;
+}
+
+.profile-static-img {
+    height: 150px;
+    width: auto;
+    max-width: 220px;
+    object-fit: contain;
+    object-position: bottom right;
+    display: block;
+    user-select: none;
+    pointer-events: none;
+    border-radius: 0;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.06));
+    transition: none !important;
+    transform: none !important;
+}
+
+html.dark .profile-static-img {
+    filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.4));
+}
+
+/* ==========================================================================
+   02: TECHNICAL METADATA SPEC MATRIX (2-COLUMN REFERENCE GRID)
+   ========================================================================== */
+
+.overview-metadata-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    border-bottom: 1px solid var(--border);
+    background-color: var(--bg-primary);
+    position: relative;
+}
+
+.overview-metadata-grid::after {
+    content: "";
+    z-index: 0;
+    background-color: var(--line);
+    width: 200vw;
+    height: 1px;
+    position: absolute;
+    bottom: -1px;
+    left: -100vw;
+    pointer-events: none;
+}
+
+.meta-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.meta-col-left {
+    border-right: 1px solid var(--border);
+}
+
+.meta-line-item {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 9px 24px;
+    font-size: 0.82rem;
+    color: var(--text-primary);
+    transition: background-color var(--transition-fast);
+    line-height: 1.4;
+}
+
+.meta-line-item:hover {
+    background-color: var(--bg-card-hover);
+}
+
+.meta-item-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    color: var(--text-muted);
+    flex-shrink: 0;
+}
+
+.meta-item-icon svg {
+    width: 14px;
+    height: 14px;
+}
+
+.meta-item-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: var(--font-mono);
+}
+
+.meta-item-text a {
+    color: var(--text-primary);
+    text-decoration: none;
+}
+
+.meta-item-text a:hover {
+    text-decoration: underline;
+}
+
+/* Social Icon Badges Row + "follow me" note */
+.overview-social-bar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 14px 24px;
+    border-bottom: 1px solid var(--border);
+    background-color: var(--bg-primary);
+    position: relative;
+}
+
+.overview-social-bar::after {
+    content: "";
+    z-index: 0;
+    background-color: var(--line);
+    width: 200vw;
+    height: 1px;
+    position: absolute;
+    bottom: -1px;
+    left: -100vw;
+    pointer-events: none;
+}
+
+.social-follow-label,
+.callout-annotation {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    user-select: none;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.social-follow-label {
+    left: calc(100% + 14px);
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.callout-annotation.callout-left {
+    right: calc(100% + 14px);
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.callout-annotation.callout-right {
+    left: calc(100% + 14px);
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.callout-annotation.callout-projects {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.callout-annotation.callout-stack {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.callout-annotation.callout-stack-all {
+    right: calc(50% + 78px);
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.callout-annotation.callout-about {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.callout-annotation.callout-bio {
+    top: 24px;
+    transform: none;
+}
+
+.callout-annotation.callout-principles {
+    top: 24px;
+    transform: none;
+}
+
+.callout-annotation.callout-education {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.callout-annotation.callout-terminal {
+    bottom: 12px;
+    top: auto;
+    transform: none;
+}
+
+.callout-annotation.callout-contact {
+    top: 24px;
+    transform: none;
+}
+
+@media (max-width: 1080px) {
+    .social-follow-label,
+    .callout-annotation:not(.callout-stack-all) {
+        display: none;
+    }
+}
+
+@media (max-width: 640px) {
+    .callout-annotation.callout-stack-all {
+        display: none;
+    }
+}
+
+.follow-hand-text {
+    font-family: var(--font-hand);
+    font-size: 1.35rem;
+    color: var(--text-secondary);
+    line-height: 1;
+    transform: rotate(-3deg);
+    display: inline-block;
+}
+
+.callout-annotation.callout-left .follow-hand-text {
+    transform: rotate(-2.5deg);
+}
+
+.callout-annotation.callout-right .follow-hand-text {
+    transform: rotate(2deg);
+}
+
+.follow-arrow-svg {
+    width: 38px;
+    height: 18px;
+    color: var(--text-muted);
+    overflow: visible;
+    flex-shrink: 0;
+}
+
+.social-buttons-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.social-btn-box {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 6px;
+    background: var(--bg-primary);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    transition: all var(--transition-fast);
+}
+
+.social-btn-box:hover {
+    color: var(--text-primary);
+    border-color: var(--text-primary);
+    background: var(--bg-card-hover);
+    transform: translateY(-1px);
+}
+
+.social-btn-box svg {
+    width: 15px;
+    height: 15px;
+}
+
+@media (max-width: 640px) {
+    .overview-hero-profile-row {
+        padding: 20px 20px 0 20px;
+        gap: 16px;
+    }
+
+    .hero-identity-left {
+        padding-bottom: 20px;
+    }
+
+    .hero-avatar-right {
+        height: 110px;
+    }
+
+    .profile-static-img {
+        height: 110px;
+        max-width: 140px;
+    }
+
+    .overview-profile-name {
+        font-size: 1.75rem;
+    }
+
+    .overview-metadata-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .meta-col-left {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .meta-line-item,
+    .overview-social-bar {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+}
+
+/* ==========================================================================
+   03: GITHUB CONTRIBUTION HEATMAP
+   ========================================================================== */
+
+.github-heatmap-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 16px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    width: 100%;
+    overflow-x: auto;
+}
+
+.heatmap-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-muted);
+}
+
+.heatmap-grid-scroll {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 580px;
+}
+
+.heatmap-months-row {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    color: var(--text-muted);
+    padding-left: 20px;
+}
+
+.heatmap-matrix {
+    display: grid;
+    grid-template-columns: repeat(52, 1fr);
+    gap: 3px;
+}
+
+.heatmap-col {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.heatmap-cell {
+    width: 9px;
+    height: 9px;
+    border-radius: 2px;
+    background-color: #ebedf0;
+    transition: transform 0.1s ease;
+}
+
+html.dark .heatmap-cell {
+    background-color: #161b22;
+}
+
+.heatmap-cell.l1 {
+    background-color: #9be9a8;
+}
+
+.heatmap-cell.l2 {
+    background-color: #40c463;
+}
+
+.heatmap-cell.l3 {
+    background-color: #30a14e;
+}
+
+.heatmap-cell.l4 {
+    background-color: #216e39;
+}
+
+html.dark .heatmap-cell.l1 {
+    background-color: #0e4429;
+}
+
+html.dark .heatmap-cell.l2 {
+    background-color: #006d32;
+}
+
+html.dark .heatmap-cell.l3 {
+    background-color: #26a641;
+}
+
+html.dark .heatmap-cell.l4 {
+    background-color: #39d353;
+}
+
+.heatmap-cell:hover {
+    transform: scale(1.3);
+}
+
+.heatmap-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+.heatmap-legend {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+

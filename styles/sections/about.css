@@ -1,0 +1,236 @@
+﻿/* ==========================================================================
+   07: EXPERIENCE & CAREER JOURNEY (EXACT CHANHDAI TREE STRUCTURE)
+   ========================================================================== */
+
+.exp-section-wrap {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: var(--bg-primary);
+}
+
+.exp-hatched-banner {
+    width: 100%;
+    height: 18px;
+    background-image: repeating-linear-gradient(45deg,
+            var(--border) 0,
+            var(--border) 1px,
+            transparent 0,
+            transparent 8px);
+    border-bottom: 1px solid var(--border);
+}
+
+.exp-section-title-box {
+    padding: 24px 20px 16px 20px;
+    border-bottom: 1px solid var(--border);
+}
+
+.exp-main-title {
+    font-size: 2.2rem;
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    color: var(--text-primary);
+    line-height: 1.1;
+}
+
+.exp-companies-list {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.exp-company-block {
+    display: flex;
+    flex-direction: column;
+    padding: 24px 20px;
+    border-bottom: 1px solid var(--border);
+    gap: 16px;
+}
+
+.exp-company-block:last-child {
+    border-bottom: none;
+}
+
+/* Company Header */
+.exp-company-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.exp-company-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.exp-company-logo {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--text-primary);
+    color: var(--bg-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 800;
+    flex-shrink: 0;
+}
+
+.exp-company-name {
+    font-size: 1.05rem;
+    font-weight: 750;
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
+}
+
+.exp-company-meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.exp-status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #3b82f6;
+    display: inline-block;
+}
+
+/* Roles Branch */
+.exp-roles-branch {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: relative;
+    padding-left: 24px;
+    margin-left: 10px;
+    border-left: 1px solid var(--border);
+}
+
+.exp-role-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.exp-role-item::before {
+    content: '';
+    position: absolute;
+    top: 11px;
+    left: -24px;
+    width: 14px;
+    height: 1px;
+    background-color: var(--border);
+}
+
+.exp-role-head-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.exp-role-title-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.exp-role-icon {
+    width: 18px;
+    height: 18px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    color: var(--text-muted);
+    background: var(--bg-secondary);
+}
+
+.exp-role-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.exp-role-toggle-icon {
+    width: 14px;
+    height: 14px;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+}
+
+.exp-role-time-meta {
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.exp-bullets-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 0;
+    margin: 4px 0 6px 0;
+}
+
+.exp-bullet-item {
+    position: relative;
+    padding-left: 16px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.55;
+}
+
+.exp-bullet-item::before {
+    content: 'â€¢';
+    position: absolute;
+    left: 4px;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+.exp-pills-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    margin-top: 4px;
+}
+
+.exp-pill-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 9999px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    transition: all var(--transition-fast);
+}
+
+.exp-pill-chip:hover {
+    border-color: var(--border-hover);
+    color: var(--text-primary);
+}
+
