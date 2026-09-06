@@ -159,6 +159,7 @@
                      PANEL 01: OVERVIEW & PROFILE (EXACT REFERENCE DESIGN)
                      ========================================================== -->
                 <section id="home" class="panel">
+                    <span id="overview" class="overview-scroll-anchor" style="position: absolute; top: 0; left: 0; height: 0; width: 0; pointer-events: none; opacity: 0;" aria-hidden="true"></span>
                     <div class="panel-content overview-panel-content">
                         <!-- Hero Profile Showcase: Name on Left, Picture on Right (Borderless & No Hover) -->
                         <div class="overview-hero-profile-row">
@@ -1464,7 +1465,14 @@
 
                     <div class="sec-title-box">
                         <h1 class="sec-main-title">Projects</h1>
-                        <span class="sec-badge-tag">INDEX // REPOSITORY</span>
+                        <span class="sec-badge-tag font-mono">INDEX // REPOSITORY</span>
+                        <div class="callout-annotation callout-left callout-projects" aria-hidden="true">
+                            <span class="font-hand follow-hand-text">all archive</span>
+                            <svg class="follow-arrow-svg" viewBox="0 0 44 24" fill="none">
+                                <path d="M 4 6 C 18 5, 32 8, 38 18 M 30 15 L 38 18 L 36 10" stroke="currentColor"
+                                    stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </div>
                     </div>
 
                     <div class="stack-standalone-desc-box">
@@ -1552,6 +1560,10 @@
                             </div>
                         </div>
                     </div>
+                    <div class="standalone-footer-boundary">
+                        <span class="standalone-footer-tag font-mono">INDEX // REPOSITORY END</span>
+                        <button type="button" class="standalone-btt-btn font-mono" aria-label="Scroll back to top">[ Back to Top &uarr; ]</button>
+                    </div>
 
                     <div class="sec-hatched-banner sec-hatched-banner-bottom"></div>
                 </div>
@@ -1583,7 +1595,7 @@
 
                     <div class="sec-title-box">
                         <h1 class="sec-main-title">Tech Stack</h1>
-                        <span class="sec-badge-tag">SYSTEMS // REGISTRY</span>
+                        <span class="sec-badge-tag font-mono">SYSTEMS // REGISTRY</span>
                     </div>
 
                     <div class="stack-standalone-desc-box">
@@ -1645,7 +1657,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="sec-hatched-banner sec-hatched-banner-bottom"></div>
                 </div>
             </div>
@@ -1905,6 +1916,8 @@
     <script src="scripts/modules/cmdk.js?v=1.1"></script>
     <script src="scripts/modules/terminal.js?v=1.1"></script>
     <script src="scripts/main.js?v=1.1"></script>
+    <!-- Floating Back to Top Controller (Standalone Views) -->
+    <button type="button" class="standalone-floating-btt font-mono" id="standalone-floating-btt" aria-label="Scroll back to top">[ Back to Top &uarr; ]</button>
 </body>
 
 </html>

@@ -55,7 +55,7 @@ function initStackStandaloneController() {
 
                 <div class="sec-title-box">
                     <h1 class="sec-main-title">Tech Stack</h1>
-                    <span class="sec-badge-tag">SYSTEMS // REGISTRY</span>
+                    <span class="sec-badge-tag font-mono">SYSTEMS // REGISTRY</span>
                 </div>
 
                 <div class="stack-standalone-desc-box">
@@ -67,11 +67,6 @@ function initStackStandaloneController() {
                 <div class="stack-table-rows cad-table-rows">
                     ${stackCategories.map(cat => `
                         <div class="stack-table-row cad-table-row">
-                            ${cat.callout ? `
-                                <div class="callout-annotation callout-right callout-stack-prod" aria-hidden="true">
-                                    <span class="font-hand follow-hand-text">production ready <span class="follow-arrow-char">↴</span></span>
-                                </div>
-                            ` : ''}
                             <div class="stack-row-header cad-row-header">
                                 <span class="stack-row-num cad-row-num font-mono">${cat.index}</span>
                                 <span class="stack-row-label cad-row-label">${cat.label}</span>
@@ -110,6 +105,8 @@ function initStackStandaloneController() {
         } else {
             window.scrollTo(0, 0);
         }
+        if (window.updateNavActiveState) window.updateNavActiveState("stack");
+        if (window.syncNavLinksHref) window.syncNavLinksHref(true);
         window.history.pushState(null, "", "#stack-dir");
         if (window.soundFX) window.soundFX.play("popover");
     }
@@ -117,6 +114,8 @@ function initStackStandaloneController() {
     function closeStandaloneStack() {
         stackView.style.display = "none";
         if (mainWrapper) mainWrapper.style.display = "";
+        if (window.syncNavLinksHref) window.syncNavLinksHref(false);
+        if (window.updateNavActiveState) window.updateNavActiveState("stack");
         window.history.pushState(null, "", "#stack");
         if (window.lenis) {
             try { window.lenis.resize(); } catch (e) {}

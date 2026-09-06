@@ -29,7 +29,11 @@
     };
 
     let audioContext = null;
+    let hasUserInteracted = false;
     const bufferCache = new Map();
+
+    window.addEventListener("pointerdown", () => { hasUserInteracted = true; }, { capture: true, once: true });
+    window.addEventListener("keydown", () => { hasUserInteracted = true; }, { capture: true, once: true });
 
     function getAudioContext() {
         if (!audioContext) {
@@ -38,7 +42,7 @@
                 audioContext = new AudioCtx();
             }
         }
-        if (audioContext && audioContext.state === "suspended") {
+        if (audioContext && audioContext.state === "suspended" && hasUserInteracted) {
             audioContext.resume().catch(() => {});
         }
         return audioContext;

@@ -10,8 +10,8 @@ document.addEventListener("DOMContentLoaded", () => {
     initPhtClock();
     initGithubHeatmap();
     initProjectsFilter();
-    initProjectDetailsController();
     initStackStandaloneController();
+    initProjectDetailsController();
     initTerminalHud();
     initContactFeedback();
     initScrollReveal();
@@ -200,6 +200,13 @@ function initProjectDetailsController() {
                 <div class="sec-title-box proj-standalone-title-box">
                     <h1 class="sec-main-title proj-standalone-title-main">${data.title}</h1>
                     <span class="sec-badge-tag font-mono">${data.badge || 'PROJECT'}</span>
+                    <div class="callout-annotation callout-right callout-standalone-project" aria-hidden="true">
+                        <svg class="follow-arrow-svg" viewBox="0 0 44 24" fill="none">
+                            <path d="M 40 6 C 26 5, 12 8, 6 18 M 14 15 L 6 18 L 8 10" stroke="currentColor"
+                                stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        <span class="font-hand follow-hand-text">project deep-dive</span>
+                    </div>
                 </div>
 
                 <!-- Narrative Overview Box (Clean CAD full-bleed layout) -->
@@ -208,9 +215,11 @@ function initProjectDetailsController() {
                     <p class="proj-story-text">${data.story}</p>
                 </div>
 
-                <!-- Showcase Media Box (Architectural Frame) -->
+                <!-- Showcase Media Box (12px radius, 16:9.5 ratio, Grayscale-to-Color Transition) -->
                 <div class="proj-standalone-media-box">
-                    <img src="${data.img}" alt="${data.title}" loading="eager">
+                    <div class="project-media-wrap proj-standalone-media-wrap">
+                        <img src="${data.img}" alt="${data.title}" loading="eager">
+                    </div>
                 </div>
 
                 <!-- Technical Deep Dive Body (Exact Education Card UI Reference) -->
@@ -280,6 +289,13 @@ function initProjectDetailsController() {
 
                 <!-- Bottom CAD Engineering Specs Matrix -->
                 <div class="proj-spec-table-container">
+                    <div class="callout-annotation callout-left callout-project-specs" aria-hidden="true">
+                        <span class="font-hand follow-hand-text">technical specs</span>
+                        <svg class="follow-arrow-svg" viewBox="0 0 44 24" fill="none">
+                            <path d="M 4 6 C 18 5, 32 8, 38 18 M 30 15 L 38 18 L 36 10" stroke="currentColor"
+                                stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </div>
                     <div class="proj-spec-header-row font-mono">
                         <span class="proj-spec-domain">${data.domain}</span>
                         <span class="proj-spec-summary">${data.domainSummary}</span>
@@ -338,11 +354,12 @@ function initProjectDetailsController() {
                             <a href="mailto:agoilotristanray@gmail.com">Email</a>
                             <a href="https://discord.com" target="_blank" rel="noopener noreferrer">Discord</a>
                         </div>
+                        <button type="button" class="standalone-btt-btn font-mono" aria-label="Scroll back to top">[ Back to Top &uarr; ]</button>
                     </div>
                 </div>
 
                 <!-- Bottom Hatched CAD Strip -->
-                <div class="sec-hatched-banner"></div>
+                <div class="sec-hatched-banner sec-hatched-banner-bottom"></div>
             </div>
         `;
 
@@ -442,6 +459,8 @@ function initProjectDetailsController() {
         if (mainWrapper) mainWrapper.style.display = "none";
         if (projectsDirView) projectsDirView.style.display = "block";
         forceScrollToTop();
+        if (window.updateNavActiveState) window.updateNavActiveState("projects");
+        if (window.syncNavLinksHref) window.syncNavLinksHref(true);
         window.history.pushState(null, "", "#projects-dir");
         if (window.soundFX) window.soundFX.play("popover");
     }
@@ -449,6 +468,8 @@ function initProjectDetailsController() {
     function closeProjectsDirectory() {
         if (projectsDirView) projectsDirView.style.display = "none";
         if (mainWrapper) mainWrapper.style.display = "";
+        if (window.syncNavLinksHref) window.syncNavLinksHref(false);
+        if (window.updateNavActiveState) window.updateNavActiveState("projects");
         window.history.pushState(null, "", "#projects");
         if (window.lenis) {
             try { window.lenis.resize(); } catch (e) {}
@@ -481,6 +502,8 @@ function initProjectDetailsController() {
         if (mainWrapper) mainWrapper.style.display = "none";
         standaloneView.style.display = "block";
         forceScrollToTop();
+        if (window.updateNavActiveState) window.updateNavActiveState("projects");
+        if (window.syncNavLinksHref) window.syncNavLinksHref(true);
         window.history.pushState(null, "", "#project/" + projectId);
         if (window.soundFX) window.soundFX.play("click");
     }
@@ -499,6 +522,8 @@ function initProjectDetailsController() {
         navigatedFromDir = false;
         if (projectsDirView) projectsDirView.style.display = "none";
         if (mainWrapper) mainWrapper.style.display = "";
+        if (window.syncNavLinksHref) window.syncNavLinksHref(false);
+        if (window.updateNavActiveState) window.updateNavActiveState("projects");
         window.history.pushState(null, "", "#projects");
         if (window.lenis) {
             try { window.lenis.resize(); } catch (e) {}
@@ -592,10 +617,11 @@ function initProjectDetailsController() {
             openProjectsDirectory();
         } else if (hash === "#stack-dir" || hash === "#stack-view") {
             if (window.openStandaloneStack) window.openStandaloneStack();
-        } else if (standaloneView.style.display === "block" || (projectsDirView && projectsDirView.style.display === "block")) {
+        } else if (standaloneView.style.display === "block" || (projectsDirView && projectsDirView.style.display === "block") || (stackView && stackView.style.display === "block")) {
             currentActiveProjectId = null;
             standaloneView.style.display = "none";
             if (projectsDirView) projectsDirView.style.display = "none";
+            if (stackView) stackView.style.display = "none";
             if (mainWrapper) mainWrapper.style.display = "";
         }
     }
@@ -862,6 +888,10 @@ function initAudioFeedback() {
         });
     }
 
+    let hasUserGesture = false;
+    window.addEventListener("pointerdown", () => { hasUserGesture = true; }, { capture: true, once: true });
+    window.addEventListener("keydown", () => { hasUserGesture = true; }, { capture: true, once: true });
+
     function getAudioContext() {
         if (!audioCtx) {
             const AudioContextClass = window.AudioContext || window.webkitAudioContext;
@@ -869,8 +899,8 @@ function initAudioFeedback() {
                 audioCtx = new AudioContextClass();
             }
         }
-        if (audioCtx && audioCtx.state === "suspended") {
-            audioCtx.resume();
+        if (audioCtx && audioCtx.state === "suspended" && hasUserGesture) {
+            try { audioCtx.resume(); } catch (e) {}
         }
         return audioCtx;
     }
@@ -996,7 +1026,16 @@ function initAudioFeedback() {
             ".modal-close-btn",
             ".t-quick-chip",
             ".edu-card-header",
-            ".edu-skill-pill"
+            ".edu-skill-pill",
+            ".cad-project-row",
+            ".cad-pill-chip",
+            ".proj-back-btn",
+            ".proj-action-btn",
+            ".proj-standalone-media-wrap",
+            ".projects-all-btn",
+            ".stack-all-btn",
+            ".standalone-btt-btn",
+            ".standalone-floating-btt"
         ];
 
         const elements = document.querySelectorAll(interactiveSelectors.join(","));

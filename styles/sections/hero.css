@@ -44,7 +44,7 @@
     width: 100%;
     border-bottom: 1px solid var(--border);
     background-color: var(--bg-primary);
-    scroll-margin-top: 60px;
+    scroll-margin-top: var(--header-height, 56px);
     opacity: 1;
     transform: translateY(0);
     position: relative;

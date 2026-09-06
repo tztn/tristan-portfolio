@@ -116,6 +116,21 @@ svg {
     box-sizing: border-box;
 }
 
+/* ==========================================================================
+   SECTION NAVIGATION & SCROLL MARGIN CORRECTION (FIXED 56PX HEADER)
+   ========================================================================== */
+
+#overview,
+#home,
+#projects,
+#stack,
+#about,
+#education,
+#contact,
+.panel {
+    scroll-margin-top: var(--header-height, 56px);
+}
+
 /* App Container */
 .app-container {
     display: flex;
