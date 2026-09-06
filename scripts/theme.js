@@ -77,6 +77,8 @@
         );
 
         try {
+            document.documentElement.classList.add('theme-transitioning-vt');
+
             const transition = document.startViewTransition(() => {
                 applyNextTheme();
             });
@@ -87,7 +89,7 @@
                     `circle(${endRadius}px at ${x}px ${y}px)`
                 ];
 
-                document.documentElement.animate(
+                const anim = document.documentElement.animate(
                     {
                         clipPath: clipPath
                     },
@@ -97,10 +99,16 @@
                         pseudoElement: '::view-transition-new(root)'
                     }
                 );
+                return anim.finished;
             }).catch(() => {
                 // Audio or layout safe fallback
             });
+
+            transition.finished.finally(() => {
+                document.documentElement.classList.remove('theme-transitioning-vt');
+            });
         } catch (e) {
+            document.documentElement.classList.remove('theme-transitioning-vt');
             triggerCssFallback();
         }
     }

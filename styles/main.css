@@ -230,16 +230,15 @@ html.lenis body {
    60 FPS VIEW TRANSITIONS & HARDWARE-ACCELERATED THEME TOGGLE ANIMATION
    ========================================================================== */
 
-/* Disable default cross-fade so the GPU circular clip-path reveal takes over */
+/* Disable default cross-fade & group resize so the GPU circular clip-path reveal takes over */
 ::view-transition-group(root) {
-    animation-duration: 0.5s;
-    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+    animation: none !important;
 }
 
 ::view-transition-old(root),
 ::view-transition-new(root) {
-    animation: none;
-    mix-blend-mode: normal;
+    animation: none !important;
+    mix-blend-mode: normal !important;
 }
 
 ::view-transition-old(root) {
@@ -248,6 +247,18 @@ html.lenis body {
 
 ::view-transition-new(root) {
     z-index: 99999;
+}
+
+/* Prevent layout jank & CSS transition collision during View Transition clip-path reveal */
+html.theme-transitioning-vt,
+html.theme-transitioning-vt *:not(.header-theme-toggle *),
+html.theme-transitioning-vt *::before,
+html.theme-transitioning-vt *::after {
+    transition: none !important;
+}
+
+html.theme-transitioning-vt .stack-marquee-track {
+    animation-play-state: paused !important;
 }
 
 /* Coordinated 60fps CSS theme transition for fallback and non-view-transition contexts */
