@@ -290,14 +290,20 @@ html.dark .project-media-wrap img {
     cursor: pointer;
     text-decoration: none;
     transition: background-color var(--transition-fast);
+    outline: none;
 }
 
-.cad-project-row:hover {
+.cad-project-row .cad-row-label {
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    font-size: 0.88rem;
+    font-weight: 600;
+    transition: color var(--transition-fast);
+}
+
+.cad-project-row:hover,
+.cad-project-row:focus-visible {
     background-color: var(--bg-card-hover);
-}
-
-.cad-project-row:hover .cad-row-label {
-    color: var(--accent);
 }
 
 .proj-back-btn {
@@ -312,7 +318,7 @@ html.dark .project-media-wrap img {
     cursor: pointer;
     padding: 6px 0;
     font-family: var(--font-sans);
-    transition: color var(--transition-fast), transform var(--transition-fast);
+    transition: color var(--transition-fast),    transform var(--transition-fast);
 }
 
 .proj-back-btn:hover {
@@ -801,6 +807,7 @@ html.dark .proj-standalone-media-wrap img {
 
 /* Responsive */
 @media (max-width: 1080px) {
+
     .callout-annotation.callout-standalone-project,
     .callout-annotation.callout-project-specs {
         display: none;
@@ -875,5 +882,3 @@ html.dark .proj-standalone-media-wrap img {
 .standalone-btt-btn:hover {
     color: var(--text-primary);
 }
-
-

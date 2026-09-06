@@ -583,7 +583,8 @@
         background-color: var(--bg-secondary);
     }
 
-    .stack-row-pills {
+    .stack-row-pills,
+    .cad-row-pills {
         padding: 12px 16px;
     }
 }
@@ -641,4 +642,3 @@
 .standalone-btt-btn:hover {
     color: var(--text-primary);
 }
-

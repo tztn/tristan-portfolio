@@ -3,8 +3,8 @@
    ========================================================================== */
 
 @import "sections/hero.css";
-@import "sections/projects.css";
-@import "sections/stack.css";
+@import "sections/projects.css?v=8";
+@import "sections/stack.css?v=8";
 @import "sections/about.css";
 @import "sections/education.css";
 @import "sections/terminal.css";
