@@ -1034,8 +1034,7 @@ function initAudioFeedback() {
             ".proj-standalone-media-wrap",
             ".projects-all-btn",
             ".stack-all-btn",
-            ".standalone-btt-btn",
-            ".standalone-floating-btt"
+            ".standalone-btt-btn"
         ];
 
         const elements = document.querySelectorAll(interactiveSelectors.join(","));

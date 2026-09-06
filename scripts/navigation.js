@@ -368,30 +368,11 @@
 
         // Delegate clicks for any back-to-top button
         document.addEventListener("click", (e) => {
-            const btt = e.target.closest(".standalone-btt-btn, #standalone-floating-btt, .back-to-top-btn, #back-to-top-btn");
+            const btt = e.target.closest(".standalone-btt-btn, .back-to-top-btn, #back-to-top-btn");
             if (btt) {
                 scrollToTop(e);
             }
         });
-
-        // Floating button visibility past 400px
-        function updateFloatingBtt() {
-            const floatingBtn = document.getElementById("standalone-floating-btt");
-            if (!floatingBtn) return;
-            const scrollY = window.pageYOffset || document.documentElement.scrollTop || window.scrollY || 0;
-            const isStandalone = isStandaloneActive();
-
-            if (isStandalone && scrollY > 400) {
-                floatingBtn.classList.add("visible");
-            } else {
-                floatingBtn.classList.remove("visible");
-            }
-        }
-
-        window.addEventListener("scroll", updateFloatingBtt, { passive: true });
-        if (window.lenis) {
-            window.lenis.on("scroll", updateFloatingBtt);
-        }
 
         /* 06: Hash & Standalone State Synchronizer */
         function handleHashSync() {
@@ -407,7 +388,6 @@
                 const clean = hash.replace("#", "");
                 if (clean) updateNavActiveState(clean);
             }
-            updateFloatingBtt();
         }
 
         window.addEventListener("hashchange", handleHashSync);
