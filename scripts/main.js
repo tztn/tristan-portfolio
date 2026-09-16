@@ -21,9 +21,35 @@ document.addEventListener("DOMContentLoaded", () => {
 /* ==========================================================================
    05: PROJECT DATA & STANDALONE PAGE CONTROLLER (CHANHDAI EXACT REFERENCE)
    ========================================================================== */
-const projectOrder = ["sneakrs", "dlails", "stym", "lostfound", "supermarket"];
+const projectOrder = ["gncp", "sneakrs", "dlails", "stym", "lostfound", "supermarket"];
 
 const projectData = {
+    gncp: {
+        id: "gncp",
+        title: "Go-On National College Online Enrollment Portal",
+        badge: "WEB / PORTAL",
+        lead: "A comprehensive academic admissions and online student enrollment platform engineered for Go-On National College in Cavite.",
+        story: "Designed to modernize institutional admissions and eliminate manual in-person queues, this web platform provides prospective students and transferees with a seamless, end-to-end digital enrollment experience from program exploration to document submission.",
+        desc: "The system features interactive academic program guides, multi-stage student registration, prerequisite validation, tuition payment schedule tracking, and centralized applicant records management.",
+        architecture: "Constructed with modern responsive front-end interfaces, structured client/server form validation pipelines, normalized relational database storage for student data, and automated registration status logging.",
+        contributions: [
+            "Architected full digital enrollment pipeline with real-time field validation and multi-step registration forms.",
+            "Designed clean, responsive campus portal UI showcasing courses, admissions requirements, and campus life.",
+            "Engineered secure student document submission workflow for high school and college transferees.",
+            "Optimized cross-device navigation and mobile viewport accessibility across desktop, tablet, and phones."
+        ],
+        date: "2025-09-16",
+        domain: "gncp-main.site.je/school-website",
+        domainSummary: "Online enrollment & academic admissions portal for Go-On National College.",
+        buildHash: "8e3b1c4",
+        categoryLabel: "Web Application / Portal",
+        deployedOn: "gncp-main.site.je",
+        linkType: "LIVE URL",
+        linkLabel: "gncp-main.site.je/school-website",
+        tags: ["Web Application", "Online Enrollment", "Responsive UI", "Student Portal", "PHP / MySQL", "JavaScript"],
+        img: "assets/images/projects/gncp.png",
+        externalLink: "https://gncp-main.site.je/school-website/"
+    },
     sneakrs: {
         id: "sneakrs",
         title: "SNEAKRS Landing Concept & UI Design",
@@ -297,7 +323,7 @@ function initProjectDetailsController() {
                         </svg>
                     </div>
                     <div class="proj-spec-header-row font-mono">
-                        <span class="proj-spec-domain">${data.domain}</span>
+                        <span class="proj-spec-domain"><a href="${data.externalLink}" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: underline; text-underline-offset: 3px;">${data.domain} ↗</a></span>
                         <span class="proj-spec-summary">${data.domainSummary}</span>
                     </div>
 
@@ -319,8 +345,8 @@ function initProjectDetailsController() {
                             <span class="proj-spec-v font-mono"><span class="deploy-delta">▲</span> ${data.deployedOn}</span>
                         </div>
                         <div class="proj-spec-cell">
-                            <span class="proj-spec-k font-mono">SOURCE CODE</span>
-                            <span class="proj-spec-v font-mono"><a href="${data.externalLink}" target="_blank" rel="noopener noreferrer">GitHub</a></span>
+                            <span class="proj-spec-k font-mono">${data.linkType || 'SOURCE CODE'}</span>
+                            <span class="proj-spec-v font-mono"><a href="${data.externalLink}" target="_blank" rel="noopener noreferrer">${data.linkLabel || 'GitHub'} ↗</a></span>
                         </div>
                         <div class="proj-spec-cell">
                             <span class="proj-spec-k font-mono">STATUS</span>
@@ -378,10 +404,10 @@ function initProjectDetailsController() {
                 }
 
                 if (window.lenis) {
-                    try { window.lenis.resize(); } catch (e) {}
+                    try { window.lenis.resize(); } catch (e) { }
                 }
                 if (window.soundFX) {
-                    try { window.soundFX.play("click"); } catch (e) {}
+                    try { window.soundFX.play("click"); } catch (e) { }
                 }
             });
         });
@@ -421,7 +447,7 @@ function initProjectDetailsController() {
             try {
                 window.lenis.scrollTo(0, { immediate: true });
                 window.lenis.resize();
-            } catch (e) {}
+            } catch (e) { }
         }
         window.scrollTo(0, 0);
         document.documentElement.scrollTop = 0;
@@ -432,7 +458,7 @@ function initProjectDetailsController() {
                 try {
                     window.lenis.scrollTo(0, { immediate: true });
                     window.lenis.resize();
-                } catch (e) {}
+                } catch (e) { }
             }
             window.scrollTo(0, 0);
             document.documentElement.scrollTop = 0;
@@ -444,7 +470,7 @@ function initProjectDetailsController() {
                 try {
                     window.lenis.scrollTo(0, { immediate: true });
                     window.lenis.resize();
-                } catch (e) {}
+                } catch (e) { }
             }
             window.scrollTo(0, 0);
             document.documentElement.scrollTop = 0;
@@ -472,7 +498,7 @@ function initProjectDetailsController() {
         if (window.updateNavActiveState) window.updateNavActiveState("projects");
         window.history.pushState(null, "", "#projects");
         if (window.lenis) {
-            try { window.lenis.resize(); } catch (e) {}
+            try { window.lenis.resize(); } catch (e) { }
         }
         const projectsEl = document.getElementById("projects");
         if (projectsEl) {
@@ -526,7 +552,7 @@ function initProjectDetailsController() {
         if (window.updateNavActiveState) window.updateNavActiveState("projects");
         window.history.pushState(null, "", "#projects");
         if (window.lenis) {
-            try { window.lenis.resize(); } catch (e) {}
+            try { window.lenis.resize(); } catch (e) { }
         }
         const projectsEl = document.getElementById("projects");
         if (projectsEl) {
@@ -900,7 +926,7 @@ function initAudioFeedback() {
             }
         }
         if (audioCtx && audioCtx.state === "suspended" && hasUserGesture) {
-            try { audioCtx.resume(); } catch (e) {}
+            try { audioCtx.resume(); } catch (e) { }
         }
         return audioCtx;
     }

@@ -318,7 +318,7 @@ html.dark .project-media-wrap img {
     cursor: pointer;
     padding: 6px 0;
     font-family: var(--font-sans);
-    transition: color var(--transition-fast),    transform var(--transition-fast);
+    transition: color var(--transition-fast), transform var(--transition-fast);
 }
 
 .proj-back-btn:hover {

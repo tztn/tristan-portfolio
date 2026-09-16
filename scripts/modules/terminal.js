@@ -33,24 +33,30 @@ function initTerminalHud() {
         "open 02",
         "open 03",
         "open 04",
-        "open 05"
+        "open 05",
+        "open 06"
     ];
 
     const projectMap = {
-        "1": "sneakrs",
-        "01": "sneakrs",
+        "1": "gncp",
+        "01": "gncp",
+        "gncp": "gncp",
+        "goon": "gncp",
+        "college": "gncp",
+        "2": "sneakrs",
+        "02": "sneakrs",
         "sneakrs": "sneakrs",
-        "2": "lostfound",
-        "02": "lostfound",
+        "3": "lostfound",
+        "03": "lostfound",
         "lostfound": "lostfound",
-        "3": "dlails",
-        "03": "dlails",
+        "4": "dlails",
+        "04": "dlails",
         "dlails": "dlails",
-        "4": "stym",
-        "04": "stym",
+        "5": "stym",
+        "05": "stym",
         "stym": "stym",
-        "5": "supermarket",
-        "05": "supermarket",
+        "6": "supermarket",
+        "06": "supermarket",
         "supermarket": "supermarket",
         "pos": "supermarket"
     };
@@ -237,34 +243,40 @@ function initTerminalHud() {
             case "projects":
             case "work":
                 renderActiveView(cmd, [
-                    `<div><strong>Featured Projects (5) &mdash; Click a row or type <code>open &lt;num&gt;</code>:</strong></div>`,
+                    `<div><strong>Featured Projects (6) &mdash; Click a row or type <code>open &lt;num&gt;</code>:</strong></div>`,
                     `<div class="term-project-table">
+                        <div class="term-project-row" data-proj-id="gncp">
+                            <span class="term-proj-tag">[ 01 // WEB ]</span>
+                            <span class="term-proj-title">Go-On National College</span>
+                            <span class="term-proj-desc">Online student enrollment &amp; academic portal</span>
+                            <span class="term-proj-action">open ↗</span>
+                        </div>
                         <div class="term-project-row" data-proj-id="sneakrs">
-                            <span class="term-proj-tag">[ 01 // FIGMA ]</span>
+                            <span class="term-proj-tag">[ 02 // FIGMA ]</span>
                             <span class="term-proj-title">SNEAKRS Concept</span>
                             <span class="term-proj-desc">High-contrast modern e-commerce landing experience</span>
                             <span class="term-proj-action">open ↗</span>
                         </div>
                         <div class="term-project-row" data-proj-id="lostfound">
-                            <span class="term-proj-tag">[ 02 // PHP ]</span>
+                            <span class="term-proj-tag">[ 03 // PHP ]</span>
                             <span class="term-proj-title">NCST Lost &amp; Found</span>
                             <span class="term-proj-desc">Campus safety claim verification &amp; reporting portal</span>
                             <span class="term-proj-action">open ↗</span>
                         </div>
                         <div class="term-project-row" data-proj-id="dlails">
-                            <span class="term-proj-tag">[ 03 // JAVA ]</span>
+                            <span class="term-proj-tag">[ 04 // JAVA ]</span>
                             <span class="term-proj-title">DLAILS Logger</span>
                             <span class="term-proj-desc">Thread-safe computer lab telemetry desktop application</span>
                             <span class="term-proj-action">open ↗</span>
                         </div>
                         <div class="term-project-row" data-proj-id="stym">
-                            <span class="term-proj-tag">[ 04 // JS ]</span>
+                            <span class="term-proj-tag">[ 05 // JS ]</span>
                             <span class="term-proj-title">Stym Storefront</span>
                             <span class="term-proj-desc">Component-driven digital asset &amp; software store</span>
                             <span class="term-proj-action">open ↗</span>
                         </div>
                         <div class="term-project-row" data-proj-id="supermarket">
-                            <span class="term-proj-tag">[ 05 // C++ ]</span>
+                            <span class="term-proj-tag">[ 06 // C++ ]</span>
                             <span class="term-proj-title">Supermarket POS</span>
                             <span class="term-proj-desc">High-throughput inventory &amp; checkout engine</span>
                             <span class="term-proj-action">open ↗</span>

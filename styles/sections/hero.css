@@ -483,6 +483,7 @@ html.dark .profile-static-img {
 }
 
 @media (max-width: 1080px) {
+
     .social-follow-label,
     .callout-annotation {
         display: none;
@@ -700,4 +701,3 @@ html.dark .heatmap-cell.l4 {
     align-items: center;
     gap: 3px;
 }
-
