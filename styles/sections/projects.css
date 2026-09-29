@@ -911,7 +911,11 @@ html.dark .proj-standalone-media-wrap img {
 
     .project-craft-card {
         border-right: none !important;
-        padding: 20px 16px;
+        padding: 18px 16px;
+    }
+
+    .project-craft-card:active {
+        background: var(--bg-card-hover);
     }
 
     .project-card-title {
@@ -924,8 +928,9 @@ html.dark .proj-standalone-media-wrap img {
     }
 
     .project-filter-pill {
-        font-size: 0.74rem;
-        padding: 4px 10px;
+        font-size: 0.76rem;
+        padding: 5px 12px;
+        min-height: 32px;
     }
 }
 
@@ -936,7 +941,7 @@ html.dark .proj-standalone-media-wrap img {
     }
 
     .proj-standalone-title-main {
-        font-size: 1.55rem;
+        font-size: clamp(1.45rem, 5vw, 1.7rem);
         line-height: 1.25;
     }
 
@@ -974,8 +979,20 @@ html.dark .proj-standalone-media-wrap img {
         padding: 12px 0 50px 0;
     }
 
+    .project-craft-card {
+        padding: 16px 14px;
+    }
+
+    .project-media-wrap {
+        border-radius: 10px;
+    }
+
+    .project-card-title {
+        font-size: 1rem;
+    }
+
     .proj-standalone-title-main {
-        font-size: 1.35rem;
+        font-size: clamp(1.3rem, 5.5vw, 1.55rem);
     }
 
     .proj-spec-matrix {
@@ -988,6 +1005,7 @@ html.dark .proj-standalone-media-wrap img {
 
     .proj-spec-cell {
         border-right: none !important;
+        padding: 10px 14px;
     }
 
     .proj-nav-actions {
@@ -995,13 +1013,19 @@ html.dark .proj-standalone-media-wrap img {
     }
 
     .proj-action-btn {
-        padding: 5px 8px;
+        padding: 6px 10px;
         font-size: 0.75rem;
+        min-height: 32px;
     }
 
     .proj-bottom-socials {
         gap: 10px;
         font-size: 0.7rem;
+    }
+
+    .projects-all-btn {
+        padding: 8px 18px;
+        font-size: 0.8rem;
     }
 }
 

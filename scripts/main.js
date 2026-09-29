@@ -871,6 +871,13 @@ function initGithubHeatmap() {
             }
             container.appendChild(col);
         }
+
+        const scrollWrap = container.closest(".github-heatmap-container");
+        if (scrollWrap && window.innerWidth <= 640) {
+            requestAnimationFrame(() => {
+                scrollWrap.scrollLeft = scrollWrap.scrollWidth;
+            });
+        }
     }
 
     function generateFullYearFallback() {

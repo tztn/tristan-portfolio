@@ -172,6 +172,25 @@
 }
 
 @media (max-width: 640px) {
+    #contact .stack-table-row {
+        grid-template-columns: 1fr;
+    }
+
+    #contact .stack-row-header {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        padding: 10px 16px;
+        background-color: var(--bg-secondary);
+    }
+
+    #contact .stack-row-pills {
+        padding: 14px 16px;
+    }
+
+    #contact .contact-form-grid {
+        max-width: 100% !important;
+    }
+
     .contact-input,
     .contact-textarea {
         /* Prevents iOS Safari & Chrome from auto-zooming into inputs on mobile */
@@ -204,6 +223,22 @@
 }
 
 @media (max-width: 480px) {
+    #contact .stack-row-header {
+        padding: 9px 12px;
+    }
+
+    #contact .stack-row-pills {
+        padding: 10px 12px;
+        gap: 6px;
+    }
+
+    #contact .stack-pill-chip {
+        padding: 4px 10px;
+        font-size: 0.75rem !important;
+        max-width: 100%;
+        word-break: break-word;
+    }
+
     .contact-direct-row {
         flex-direction: column;
         align-items: stretch;

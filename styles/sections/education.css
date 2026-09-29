@@ -287,16 +287,72 @@
 @media (max-width: 480px) {
     .edu-timeline-list {
         padding: 14px 12px;
+        gap: 16px;
+    }
+
+    .edu-card {
+        gap: 10px;
+        padding-bottom: 16px;
+    }
+
+    .edu-school-name {
+        font-size: 0.92rem;
+        line-height: 1.35;
     }
 
     .edu-meta-row {
         flex-direction: column;
         align-items: flex-start;
-        gap: 2px;
+        gap: 3px;
+        font-size: 0.76rem;
     }
 
     .edu-meta-divider {
         display: none;
+    }
+
+    .edu-toggle-btn {
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .edu-skills-row {
+        gap: 6px;
+        margin-top: 10px;
+    }
+
+    .edu-skill-pill {
+        padding: 3px 8px;
+        font-size: 0.74rem !important;
+        max-width: 100%;
+        word-break: break-word;
+    }
+}
+
+@media (max-width: 360px) {
+    .edu-timeline-list {
+        padding: 12px 8px;
+    }
+
+    .edu-card {
+        gap: 8px;
+    }
+
+    .edu-card-left {
+        width: 26px;
+    }
+
+    .edu-icon-badge {
+        width: 26px;
+        height: 26px;
+    }
+
+    .edu-school-name {
+        font-size: 0.88rem;
     }
 }
 

@@ -557,23 +557,28 @@
 }
 
 @media (max-width: 640px) {
+    .stack-marquee-wrapper,
     .stack-marquee-row {
-        height: 54px;
+        touch-action: pan-y;
+    }
+
+    .stack-marquee-row {
+        height: 52px;
     }
 
     .marquee-brand-item {
-        min-width: 165px;
-        padding: 0 16px;
+        min-width: 155px;
+        padding: 0 14px;
         gap: 6px;
     }
 
     .brand-item-name {
-        font-size: 0.98rem;
+        font-size: 0.94rem;
     }
 
     .stack-svg-icon {
-        width: 17px;
-        height: 17px;
+        width: 18px;
+        height: 18px;
     }
 
     .components-registry-grid {
@@ -613,33 +618,57 @@
     }
 
     .stack-marquee-row {
-        height: 48px;
+        height: 46px;
     }
 
     .marquee-brand-item {
-        min-width: 145px;
-        padding: 0 12px;
+        min-width: 135px;
+        padding: 0 10px;
+        gap: 5px;
     }
 
     .brand-item-name {
-        font-size: 0.88rem;
+        font-size: 0.86rem;
+    }
+
+    .stack-svg-icon {
+        width: 16px;
+        height: 16px;
     }
 
     .stack-pill-chip,
     .cad-pill-chip {
-        padding: 3px 9px;
+        padding: 4px 10px;
         font-size: 0.75rem !important;
+        max-width: 100%;
+        word-break: break-word;
     }
 
     .stack-row-header,
     .cad-row-header {
-        padding: 10px 12px;
+        padding: 10px 14px;
     }
 
     .stack-row-pills,
     .cad-row-pills {
-        padding: 10px 12px;
+        padding: 10px 14px;
         gap: 6px;
+    }
+
+    .stack-all-btn {
+        padding: 8px 18px;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 360px) {
+    .marquee-brand-item {
+        min-width: 120px;
+        padding: 0 8px;
+    }
+
+    .brand-item-name {
+        font-size: 0.82rem;
     }
 }
 

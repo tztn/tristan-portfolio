@@ -338,13 +338,37 @@ html.dark .moon-icon {
     left: 0;
     width: 100%;
     background-color: var(--bg-primary);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--border);
     padding: 16px 20px;
     z-index: 99;
+    max-height: calc(100vh - var(--header-height, 56px));
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    box-sizing: border-box;
+}
+
+@supports (color: color-mix(in oklab, red, red)) {
+    .mobile-drawer {
+        background-color: color-mix(in oklab, var(--bg-primary) 92%, transparent);
+    }
 }
 
 .mobile-drawer.open {
     display: block;
+    animation: drawerSlideDown 0.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes drawerSlideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .mobile-nav-list {
@@ -359,18 +383,24 @@ html.dark .moon-icon {
 .mobile-nav-link {
     display: flex;
     align-items: center;
-    padding: 8px 12px;
-    border-radius: 6px;
-    font-size: 0.88rem;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 0.9rem;
     font-weight: 550;
     color: var(--text-secondary);
     text-decoration: none;
+    transition: all var(--transition-fast);
 }
 
 .mobile-nav-link:hover,
 .mobile-nav-link.active {
     color: var(--text-primary);
     background-color: var(--bg-secondary);
+}
+
+.mobile-nav-link:active {
+    background-color: var(--bg-card-hover);
+    transform: scale(0.99);
 }
 
 @media (max-width: 768px) {
@@ -390,32 +420,44 @@ html.dark .moon-icon {
 
     .top-header {
         padding: 0 12px;
+        height: 54px;
     }
 
     .header-container {
-        padding: 0 10px;
+        padding: 0 8px;
     }
 
     .mobile-drawer {
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
         padding: 14px 16px;
+        padding-bottom: max(18px, env(safe-area-inset-bottom));
     }
 
     .mobile-nav-link {
-        padding: 10px 14px;
-        font-size: 0.92rem;
+        padding: 12px 14px;
+        font-size: 0.95rem;
     }
 }
 
 @media (max-width: 480px) {
+    .top-header {
+        padding: 0 8px;
+    }
+
+    .header-container {
+        padding: 0 6px;
+        border-left: none;
+        border-right: none;
+    }
+
     /* Hide desktop keyboard shortcut badges on mobile phones */
     .header-kbd-group {
         display: none;
     }
 
     .cmdk-trigger-btn {
-        width: 30px;
-        height: 30px;
+        width: 32px;
+        height: 32px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -423,6 +465,11 @@ html.dark .moon-icon {
         border-radius: 6px;
         background: var(--bg-secondary);
         border: 1px solid var(--border);
+        transition: transform var(--transition-fast), background-color var(--transition-fast);
+    }
+
+    .cmdk-trigger-btn:active {
+        transform: scale(0.92);
     }
 
     .cmdk-search-icon {
@@ -439,14 +486,20 @@ html.dark .moon-icon {
     }
 
     .pixel-logo-svg {
-        width: 36px;
-        height: 18px;
+        width: 38px;
+        height: 19px;
     }
 
     .header-audio-toggle,
     .header-theme-toggle,
     .mobile-menu-toggle {
-        width: 30px;
-        height: 30px;
+        width: 32px;
+        height: 32px;
+    }
+
+    .header-audio-toggle:active,
+    .header-theme-toggle:active,
+    .mobile-menu-toggle:active {
+        transform: scale(0.92);
     }
 }
