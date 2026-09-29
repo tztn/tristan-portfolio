@@ -1,5 +1,5 @@
 /* ==========================================================================
-   10: CONTACT FORM - ASYNCHRONOUS FORMSPREE DELIVERY, RATE LIMITING & VALIDATION
+   10: CONTACT FORM - ASYNCHRONOUS FORMSUBMIT DELIVERY, RATE LIMITING & VALIDATION
    ========================================================================== */
 function initContactFeedback() {
     const copyBtn = document.getElementById("copy-email-btn");
@@ -25,8 +25,8 @@ function initContactFeedback() {
 
     if (!contactForm) return;
 
-    // Configurable endpoint (defaulting to Formspree endpoint directed to Tristan)
-    const FORMSPREE_ENDPOINT = "https://formspree.io/f/xpznvqwe";
+    // Endpoint for FormSubmit AJAX submission
+    const FORMSUBMIT_ENDPOINT = "https://formsubmit.co/ajax/agoilotristanray@gmail.com";
 
     // Form elements
     const nameInput = document.getElementById("form-name");
@@ -145,7 +145,7 @@ function initContactFeedback() {
     function validateMessage() {
         if (!messageInput) return true;
         const val = messageInput.value.trim();
-        if (val.length < 10 || val.length > 1000) {
+        if (val.length < 10) {
             messageInput.classList.add("has-error");
             if (errorMessage) errorMessage.style.display = "flex";
             return false;
@@ -180,22 +180,20 @@ function initContactFeedback() {
 
     const idleBtnHtml = '<span>Send Message</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>';
 
-    function setFormDisabled(disabled) {
-        if (nameInput) nameInput.disabled = disabled;
-        if (emailInput) emailInput.disabled = disabled;
-        if (messageInput) messageInput.disabled = disabled;
-        if (submitBtn) submitBtn.disabled = disabled;
-    }
-
-    contactForm.addEventListener("submit", async (e) => {
+    // Contact form submit handler
+    contactForm.addEventListener("submit", (e) => {
         e.preventDefault();
 
-        // 1. Check Rate Limit
-        if (checkRateLimit()) {
+        // 1. Check the honeypot field (_gotcha). If filled, silently abort without sending.
+        if (gotchaInput && gotchaInput.value.trim() !== "") {
             return;
         }
 
-        // 2. Validate all fields
+        // 2. Validate inputs:
+        //    - Name: at least 2 characters.
+        //    - Email: standard valid email regex pattern.
+        //    - Message: at least 10 characters.
+        //    - If invalid, show inline errors, focus the first error, and abort.
         const isNameValid = validateName();
         const isEmailValid = validateEmail();
         const isMessageValid = validateMessage();
@@ -207,20 +205,20 @@ function initContactFeedback() {
             return;
         }
 
-        // 3. Honeypot Check (Anti-Bot Silent Rejection)
-        if (gotchaInput && gotchaInput.value.trim() !== "") {
-            contactForm.reset();
+        // 3. Enforce 24-hour rate limiting using localStorage: maximum 3 submissions per 24 hours.
+        //    If limit reached, show warning banner and abort.
+        if (checkRateLimit()) {
             if (feedbackHud) {
-                feedbackHud.className = "form-feedback-hud font-mono feedback-success";
+                feedbackHud.className = "form-feedback-hud font-mono feedback-error";
                 feedbackHud.style.display = "block";
-                feedbackHud.textContent = "✓ Message sent successfully. I'll get back to you soon.";
+                feedbackHud.textContent = "✕ Rate limit reached (3 submissions per 24 hours). Please email agoilotristanray@gmail.com directly.";
             }
             return;
         }
 
-        // 4. Set Sending State
-        setFormDisabled(true);
+        // 4. Disable submit button and set text to "Sending...".
         if (submitBtn) {
+            submitBtn.disabled = true;
             submitBtn.innerHTML = '<span>Sending...</span>';
         }
         if (feedbackHud) {
@@ -229,64 +227,66 @@ function initContactFeedback() {
             feedbackHud.textContent = "";
         }
 
-        const payload = {
-            name: nameInput ? nameInput.value.trim() : "",
-            email: emailInput ? emailInput.value.trim() : "",
-            message: messageInput ? messageInput.value.trim() : ""
-        };
-
-        try {
-            const response = await fetch(FORMSPREE_ENDPOINT, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json"
-                },
-                body: JSON.stringify(payload)
-            });
-
-            if (response.ok) {
-                // Success State
-                contactForm.reset();
-                if (nameInput) nameInput.classList.remove("has-error");
-                if (emailInput) emailInput.classList.remove("has-error");
-                if (messageInput) messageInput.classList.remove("has-error");
-
-                setFormDisabled(false);
-                if (submitBtn) {
-                    submitBtn.innerHTML = idleBtnHtml;
-                }
-
-                if (feedbackHud) {
-                    feedbackHud.className = "form-feedback-hud font-mono feedback-success";
-                    feedbackHud.style.display = "block";
-                    feedbackHud.textContent = "✓ Message sent successfully. I'll get back to you soon.";
-                }
-
-                if (window.soundFX) window.soundFX.play("success");
-
-                // Record submission for rate limiting
-                recordSubmissionSuccess();
-            } else {
-                throw new Error("HTTP " + response.status);
+        // 5. Send the fetch POST request
+        fetch(FORMSUBMIT_ENDPOINT, {
+            method: "POST",
+            headers: { 
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify({
+                name: nameInput.value.trim(),
+                email: emailInput.value.trim(),
+                message: messageInput.value.trim(),
+                _subject: `New Portfolio Message from ${nameInput.value.trim()}`
+            })
+        })
+        .then(res => {
+            if (!res.ok) {
+                throw new Error("HTTP error " + res.status);
             }
-        } catch (err) {
-            console.error("Contact submission error:", err);
+            return res.json();
+        })
+        .then(data => {
+            nameInput.value = "";
+            emailInput.value = "";
+            messageInput.value = "";
+            if (nameInput) nameInput.classList.remove("has-error");
+            if (emailInput) emailInput.classList.remove("has-error");
+            if (messageInput) messageInput.classList.remove("has-error");
 
-            // Re-enable form
-            setFormDisabled(false);
-            if (submitBtn) {
-                submitBtn.innerHTML = idleBtnHtml;
+            // Record rate limit timestamp in localStorage
+            recordSubmissionSuccess();
+
+            // Display green monospace success banner:
+            // "✓ Message sent successfully. I'll get back to you soon."
+            if (feedbackHud) {
+                feedbackHud.className = "form-feedback-hud font-mono feedback-success";
+                feedbackHud.style.display = "block";
+                feedbackHud.textContent = "✓ Message sent successfully. I'll get back to you soon.";
             }
 
-            // Error State Notice
+            if (window.soundFX) window.soundFX.play("success");
+        })
+        .catch(err => {
+            console.error("Submission error:", err);
+            // Display red monospace error banner:
+            // "✕ Failed to send message. Please email agoilotristanray@gmail.com directly."
             if (feedbackHud) {
                 feedbackHud.className = "form-feedback-hud font-mono feedback-error";
                 feedbackHud.style.display = "block";
-                feedbackHud.textContent = "✕ Failed to send message. Please copy and email agoilotristanray@gmail.com directly.";
+                feedbackHud.textContent = "✕ Failed to send message. Please email agoilotristanray@gmail.com directly.";
             }
+
             if (window.soundFX) window.soundFX.play("click");
-        }
+        })
+        .finally(() => {
+            // Reset submit button state back to active
+            if (submitBtn) {
+                const isLimited = checkRateLimit();
+                submitBtn.disabled = isLimited;
+                submitBtn.innerHTML = idleBtnHtml;
+            }
+        });
     });
 }
-
