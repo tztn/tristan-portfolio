@@ -1,5 +1,5 @@
 /* ==========================================================================
-   PORTFOLIO INTERACTIVE LOGIC (CAD BLUEPRINT, CMDK & TERMINAL)
+   PORTFOLIO INTERACTIVE LOGIC (CAD BLUEPRINT & CMDK)
    ========================================================================== */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -12,7 +12,6 @@ document.addEventListener("DOMContentLoaded", () => {
     initProjectsFilter();
     initStackStandaloneController();
     initProjectDetailsController();
-    initTerminalHud();
     initContactFeedback();
     initScrollReveal();
     initEducationAccordion();
@@ -192,37 +191,43 @@ function initProjectDetailsController() {
         const nextId = projectOrder[(currentIndex + 1) % projectOrder.length];
 
         standaloneContainer.innerHTML = `
-            <!-- Top Actions Bar -->
-            <div class="proj-standalone-topbar">
-                <button type="button" class="proj-back-btn" id="proj-back-btn" aria-label="Back to projects">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="19" y1="12" x2="5" y2="12"></line>
-                        <polyline points="12 19 5 12 12 5"></polyline>
-                    </svg>
-                    <span>Projects</span>
-                </button>
-
-                <div class="proj-nav-actions">
-                    <button type="button" class="proj-action-btn proj-icon-btn" id="proj-prev-btn" title="Previous Project: ${projectData[prevId].title}">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="15 18 9 12 15 6"></polyline>
-                        </svg>
-                    </button>
-
-                    <button type="button" class="proj-action-btn proj-icon-btn" id="proj-next-btn" title="Next Project: ${projectData[nextId].title}">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="9 18 15 12 9 6"></polyline>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-
             <!-- Standalone Project CAD Blueprint Panel (Matches all site sections) -->
             <div class="proj-cad-panel panel">
-                <!-- Top Hatched CAD Strip -->
-                <div class="sec-hatched-banner"></div>
+                <!-- Row 1: Empty Spacer Grid Row (~48px / h-12) -->
+                <div class="proj-matrix-row proj-spacer-matrix-row proj-detail-spacer-row" aria-hidden="true">
+                    <div class="proj-spacer-col"></div>
+                </div>
 
-                <!-- CAD Section Title Box -->
+                <!-- Row 2: Sub-Navigation Row -->
+                <div class="proj-matrix-row proj-subnav-matrix-row proj-detail-subnav-row">
+                    <div class="proj-subnav-col proj-subnav-left">
+                        <button type="button" class="proj-back-btn font-mono" id="proj-back-btn" aria-label="Back to projects">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="19" y1="12" x2="5" y2="12"></line>
+                                <polyline points="12 19 5 12 12 5"></polyline>
+                            </svg>
+                            <span>Projects</span>
+                        </button>
+                    </div>
+
+                    <div class="proj-subnav-col proj-subnav-right">
+                        <div class="proj-nav-actions">
+                            <button type="button" class="proj-action-btn proj-icon-btn" id="proj-prev-btn" title="Previous Project: ${projectData[prevId].title}">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="15 18 9 12 15 6"></polyline>
+                                </svg>
+                            </button>
+
+                            <button type="button" class="proj-action-btn proj-icon-btn" id="proj-next-btn" title="Next Project: ${projectData[nextId].title}">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="9 18 15 12 9 6"></polyline>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row 3: Page Title Row -->
                 <div class="sec-title-box proj-standalone-title-box">
                     <h1 class="sec-main-title proj-standalone-title-main">${data.title}</h1>
                     <span class="sec-badge-tag font-mono">${data.badge || 'PROJECT'}</span>

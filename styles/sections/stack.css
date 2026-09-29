@@ -162,7 +162,7 @@
     z-index: 20;
     transition: var(--transition-theme);
     overflow-x: clip;
-    padding: 0 16px 100px 16px;
+    padding: 0 0 100px 0;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -172,17 +172,11 @@
     width: 100%;
     max-width: var(--max-content-width, 768px);
     margin: 0 auto;
-    padding: 28px 0 80px 0;
+    padding: 0 0 80px 0;
     animation: fadeInPage 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     position: relative;
 }
 
-/* Remove Sub-Nav Divider Line for clean breathing room above hatched border */
-.stack-standalone-wrapper .proj-standalone-topbar {
-    border-bottom: none !important;
-    padding-bottom: 4px;
-    margin-bottom: 24px;
-}
 
 .stack-cad-panel {
     width: 100%;
@@ -207,12 +201,6 @@
 .proj-cad-panel .sec-hatched-banner:last-child {
     border-bottom: none;
     border-top: 1px solid var(--border);
-}
-
-.stack-cad-panel .sec-hatched-banner:last-child::after,
-.proj-cad-panel .sec-hatched-banner:last-child::after {
-    top: -1px;
-    bottom: auto;
 }
 
 .stack-standalone-desc-box {
@@ -569,6 +557,28 @@
 }
 
 @media (max-width: 640px) {
+    .stack-marquee-row {
+        height: 54px;
+    }
+
+    .marquee-brand-item {
+        min-width: 165px;
+        padding: 0 16px;
+        gap: 6px;
+    }
+
+    .brand-item-name {
+        font-size: 0.98rem;
+    }
+
+    .stack-svg-icon {
+        width: 17px;
+        height: 17px;
+    }
+
+    .components-registry-grid {
+        grid-template-columns: 1fr;
+    }
 
     .stack-table-row,
     .cad-table-row {
@@ -586,6 +596,50 @@
     .stack-row-pills,
     .cad-row-pills {
         padding: 12px 16px;
+    }
+
+    .stack-standalone-desc-box {
+        padding: 14px 16px;
+    }
+
+    .stack-standalone-desc {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .stack-standalone-wrapper {
+        padding: 0 6px 60px 6px;
+    }
+
+    .stack-marquee-row {
+        height: 48px;
+    }
+
+    .marquee-brand-item {
+        min-width: 145px;
+        padding: 0 12px;
+    }
+
+    .brand-item-name {
+        font-size: 0.88rem;
+    }
+
+    .stack-pill-chip,
+    .cad-pill-chip {
+        padding: 3px 9px;
+        font-size: 0.75rem !important;
+    }
+
+    .stack-row-header,
+    .cad-row-header {
+        padding: 10px 12px;
+    }
+
+    .stack-row-pills,
+    .cad-row-pills {
+        padding: 10px 12px;
+        gap: 6px;
     }
 }
 
@@ -641,4 +695,449 @@
 
 .standalone-btt-btn:hover {
     color: var(--text-primary);
+}
+
+/* ==========================================================================
+   07: CHANHDAI SPONSOR MATRIX STYLE STANDALONE TECH STACK (IMAGE 2 REFERENCE)
+   ========================================================================== */
+
+.stack-matrix-container {
+    width: 100%;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background-color: var(--bg-primary);
+}
+
+.stack-matrix-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+.stack-matrix-cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 92px;
+    padding: 1.25rem 1rem;
+    border-bottom: 1px solid var(--border);
+    transition: background-color var(--transition-fast);
+    text-decoration: none;
+    color: var(--text-primary);
+    cursor: default;
+    user-select: none;
+    box-sizing: border-box;
+}
+
+.stack-matrix-grid .stack-matrix-cell:nth-child(odd) {
+    border-right: 1px solid var(--border);
+}
+
+.stack-matrix-grid .stack-matrix-cell:nth-last-child(-n+2) {
+    border-bottom: none;
+}
+
+.stack-matrix-cell:hover {
+    background-color: var(--bg-card-hover, rgba(255, 255, 255, 0.035));
+}
+
+.stack-brand-lockup {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: var(--text-primary);
+    transition: transform var(--transition-fast);
+}
+
+.stack-matrix-cell:hover .stack-brand-lockup,
+.stack-cat-cell:hover .stack-brand-lockup {
+    transform: scale(1.03);
+}
+
+.stack-brand-icon {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    fill: currentColor;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stack-brand-name {
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+}
+
+/* ==========================================================================
+   CONTINUOUS MATRIX GRID ARCHITECTURE (CHANHDAI SPONSOR MATRIX STYLE)
+   ========================================================================== */
+
+/* Main Matrix Board Container */
+.stack-matrix-board {
+    width: 100%;
+    max-width: var(--max-content-width, 768px);
+    margin: 0 auto;
+    position: relative;
+    border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    background-color: var(--bg-primary);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Full-width continuous top boundary line (extends 100vw to viewport edges) */
+.stack-matrix-board::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100vw;
+    height: 1px;
+    background-color: var(--border);
+    pointer-events: none;
+    z-index: 3;
+}
+
+/* Full-Height Continuous Vertical Guide Lines Overlay */
+.stack-matrix-guide-lines {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    z-index: 1;
+}
+
+.stack-guide-col:nth-child(1),
+.stack-guide-col:nth-child(2) {
+    border-right: 1px solid var(--border);
+}
+
+/* Every Matrix Row is a 3-Column Grid */
+.stack-matrix-row {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    position: relative;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    z-index: 2;
+}
+
+/* Full-width horizontal dividing line extending across entire viewport (including flanking margins) */
+.stack-matrix-row::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100vw;
+    height: 1px;
+    background-color: var(--border);
+    pointer-events: none;
+    z-index: 3;
+}
+
+/* Cell borders inside row */
+.stack-matrix-row > *:nth-child(1),
+.stack-matrix-row > *:nth-child(2) {
+    border-right: 1px solid var(--border);
+}
+
+.stack-matrix-row > *:nth-child(3) {
+    border-right: none;
+}
+
+/* Row 1: Empty Spacer Grid Row (Image Reference: ~48px / h-12) */
+.stack-spacer-matrix-row {
+    height: 48px;
+    min-height: 48px;
+    background-color: var(--bg-primary);
+}
+
+.stack-spacer-col {
+    background-color: transparent;
+}
+
+/* Row 2: Sub-Navigation Topbar Row in Matrix */
+.stack-subnav-matrix-row {
+    min-height: 48px;
+    align-items: stretch;
+    background-color: var(--bg-primary);
+}
+
+.stack-subnav-col {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    background-color: var(--bg-primary);
+}
+
+.stack-subnav-left {
+    padding: 0.5rem 1.25rem;
+    justify-content: flex-start;
+}
+
+.stack-subnav-center {
+    background-color: transparent;
+}
+
+.stack-subnav-right {
+    padding: 0.5rem 1.25rem;
+    justify-content: flex-end;
+}
+
+.stack-subnav-matrix-row .proj-back-btn {
+    margin: 0;
+}
+
+.stack-subnav-matrix-row .proj-standalone-cat-badge {
+    margin: 0;
+    white-space: nowrap;
+}
+
+/* Standalone Hero Row */
+.stack-hero-matrix-row {
+    min-height: 170px;
+    align-items: stretch;
+}
+
+.stack-hero-col-main {
+    grid-column: span 2;
+    padding: 2.75rem 2rem 2.25rem 2rem;
+    box-sizing: border-box;
+    background-color: var(--bg-primary);
+    border-right: 1px solid var(--border);
+}
+
+.stack-hero-col-side {
+    grid-column: span 1;
+    background-color: transparent;
+    border-right: none !important;
+}
+
+.stack-hero-eyebrow {
+    font-size: 0.8rem;
+    font-family: var(--font-mono);
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+    display: block;
+    font-weight: 500;
+}
+
+.stack-hero-heading {
+    font-size: clamp(2.2rem, 4vw, 2.85rem);
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    color: var(--text-primary);
+    margin: 0 0 0.85rem 0;
+    line-height: 1.15;
+    font-family: var(--font-sans);
+}
+
+.stack-hero-sub {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    max-width: 680px;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Category Title Row */
+.stack-cat-header-row {
+    min-height: 44px;
+    align-items: stretch;
+}
+
+.stack-cat-title-cell {
+    padding: 0.75rem 1.75rem;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    font-family: var(--font-sans);
+    letter-spacing: -0.01em;
+    display: flex;
+    align-items: center;
+    background-color: var(--bg-primary);
+    border-right: 1px solid var(--border);
+}
+
+.stack-cat-empty-cell {
+    background-color: transparent;
+}
+
+/* Item Cells */
+.stack-item-cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 92px;
+    padding: 1.25rem 1rem;
+    box-sizing: border-box;
+    transition: background-color var(--transition-fast);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    cursor: default;
+    user-select: none;
+}
+
+.stack-item-cell:hover:not(.stack-empty-cell) {
+    background-color: var(--bg-card-hover, rgba(255, 255, 255, 0.035));
+}
+
+.stack-empty-cell {
+    background-color: transparent;
+    pointer-events: none;
+    cursor: default;
+}
+
+/* Pill footer */
+.stack-pill-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.75rem 0 0.5rem;
+    width: 100%;
+}
+
+.stack-all-pill-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 20px;
+    border-radius: 9999px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    font-size: 0.82rem;
+    font-weight: 500;
+    font-family: var(--font-mono);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    user-select: none;
+}
+
+.stack-all-pill-btn:hover {
+    background: var(--bg-card-hover);
+    color: var(--text-primary);
+    border-color: var(--text-muted);
+    transform: translateY(-1px);
+}
+
+.stack-all-pill-btn svg {
+    transition: transform 0.2s ease;
+}
+
+.stack-all-pill-btn:hover svg {
+    transform: translateX(3px);
+}
+
+@media (max-width: 680px) {
+    .stack-matrix-guide-lines {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .stack-guide-col:nth-child(2) {
+        border-right: none;
+    }
+
+    .stack-matrix-row {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .stack-spacer-matrix-row {
+        height: 40px;
+        min-height: 40px;
+    }
+
+    .stack-spacer-col:last-child {
+        display: none;
+    }
+
+    .stack-subnav-center {
+        display: none;
+    }
+
+    .stack-hero-col-main {
+        grid-column: span 2;
+        border-right: none;
+    }
+
+    .stack-hero-col-side {
+        display: none;
+    }
+
+    .stack-cat-header-row .stack-cat-empty-cell:last-child {
+        display: none;
+    }
+
+    .stack-matrix-row > *:nth-child(1) {
+        border-right: 1px solid var(--border);
+    }
+
+    .stack-matrix-row > *:nth-child(2) {
+        border-right: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .stack-matrix-guide-lines {
+        display: none;
+    }
+
+    .stack-matrix-row {
+        grid-template-columns: 1fr;
+    }
+
+    .stack-spacer-matrix-row {
+        height: 32px;
+        min-height: 32px;
+    }
+
+    .stack-subnav-matrix-row {
+        grid-template-columns: 1fr;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.6rem 1rem;
+    }
+
+    .stack-subnav-col {
+        padding: 0;
+    }
+
+    .stack-matrix-row > * {
+        border-right: none !important;
+    }
+
+    .stack-hero-col-main {
+        grid-column: span 1;
+        padding: 2rem 1.25rem 1.75rem 1.25rem;
+    }
+
+    .stack-hero-col-side {
+        display: none;
+    }
+
+    .stack-cat-empty-cell {
+        display: none;
+    }
+
+    .stack-empty-cell {
+        display: none !important;
+    }
 }

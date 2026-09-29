@@ -374,11 +374,79 @@ html.dark .moon-icon {
 }
 
 @media (max-width: 768px) {
+    .header-nav,
     .header-nav-list {
+        display: none;
+    }
+
+    /* Hide redundant first divider when desktop nav is hidden */
+    .header-right-group > .nav-divider:first-of-type {
         display: none;
     }
 
     .mobile-menu-toggle {
         display: flex;
+    }
+
+    .top-header {
+        padding: 0 12px;
+    }
+
+    .header-container {
+        padding: 0 10px;
+    }
+
+    .mobile-drawer {
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        padding: 14px 16px;
+    }
+
+    .mobile-nav-link {
+        padding: 10px 14px;
+        font-size: 0.92rem;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Hide desktop keyboard shortcut badges on mobile phones */
+    .header-kbd-group {
+        display: none;
+    }
+
+    .cmdk-trigger-btn {
+        width: 30px;
+        height: 30px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        border-radius: 6px;
+        background: var(--bg-secondary);
+        border: 1px solid var(--border);
+    }
+
+    .cmdk-search-icon {
+        width: 15px;
+        height: 15px;
+    }
+
+    .header-right-group {
+        gap: 6px;
+    }
+
+    .nav-divider {
+        display: none;
+    }
+
+    .pixel-logo-svg {
+        width: 36px;
+        height: 18px;
+    }
+
+    .header-audio-toggle,
+    .header-theme-toggle,
+    .mobile-menu-toggle {
+        width: 30px;
+        height: 30px;
     }
 }

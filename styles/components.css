@@ -251,3 +251,51 @@ svg {
     font-size: 0.75rem;
     color: var(--emerald);
 }
+
+@media (max-width: 640px) {
+    .cmdk-overlay {
+        padding: 12px;
+        align-items: flex-start;
+        padding-top: 12vh;
+    }
+
+    .cmdk-dialog {
+        max-height: 80vh;
+        border-radius: 12px;
+    }
+
+    .cmdk-input {
+        /* Prevents iOS Safari & Chrome from auto-zooming */
+        font-size: 16px !important;
+    }
+
+    /* Hide desktop keyboard hints (arrows, enter, esc) on mobile */
+    .cmdk-hints {
+        display: none;
+    }
+
+    .cmdk-footer::after {
+        content: "Tap to navigate";
+        font-size: 0.72rem;
+        color: var(--text-muted);
+    }
+
+    .cmdk-item-kbd {
+        display: none;
+    }
+
+    .cmdk-close-kbd {
+        padding: 3px 8px;
+        font-size: 0.72rem;
+    }
+
+    .modal-backdrop {
+        padding: 12px;
+    }
+
+    .modal-dialog {
+        padding: 20px 16px;
+        border-radius: 12px;
+        max-height: 88vh;
+    }
+}

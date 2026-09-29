@@ -231,5 +231,74 @@
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
 }
 
+@media (max-width: 640px) {
+    .edu-timeline-list {
+        padding: 16px;
+        gap: 20px;
+    }
+
+    .edu-card {
+        gap: 12px;
+        padding-bottom: 20px;
+    }
+
+    .edu-icon-badge {
+        width: 30px;
+        height: 30px;
+    }
+
+    .edu-icon-badge svg,
+    .edu-cap-svg {
+        width: 15px !important;
+        height: 15px !important;
+    }
+
+    .edu-card-left {
+        width: 30px;
+    }
+
+    .edu-tree-line {
+        top: 30px;
+        left: 14px;
+        width: 18px;
+    }
+
+    .edu-school-name {
+        font-size: 0.95rem;
+    }
+
+    .edu-meta-row {
+        font-size: 0.78rem;
+        gap: 6px;
+    }
+
+    .edu-bullet-list {
+        font-size: 0.82rem;
+        padding-left: 16px;
+        margin: 10px 0 12px 0;
+    }
+
+    .edu-skill-pill {
+        padding: 3px 9px;
+        font-size: 0.75rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .edu-timeline-list {
+        padding: 14px 12px;
+    }
+
+    .edu-meta-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2px;
+    }
+
+    .edu-meta-divider {
+        display: none;
+    }
+}
+
 
 

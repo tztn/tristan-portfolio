@@ -240,7 +240,7 @@ html.dark .project-media-wrap img {
     width: 100%;
     max-width: var(--max-content-width, 768px);
     margin: 0 auto;
-    padding: 28px 0 80px 0;
+    padding: 0 0 80px 0;
     animation: fadeInPage 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     position: relative;
 }
@@ -257,20 +257,6 @@ html.dark .project-media-wrap img {
     }
 }
 
-/* Top Actions Bar */
-.proj-standalone-topbar {
-    width: 100%;
-    max-width: var(--max-content-width, 768px);
-    margin: 0 auto 20px auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-bottom: 4px;
-    border-bottom: none;
-    flex-wrap: wrap;
-    gap: 12px;
-}
-
 /* Standalone Projects CAD Panel */
 .proj-cad-panel {
     width: 100%;
@@ -278,12 +264,149 @@ html.dark .project-media-wrap img {
     margin: 0 auto;
     border-left: 1px solid var(--border);
     border-right: 1px solid var(--border);
-    border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
     background-color: var(--bg-primary);
     display: flex;
     flex-direction: column;
     position: relative;
+    box-sizing: border-box;
+}
+
+/* Full-width continuous top boundary line (extends 100vw to viewport edges) */
+.proj-cad-panel::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100vw;
+    height: 1px;
+    background-color: var(--border);
+    pointer-events: none;
+    z-index: 3;
+}
+
+/* Projects Standalone Matrix Rows (Continuous 190px 1fr CAD Blueprint Grid) */
+.proj-matrix-row {
+    display: grid;
+    grid-template-columns: 190px 1fr;
+    position: relative;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    z-index: 2;
+}
+
+/* Full-width horizontal dividing line extending across entire viewport */
+.proj-matrix-row::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100vw;
+    height: 1px;
+    background-color: var(--border);
+    pointer-events: none;
+    z-index: 3;
+}
+
+.proj-matrix-row > *:first-child {
+    border-right: 1px solid var(--border);
+}
+
+/* Row 1: Empty Spacer Grid Row (~48px / h-12) */
+.proj-spacer-matrix-row {
+    height: 48px;
+    min-height: 48px;
+    background-color: var(--bg-primary);
+}
+
+.proj-spacer-col {
+    background-color: transparent;
+}
+
+/* Row 2: Sub-Navigation Row */
+.proj-subnav-matrix-row {
+    min-height: 48px;
+    align-items: stretch;
+    background-color: var(--bg-primary);
+}
+
+.proj-subnav-col {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    background-color: var(--bg-primary);
+}
+
+.proj-subnav-left {
+    padding: 0.5rem 1.25rem;
+    justify-content: flex-start;
+}
+
+.proj-subnav-right {
+    padding: 0.5rem 1.25rem;
+    justify-content: flex-end;
+}
+
+.proj-subnav-matrix-row .proj-back-btn {
+    margin: 0;
+}
+
+/* Deep-dive page subnav overrides (flex layout for full width back btn & prev/next) */
+.proj-detail-spacer-row {
+    display: block;
+}
+
+.proj-detail-subnav-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.proj-detail-subnav-row > *:first-child {
+    border-right: none;
+}
+
+/* Row 3 in Projects Archive: Page Title Row */
+.proj-hero-matrix-row {
+    min-height: 130px;
+    align-items: stretch;
+    background-color: var(--bg-primary);
+}
+
+.proj-hero-col-meta {
+    padding: 2.25rem 1.25rem 2rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 12px;
+    position: relative;
+    background-color: var(--bg-primary);
+}
+
+.proj-hero-col-content {
+    padding: 2.25rem 1.75rem 2rem 1.75rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: var(--bg-primary);
+}
+
+.proj-hero-col-content .sec-main-title {
+    margin: 0 0 0.5rem 0;
+    line-height: 1.15;
+}
+
+.proj-hero-desc {
+    font-family: var(--font-sans);
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    margin: 0;
 }
 
 .cad-project-row {
@@ -814,9 +937,79 @@ html.dark .proj-standalone-media-wrap img {
     }
 }
 
+@media (hover: none), (max-width: 768px) {
+    .project-media-wrap img {
+        filter: grayscale(0%) contrast(1) brightness(1) opacity(1) !important;
+    }
+}
+
+@media (max-width: 680px) {
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .project-craft-card {
+        border-right: none !important;
+        padding: 20px 16px;
+    }
+
+    .project-card-title {
+        font-size: 1.05rem;
+    }
+
+    .projects-filter-bar {
+        gap: 6px;
+        margin-bottom: 16px;
+    }
+
+    .project-filter-pill {
+        font-size: 0.74rem;
+        padding: 4px 10px;
+    }
+}
+
 @media (max-width: 640px) {
+    .proj-matrix-row {
+        grid-template-columns: 1fr;
+    }
+
+    .proj-matrix-row > *:first-child {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .proj-spacer-matrix-row > *:first-child {
+        border-bottom: none;
+    }
+
+    .proj-spacer-matrix-row > *:nth-child(2) {
+        display: none;
+    }
+
+    .proj-subnav-matrix-row {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .proj-subnav-matrix-row > *:first-child {
+        border-bottom: none;
+    }
+
+    .proj-hero-col-meta {
+        padding: 1rem 1.25rem;
+    }
+
+    .proj-hero-col-content {
+        padding: 1.25rem;
+    }
+
     .proj-standalone-title-main {
-        font-size: 1.65rem;
+        font-size: 1.55rem;
+        line-height: 1.25;
+    }
+
+    .standalone-esc-kbd {
+        display: none !important;
     }
 
     .proj-spec-matrix {
@@ -825,6 +1018,58 @@ html.dark .proj-standalone-media-wrap img {
 
     .proj-spec-cell-wide {
         grid-column: span 2;
+    }
+
+    .proj-standalone-desc-box {
+        padding: 16px;
+    }
+
+    .proj-standalone-desc {
+        font-size: 0.88rem;
+    }
+
+    .proj-article-body {
+        padding: 18px 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .project-standalone-wrapper {
+        padding: 0 6px 60px 6px;
+    }
+
+    .standalone-container {
+        padding: 12px 0 50px 0;
+    }
+
+    .proj-standalone-title-main {
+        font-size: 1.35rem;
+    }
+
+    .proj-spec-matrix {
+        grid-template-columns: 1fr;
+    }
+
+    .proj-spec-cell-wide {
+        grid-column: span 1;
+    }
+
+    .proj-spec-cell {
+        border-right: none !important;
+    }
+
+    .proj-nav-actions {
+        gap: 4px;
+    }
+
+    .proj-action-btn {
+        padding: 5px 8px;
+        font-size: 0.75rem;
+    }
+
+    .proj-bottom-socials {
+        gap: 10px;
+        font-size: 0.7rem;
     }
 }
 

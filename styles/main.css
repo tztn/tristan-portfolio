@@ -92,6 +92,7 @@ html {
     background-color: var(--bg-primary);
     color: var(--text-primary);
     transition: var(--transition-theme);
+    overflow-x: hidden;
     overflow-x: clip;
 }
 
@@ -101,6 +102,7 @@ body {
     background-color: var(--bg-primary);
     color: var(--text-primary);
     min-height: 100vh;
+    overflow-x: hidden;
     overflow-x: clip;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -139,6 +141,7 @@ svg {
     width: 100%;
     position: relative;
     z-index: 1;
+    overflow-x: hidden;
     overflow-x: clip;
 }
 
