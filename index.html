@@ -1275,28 +1275,31 @@
                             <div class="stack-row-pills" style="width: 100%;">
                                 <form class="contact-form-grid" id="contact-form" novalidate
                                     style="width: 100%; max-width: 520px;">
+                                    <!-- Honeypot anti-spam field -->
+                                    <input type="text" name="_gotcha" id="form-gotcha" style="display: none !important;" tabindex="-1" autocomplete="off" aria-hidden="true">
+
                                     <div class="form-field-group">
-                                        <input type="text" id="form-name" class="contact-input" placeholder="Your Name"
+                                        <input type="text" id="form-name" name="name" class="contact-input" placeholder="Your Name"
                                             required autocomplete="name">
                                         <span class="field-error-msg font-mono" id="error-name"
                                             style="display: none;">Name is required (at least 2 characters).</span>
                                     </div>
                                     <div class="form-field-group">
-                                        <input type="email" id="form-email" class="contact-input"
+                                        <input type="email" id="form-email" name="email" class="contact-input"
                                             placeholder="Your Email Address" required autocomplete="email">
                                         <span class="field-error-msg font-mono" id="error-email"
                                             style="display: none;">Please provide a valid email address (e.g.,
                                             name@domain.com).</span>
                                     </div>
                                     <div class="form-field-group">
-                                        <textarea id="form-message" class="contact-textarea"
-                                            placeholder="Your Message or Project Details..." required></textarea>
+                                        <textarea id="form-message" name="message" class="contact-textarea"
+                                            placeholder="Your Message or Project Details..." required maxlength="1000"></textarea>
                                         <span class="field-error-msg font-mono" id="error-message"
-                                            style="display: none;">Message must be at least 5 characters.</span>
+                                            style="display: none;">Message must be between 10 and 1000 characters.</span>
                                     </div>
 
                                     <div id="form-feedback-hud" class="form-feedback-hud font-mono"
-                                        style="display: none;"></div>
+                                        style="display: none;" role="status"></div>
 
                                     <button type="submit" class="contact-submit-btn" id="form-submit-btn">
                                         <span>Send Message</span>
@@ -1307,6 +1310,7 @@
                                             <polyline points="12 5 19 12 12 19"></polyline>
                                         </svg>
                                     </button>
+                                    <div id="rate-limit-notice" class="form-rate-limit-notice font-mono" style="display: none;"></div>
                                 </form>
                             </div>
                         </div>

@@ -171,6 +171,44 @@
     transform: none;
 }
 
+/* Feedback HUD & Status Banners */
+.form-feedback-hud {
+    padding: 10px 14px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    line-height: 1.45;
+    transition: all var(--transition-fast);
+}
+
+.form-feedback-hud.feedback-success {
+    color: var(--emerald, #10b981);
+    border-color: rgba(16, 185, 129, 0.35);
+    background: rgba(16, 185, 129, 0.06);
+}
+
+.form-feedback-hud.feedback-error {
+    color: #ef4444;
+    border-color: rgba(239, 68, 68, 0.35);
+    background: rgba(239, 68, 68, 0.06);
+}
+
+.form-rate-limit-notice {
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    color: var(--text-muted);
+    padding: 8px 0 2px 0;
+    line-height: 1.5;
+}
+
+.form-rate-limit-notice a {
+    color: var(--text-primary);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
 @media (max-width: 640px) {
     #contact .stack-table-row {
         grid-template-columns: 1fr;
