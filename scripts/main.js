@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initCommandPalette();
     initPhtClock();
     initDynamicGreeting();
+    initHeroTextFlip();
     initGithubHeatmap();
     initProjectsFilter();
     initStackStandaloneController();
@@ -707,6 +708,65 @@ function initDynamicGreeting() {
     }
 
     updateGreeting();
+}
+
+/* ==========================================================================
+   09C: HERO TEXT-FLIP ROTATION (@ncdai/text-flip INSPIRED 3D ROLL)
+   ========================================================================== */
+function initHeroTextFlip() {
+    const container = document.getElementById("hero-flip-container");
+    if (!container) return;
+
+    const phrases = [
+        "Building clean, fast websites",
+        "Front-end developer and builder",
+        "Turning designs into clean code"
+    ];
+
+    let currentIndex = 0;
+    let isTransitioning = false;
+    const FLIP_INTERVAL = 3200; // 3.2s interval
+
+    function flipNext() {
+        if (isTransitioning) return;
+        if (document.hidden) return; // Pause when tab is in background
+
+        const currentEl = container.querySelector(".flip-text-inner");
+        if (!currentEl) return;
+
+        isTransitioning = true;
+        currentIndex = (currentIndex + 1) % phrases.length;
+        const nextPhrase = phrases[currentIndex];
+
+        // Create the incoming phrase element
+        const nextEl = document.createElement("span");
+        nextEl.className = "flip-text-inner flip-text-entering";
+        nextEl.textContent = nextPhrase;
+        nextEl.setAttribute("aria-hidden", "true");
+
+        container.appendChild(nextEl);
+
+        // Force browser layout calculation so the enter state registers
+        void nextEl.offsetHeight;
+
+        // Animate out current and animate in next simultaneously
+        requestAnimationFrame(() => {
+            currentEl.classList.add("flip-text-exiting");
+            nextEl.classList.remove("flip-text-entering");
+            nextEl.classList.add("flip-text-animating");
+        });
+
+        // Clean up on animation completion
+        setTimeout(() => {
+            currentEl.remove();
+            nextEl.classList.remove("flip-text-animating");
+            nextEl.removeAttribute("aria-hidden");
+            container.setAttribute("aria-label", nextPhrase);
+            isTransitioning = false;
+        }, 550);
+    }
+
+    setInterval(flipNext, FLIP_INTERVAL);
 }
 
 /* Cursor Tracking Animation & Tactile Click for Fig. 1 Isometric Blueprint */

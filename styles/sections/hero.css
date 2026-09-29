@@ -280,6 +280,60 @@
     margin: 0;
 }
 
+/* 3D Vertical Text-Flip Rotation (@ncdai/text-flip Inspired) */
+.flip-text-container {
+    display: inline-flex;
+    position: relative;
+    overflow: hidden;
+    height: 1.5em;
+    vertical-align: bottom;
+    max-width: 100%;
+    perspective: 600px;
+    transform-style: preserve-3d;
+}
+
+.flip-text-inner {
+    display: block;
+    line-height: 1.5em;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 100%;
+    transform-origin: 50% 50% -8px;
+    transition: transform 0.52s cubic-bezier(0.16, 1, 0.3, 1),
+                opacity 0.42s cubic-bezier(0.16, 1, 0.3, 1),
+                filter 0.42s ease;
+    will-change: transform, opacity, filter;
+    color: var(--text-secondary);
+}
+
+.flip-text-inner.flip-text-entering {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translateY(100%) rotateX(-45deg);
+    opacity: 0;
+    filter: blur(2px);
+    pointer-events: none;
+}
+
+.flip-text-inner.flip-text-animating {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translateY(0%) rotateX(0deg);
+    opacity: 1;
+    filter: blur(0px);
+    pointer-events: none;
+}
+
+.flip-text-inner.flip-text-exiting {
+    transform: translateY(-100%) rotateX(45deg);
+    opacity: 0;
+    filter: blur(2px);
+    pointer-events: none;
+}
+
 .hero-avatar-right {
     height: 150px;
     flex-shrink: 0;
