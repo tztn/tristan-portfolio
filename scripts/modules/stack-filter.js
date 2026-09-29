@@ -174,8 +174,8 @@ function initStackStandaloneController() {
 
                 <!-- Categorized Sections -->
                 ${stackSections.map(sec => {
-                    const rows = chunkIntoRows(sec.items, 3);
-                    return `
+            const rows = chunkIntoRows(sec.items, 3);
+            return `
                         <!-- Category Header Row -->
                         <div class="stack-matrix-row stack-cat-header-row">
                             <div class="stack-cat-title-cell font-mono">${sec.category}</div>
@@ -199,7 +199,7 @@ function initStackStandaloneController() {
                             </div>
                         `).join('')}
                     `;
-                }).join('')}
+        }).join('')}
             </div>
         `;
 
@@ -237,7 +237,7 @@ function initStackStandaloneController() {
         if (window.updateNavActiveState) window.updateNavActiveState("stack");
         window.history.pushState(null, "", "#stack");
         if (window.lenis) {
-            try { window.lenis.resize(); } catch (e) {}
+            try { window.lenis.resize(); } catch (e) { }
         }
         const stackEl = document.getElementById("stack");
         if (stackEl) {

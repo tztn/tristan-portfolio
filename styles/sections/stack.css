@@ -557,6 +557,7 @@
 }
 
 @media (max-width: 640px) {
+
     .stack-marquee-wrapper,
     .stack-marquee-row {
         touch-action: pan-y;
