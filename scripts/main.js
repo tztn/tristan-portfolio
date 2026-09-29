@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initPronounceAudio();
     initCommandPalette();
     initPhtClock();
+    initDynamicGreeting();
     initGithubHeatmap();
     initProjectsFilter();
     initStackStandaloneController();
@@ -685,6 +686,29 @@ function initPhtClock() {
     setInterval(update, 1000);
 }
 
+/* ==========================================================================
+   09B: DYNAMIC TIME-BASED GREETING (OVERVIEW HERO)
+   ========================================================================== */
+function initDynamicGreeting() {
+    const greetingEl = document.getElementById("dynamic-greeting");
+    if (!greetingEl) return;
+
+    function updateGreeting() {
+        const hours = new Date().getHours();
+        let greeting = "Good evening";
+        if (hours >= 5 && hours < 12) {
+            greeting = "Good morning";
+        } else if (hours >= 12 && hours < 18) {
+            greeting = "Good afternoon";
+        } else {
+            greeting = "Good evening";
+        }
+        greetingEl.textContent = greeting;
+    }
+
+    updateGreeting();
+}
+
 /* Cursor Tracking Animation & Tactile Click for Fig. 1 Isometric Blueprint */
 function initIsometricFigTracking() {
     const heroZone = document.getElementById("blueprint-hero-zone");
@@ -822,7 +846,7 @@ function initGithubHeatmap() {
 
     function renderMatrix(contributions, totalCount) {
         container.innerHTML = "";
-        if (totalLabel) totalLabel.textContent = `${totalCount} contributions`;
+        if (totalLabel) totalLabel.textContent = `${totalCount} contributions in the last year`;
 
         const weeks = 52;
         let dayIndex = 0;

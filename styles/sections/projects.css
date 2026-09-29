@@ -286,10 +286,10 @@ html.dark .project-media-wrap img {
     z-index: 3;
 }
 
-/* Projects Standalone Matrix Rows (Continuous 190px 1fr CAD Blueprint Grid) */
+/* Deep Dive Standalone Header Rows */
 .proj-matrix-row {
-    display: grid;
-    grid-template-columns: 190px 1fr;
+    display: flex;
+    flex-direction: column;
     position: relative;
     width: 100%;
     margin: 0;
@@ -298,7 +298,6 @@ html.dark .project-media-wrap img {
     z-index: 2;
 }
 
-/* Full-width horizontal dividing line extending across entire viewport */
 .proj-matrix-row::after {
     content: "";
     position: absolute;
@@ -312,11 +311,6 @@ html.dark .project-media-wrap img {
     z-index: 3;
 }
 
-.proj-matrix-row > *:first-child {
-    border-right: 1px solid var(--border);
-}
-
-/* Row 1: Empty Spacer Grid Row (~48px / h-12) */
 .proj-spacer-matrix-row {
     height: 48px;
     min-height: 48px;
@@ -327,7 +321,6 @@ html.dark .project-media-wrap img {
     background-color: transparent;
 }
 
-/* Row 2: Sub-Navigation Row */
 .proj-subnav-matrix-row {
     min-height: 48px;
     align-items: stretch;
@@ -355,58 +348,26 @@ html.dark .project-media-wrap img {
     margin: 0;
 }
 
-/* Deep-dive page subnav overrides (flex layout for full width back btn & prev/next) */
 .proj-detail-spacer-row {
     display: block;
 }
 
 .proj-detail-subnav-row {
     display: flex;
+    flex-direction: row;
     align-items: center;
     justify-content: space-between;
 }
 
-.proj-detail-subnav-row > *:first-child {
-    border-right: none;
-}
-
-/* Row 3 in Projects Archive: Page Title Row */
-.proj-hero-matrix-row {
-    min-height: 130px;
-    align-items: stretch;
-    background-color: var(--bg-primary);
-}
-
-.proj-hero-col-meta {
-    padding: 2.25rem 1.25rem 2rem 1.25rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 12px;
+/* Standalone Projects Archive Table Rows */
+.projects-standalone-wrapper .cad-table-rows {
     position: relative;
+    z-index: 3;
     background-color: var(--bg-primary);
 }
 
-.proj-hero-col-content {
-    padding: 2.25rem 1.75rem 2rem 1.75rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+.projects-standalone-wrapper .cad-table-row {
     background-color: var(--bg-primary);
-}
-
-.proj-hero-col-content .sec-main-title {
-    margin: 0 0 0.5rem 0;
-    line-height: 1.15;
-}
-
-.proj-hero-desc {
-    font-family: var(--font-sans);
-    font-size: 0.92rem;
-    color: var(--text-secondary);
-    line-height: 1.65;
-    margin: 0;
 }
 
 .cad-project-row {
@@ -969,38 +930,9 @@ html.dark .proj-standalone-media-wrap img {
 }
 
 @media (max-width: 640px) {
-    .proj-matrix-row {
-        grid-template-columns: 1fr;
-    }
-
-    .proj-matrix-row > *:first-child {
-        border-right: none;
-        border-bottom: 1px solid var(--border);
-    }
-
-    .proj-spacer-matrix-row > *:first-child {
-        border-bottom: none;
-    }
-
-    .proj-spacer-matrix-row > *:nth-child(2) {
-        display: none;
-    }
-
-    .proj-subnav-matrix-row {
+    .proj-detail-subnav-row {
         display: flex;
         justify-content: space-between;
-    }
-
-    .proj-subnav-matrix-row > *:first-child {
-        border-bottom: none;
-    }
-
-    .proj-hero-col-meta {
-        padding: 1rem 1.25rem;
-    }
-
-    .proj-hero-col-content {
-        padding: 1.25rem;
     }
 
     .proj-standalone-title-main {

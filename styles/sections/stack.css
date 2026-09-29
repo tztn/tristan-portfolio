@@ -850,12 +850,12 @@
 }
 
 /* Cell borders inside row */
-.stack-matrix-row > *:nth-child(1),
-.stack-matrix-row > *:nth-child(2) {
+.stack-matrix-row>*:nth-child(1),
+.stack-matrix-row>*:nth-child(2) {
     border-right: 1px solid var(--border);
 }
 
-.stack-matrix-row > *:nth-child(3) {
+.stack-matrix-row>*:nth-child(3) {
     border-right: none;
 }
 
@@ -1085,11 +1085,11 @@
         display: none;
     }
 
-    .stack-matrix-row > *:nth-child(1) {
+    .stack-matrix-row>*:nth-child(1) {
         border-right: 1px solid var(--border);
     }
 
-    .stack-matrix-row > *:nth-child(2) {
+    .stack-matrix-row>*:nth-child(2) {
         border-right: none;
     }
 }
@@ -1120,7 +1120,7 @@
         padding: 0;
     }
 
-    .stack-matrix-row > * {
+    .stack-matrix-row>* {
         border-right: none !important;
     }
 

@@ -608,6 +608,25 @@ html.dark .profile-static-img {
         padding-left: 16px;
         padding-right: 16px;
     }
+
+    .overview-bio-block {
+        padding: 20px 18px 24px 18px;
+        gap: 12px;
+    }
+
+    .overview-greeting {
+        font-size: 1.85rem;
+    }
+
+    .overview-bio-list {
+        padding-left: 18px;
+        gap: 8px;
+    }
+
+    .overview-bio-list li {
+        font-size: 0.9rem;
+        line-height: 1.6;
+    }
 }
 
 @media (max-width: 480px) {
@@ -667,64 +686,79 @@ html.dark .profile-static-img {
 }
 
 /* ==========================================================================
-   03: GITHUB CONTRIBUTION HEATMAP
+   03: GITHUB CONTRIBUTION HEATMAP (CHANHDAI EXACT SPEC)
    ========================================================================== */
 
 .github-heatmap-container {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    padding: 16px;
-    background: var(--bg-secondary);
-    border: 1px solid var(--border);
-    border-radius: 8px;
+    padding: 24px 28px 20px 28px;
+    background: var(--bg-primary);
+    border: none;
+    border-bottom: 1px solid var(--border);
+    position: relative;
     width: 100%;
-    overflow-x: auto;
+    overflow: visible;
+    box-sizing: border-box;
 }
 
-.heatmap-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    color: var(--text-muted);
+.github-heatmap-container::after {
+    content: "";
+    z-index: 0;
+    background-color: var(--line);
+    width: 200vw;
+    height: 1px;
+    position: absolute;
+    bottom: -1px;
+    left: -100vw;
+    pointer-events: none;
 }
 
 .heatmap-grid-scroll {
     display: flex;
     flex-direction: column;
-    gap: 3px;
-    min-width: 580px;
+    gap: 8px;
+    width: 100%;
+    overflow: visible;
+    box-sizing: border-box;
 }
 
 .heatmap-months-row {
     display: flex;
     justify-content: space-between;
+    width: 100%;
     font-family: var(--font-mono);
-    font-size: 0.62rem;
+    font-size: 0.72rem;
     color: var(--text-muted);
-    padding-left: 20px;
+    padding: 0 2px;
+    user-select: none;
+    box-sizing: border-box;
 }
 
 .heatmap-matrix {
     display: grid;
-    grid-template-columns: repeat(52, 1fr);
+    grid-template-columns: repeat(52, minmax(0, 1fr));
     gap: 3px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .heatmap-col {
     display: flex;
     flex-direction: column;
     gap: 3px;
+    width: 100%;
+    min-width: 0;
 }
 
 .heatmap-cell {
-    width: 9px;
-    height: 9px;
+    width: 100%;
+    aspect-ratio: 1 / 1;
     border-radius: 2px;
     background-color: #ebedf0;
-    transition: transform 0.1s ease;
+    transition: transform 0.1s ease, filter 0.1s ease;
+    cursor: default;
+    box-sizing: border-box;
 }
 
 html.dark .heatmap-cell {
@@ -764,21 +798,152 @@ html.dark .heatmap-cell.l4 {
 }
 
 .heatmap-cell:hover {
-    transform: scale(1.3);
+    outline: 1.5px solid var(--text-primary);
+    outline-offset: -0.5px;
+    z-index: 2;
 }
 
 .heatmap-footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    width: 100%;
     font-family: var(--font-mono);
-    font-size: 0.65rem;
+    font-size: 0.72rem;
     color: var(--text-muted);
-    margin-top: 4px;
+    margin-top: 6px;
+    padding: 0 2px;
+    box-sizing: border-box;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.heatmap-fig-caption {
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+}
+
+.heatmap-fig-caption a {
+    color: var(--text-primary);
+    text-decoration: underline;
+    text-underline-offset: 2px;
 }
 
 .heatmap-legend {
     display: flex;
     align-items: center;
-    gap: 3px;
+    gap: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    user-select: none;
+}
+
+.heatmap-legend-cell {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    background-color: #ebedf0;
+    flex-shrink: 0;
+}
+
+html.dark .heatmap-legend-cell {
+    background-color: #161b22;
+}
+
+.heatmap-legend-cell.l1 {
+    background-color: #9be9a8;
+}
+
+.heatmap-legend-cell.l2 {
+    background-color: #40c463;
+}
+
+.heatmap-legend-cell.l3 {
+    background-color: #30a14e;
+}
+
+.heatmap-legend-cell.l4 {
+    background-color: #216e39;
+}
+
+html.dark .heatmap-legend-cell.l1 {
+    background-color: #0e4429;
+}
+
+html.dark .heatmap-legend-cell.l2 {
+    background-color: #006d32;
+}
+
+html.dark .heatmap-legend-cell.l3 {
+    background-color: #26a641;
+}
+
+html.dark .heatmap-legend-cell.l4 {
+    background-color: #39d353;
+}
+
+@media (max-width: 600px) {
+    .github-heatmap-container {
+        padding: 18px 16px 16px 16px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    .github-heatmap-container::-webkit-scrollbar {
+        display: none;
+        width: 0;
+        height: 0;
+    }
+
+    .heatmap-grid-scroll {
+        min-width: 480px;
+    }
+}
+
+/* ==========================================================================
+   03B: DYNAMIC GREETING & BIO BULLET SUMMARY (CHANHDAI EXACT REFERENCE)
+   ========================================================================== */
+
+.overview-bio-block {
+    padding: 24px 28px 28px 28px;
+    background-color: var(--bg-primary);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.overview-greeting {
+    font-family: var(--font-handwriting), 'Caveat', cursive;
+    font-size: clamp(2rem, 3.8vw, 2.35rem);
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin: 0;
+}
+
+.overview-bio-list {
+    list-style-type: disc;
+    padding-left: 20px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.overview-bio-list li {
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: var(--text-secondary);
+}
+
+.overview-bio-list li::marker {
+    color: var(--text-muted);
 }
