@@ -367,12 +367,12 @@ html.dark .profile-static-img {
 }
 
 /* ==========================================================================
-   02: TECHNICAL METADATA SPEC MATRIX (2-COLUMN REFERENCE GRID)
+   02: TECHNICAL METADATA SPEC MATRIX (EXACT IMAGE 2 REFERENCE GRID)
    ========================================================================== */
 
 .overview-metadata-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
+    flex-direction: column;
     border-bottom: 1px solid var(--border);
     background-color: var(--bg-primary);
     position: relative;
@@ -381,7 +381,7 @@ html.dark .profile-static-img {
 .overview-metadata-grid::after {
     content: "";
     z-index: 0;
-    background-color: var(--line);
+    background-color: var(--line, var(--border));
     width: 200vw;
     height: 1px;
     position: absolute;
@@ -390,42 +390,89 @@ html.dark .profile-static-img {
     pointer-events: none;
 }
 
-.meta-column {
-    display: flex;
-    flex-direction: column;
+.meta-grid-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    position: relative;
+    width: 100%;
+    border-bottom: 1px solid var(--border);
 }
 
-.meta-col-left {
-    border-right: 1px solid var(--border);
+/* Full-bleed 200vw continuous horizontal architectural line for EACH row */
+.meta-grid-row::after {
+    content: "";
+    z-index: 0;
+    background-color: var(--line, var(--border));
+    width: 200vw;
+    height: 1px;
+    position: absolute;
+    bottom: -1px;
+    left: -100vw;
+    pointer-events: none;
+}
+
+/* Last row bottom dividing line is closed by .overview-metadata-grid::after */
+.meta-grid-row:last-child {
+    border-bottom: none;
+}
+
+.meta-grid-row:last-child::after {
+    display: none;
 }
 
 .meta-line-item {
     display: flex;
     align-items: center;
-    gap: 9px;
-    padding: 9px 24px;
-    font-family: var(--font-mono);
-    font-size: 0.82rem;
-    color: var(--text-primary);
-    transition: background-color var(--transition-fast);
-    line-height: 1.4;
+    gap: 12px;
+    padding: 0 24px;
+    height: 48px;
+    min-height: 48px;
+    box-sizing: border-box;
+    font-family: var(--font-sans) !important;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+    position: relative;
+    background-color: transparent;
 }
 
-.meta-line-item:hover {
+.meta-col-1 {
+    border-right: 1px solid var(--border);
+}
+
+.meta-line-item:not(.meta-item-empty):hover {
     background-color: var(--bg-card-hover);
+    color: var(--text-primary);
 }
 
-.meta-item-icon {
+.meta-item-empty {
+    pointer-events: none;
+    user-select: none;
+    background: transparent;
+}
+
+/* Subtle Rounded Icon Badge Container (Exact Reference: Image 2) */
+.meta-item-badge {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 16px;
-    height: 16px;
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border);
     color: var(--text-muted);
     flex-shrink: 0;
+    transition: color var(--transition-fast), border-color var(--transition-fast), background-color var(--transition-fast);
 }
 
-.meta-item-icon svg {
+.meta-line-item:not(.meta-item-empty):hover .meta-item-badge {
+    color: var(--text-primary);
+    border-color: var(--border-strong, var(--border));
+}
+
+.meta-svg-icon {
     width: 14px;
     height: 14px;
 }
@@ -434,17 +481,33 @@ html.dark .profile-static-img {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    font-family: var(--font-mono);
+    font-family: var(--font-sans) !important;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-secondary);
     line-height: 1.4;
+    transition: color var(--transition-fast);
 }
 
-.meta-item-text a {
-    color: var(--text-primary);
+.meta-item-text a,
+.meta-link {
+    color: var(--text-secondary);
     text-decoration: none;
+    font-family: var(--font-sans) !important;
+    transition: color var(--transition-fast);
 }
 
-.meta-item-text a:hover {
-    text-decoration: underline;
+.meta-line-item:not(.meta-item-empty):hover .meta-item-text,
+.meta-line-item:not(.meta-item-empty):hover .meta-link,
+.meta-link:hover {
+    color: var(--text-primary);
+}
+
+.meta-time-display {
+    font-family: var(--font-mono) !important;
+    font-size: 0.82rem;
+    letter-spacing: 0.02em;
+    color: var(--text-secondary);
 }
 
 /* Social Icon Badges Row + "follow me" note */
@@ -634,23 +697,27 @@ html.dark .profile-static-img {
         font-size: 0.85rem;
     }
 
-    .overview-metadata-grid {
+    .meta-grid-row {
         grid-template-columns: 1fr;
     }
 
-    .meta-col-left {
+    .meta-col-1 {
         border-right: none;
         border-bottom: 1px solid var(--border);
     }
 
-    .meta-line-item {
-        padding: 9px 16px;
-        align-items: flex-start;
-        min-height: 38px;
+    .meta-item-empty {
+        display: none;
     }
 
-    .meta-item-icon {
-        margin-top: 2px;
+    .meta-line-item {
+        padding: 0 16px;
+        height: 44px;
+        min-height: 44px;
+    }
+
+    .meta-grid-row:last-child .meta-col-1:last-child {
+        border-bottom: none;
     }
 
     .meta-item-text {

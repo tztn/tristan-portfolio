@@ -65,7 +65,7 @@
             <div class="header-right-group">
                 <!-- Nav Links -->
                 <nav class="header-nav">
-                    <ul class="header-nav-list font-mono">
+                    <ul class="header-nav-list">
                         <li><a href="#home" class="header-nav-link active">Overview</a></li>
                         <li><a href="#projects" class="header-nav-link">Projects</a></li>
                         <li><a href="#stack" class="header-nav-link">Stack</a></li>
@@ -139,7 +139,7 @@
 
         <!-- Mobile Dropdown Drawer -->
         <div class="mobile-drawer" id="mobile-drawer" data-lenis-prevent>
-            <ul class="mobile-nav-list font-mono">
+            <ul class="mobile-nav-list">
                 <li><a href="#home" class="mobile-nav-link">Overview</a></li>
                 <li><a href="#projects" class="mobile-nav-link">Projects</a></li>
                 <li><a href="#stack" class="mobile-nav-link">Stack</a></li>
@@ -182,12 +182,12 @@
                         <div class="sec-hatched-banner"></div>
 
                         <!-- 2-Column Technical Metadata Grid (Exact Reference Grid Layout) -->
-                        <div class="overview-metadata-grid font-mono">
-                            <!-- Left Column -->
-                            <div class="meta-column meta-col-left">
-                                <div class="meta-line-item">
-                                    <span class="meta-item-icon">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        <div class="overview-metadata-grid">
+                            <!-- Row 1: Role | PHT Time -->
+                            <div class="meta-grid-row">
+                                <div class="meta-line-item meta-col-1">
+                                    <span class="meta-item-badge">
+                                        <svg class="meta-svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                             stroke-linecap="round" stroke-linejoin="round">
                                             <polyline points="16 18 22 12 16 6"></polyline>
                                             <polyline points="8 6 2 12 8 18"></polyline>
@@ -196,9 +196,23 @@
                                     <span class="meta-item-text">Front-End Developer &amp; UI Designer</span>
                                 </div>
 
-                                <div class="meta-line-item">
-                                    <span class="meta-item-icon">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                <div class="meta-line-item meta-col-2">
+                                    <span class="meta-item-badge">
+                                        <svg class="meta-svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <circle cx="12" cy="12" r="10"></circle>
+                                            <polyline points="12 6 12 12 16 14"></polyline>
+                                        </svg>
+                                    </span>
+                                    <span class="meta-item-text meta-time-display" id="pht-clock-text">06:15 PM // UTC+8</span>
+                                </div>
+                            </div>
+
+                            <!-- Row 2: Education | Email -->
+                            <div class="meta-grid-row">
+                                <div class="meta-line-item meta-col-1">
+                                    <span class="meta-item-badge">
+                                        <svg class="meta-svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                             stroke-linecap="round" stroke-linejoin="round">
                                             <path d="M9 18h6"></path>
                                             <path d="M10 22h4"></path>
@@ -210,9 +224,24 @@
                                     <span class="meta-item-text">BSIT Student @NCST</span>
                                 </div>
 
-                                <div class="meta-line-item">
-                                    <span class="meta-item-icon">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                <div class="meta-line-item meta-col-2">
+                                    <span class="meta-item-badge">
+                                        <svg class="meta-svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+                                            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+                                        </svg>
+                                    </span>
+                                    <span class="meta-item-text"><a href="mailto:agoilotristanray@gmail.com"
+                                            class="meta-link">agoilotristanray@gmail.com</a></span>
+                                </div>
+                            </div>
+
+                            <!-- Row 3: Location | Empty -->
+                            <div class="meta-grid-row">
+                                <div class="meta-line-item meta-col-1">
+                                    <span class="meta-item-badge">
+                                        <svg class="meta-svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                             stroke-linecap="round" stroke-linejoin="round">
                                             <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                                             <circle cx="12" cy="10" r="3"></circle>
@@ -221,60 +250,25 @@
                                     <span class="meta-item-text">Dasmariñas City, Cavite, PH</span>
                                 </div>
 
-                                <div class="meta-line-item">
-                                    <span class="meta-item-icon">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                <div class="meta-line-item meta-col-2 meta-item-empty" aria-hidden="true"></div>
+                            </div>
+
+                            <!-- Row 4: Phone | Empty -->
+                            <div class="meta-grid-row">
+                                <div class="meta-line-item meta-col-1">
+                                    <span class="meta-item-badge">
+                                        <svg class="meta-svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                             stroke-linecap="round" stroke-linejoin="round">
                                             <path
                                                 d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
                                             </path>
                                         </svg>
                                     </span>
-                                    <span class="meta-item-text"><a href="mailto:agoilotristanray@gmail.com"
-                                            class="meta-link font-mono">+63 945 123 4567</a></span>
+                                    <span class="meta-item-text"><a href="tel:+639451234567"
+                                            class="meta-link">+63 945 123 4567</a></span>
                                 </div>
 
-                                <div class="meta-line-item">
-                                    <span class="meta-item-icon">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71">
-                                            </path>
-                                            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71">
-                                            </path>
-                                        </svg>
-                                    </span>
-                                    <span class="meta-item-text"><a href="https://tztn.github.io" target="_blank"
-                                            rel="noopener noreferrer"
-                                            class="meta-link font-mono">tztn.github.io</a></span>
-                                </div>
-                            </div>
-
-                            <!-- Right Column -->
-                            <div class="meta-column meta-col-right">
-                                <div class="meta-line-item">
-                                    <span class="meta-item-icon">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round">
-                                            <circle cx="12" cy="12" r="10"></circle>
-                                            <polyline points="12 6 12 12 16 14"></polyline>
-                                        </svg>
-                                    </span>
-                                    <span class="meta-item-text meta-time-display" id="pht-clock-text">06:15 PM //
-                                        UTC+8</span>
-                                </div>
-
-                                <div class="meta-line-item">
-                                    <span class="meta-item-icon">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round">
-                                            <rect width="20" height="16" x="2" y="4" rx="2"></rect>
-                                            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
-                                        </svg>
-                                    </span>
-                                    <span class="meta-item-text"><a href="mailto:agoilotristanray@gmail.com"
-                                            class="meta-link font-mono">agoilotristanray@gmail.com</a></span>
-                                </div>
+                                <div class="meta-line-item meta-col-2 meta-item-empty" aria-hidden="true"></div>
                             </div>
                         </div>
 
