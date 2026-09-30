@@ -17,27 +17,27 @@ function initStackStandaloneController() {
             items: [
                 {
                     name: "HTML",
-                    icon: `<svg class="stack-brand-icon" viewBox="0 0 24 24"><path d="M12 2L3 5l1.6 14.5L12 22l7.4-2.5L21 5l-9-3zm0 2.2l7.1 2.4-1.3 12.3-5.8 2-5.8-2L4.9 6.6 12 4.2zm-4.7 5.3h9.4l-.3 3.3H9.9l.2 1.9 4.6-.2-.2 2.2-4.4.2-.3-2.2H8l.5 3.9 6.2-.3.6-5.8H7.3V9.5z"/></svg>`
+                    icon: `<img src="assets/icons/html white.png" alt="HTML" class="stack-brand-icon stack-custom-icon" width="24" height="24" loading="lazy" />`
                 },
                 {
                     name: "CSS",
-                    icon: `<svg class="stack-brand-icon" viewBox="0 0 24 24"><path d="M1.5 0h21l-1.91 21.48L12 24l-8.59-2.52L1.5 0zm15.48 4.87H7.03l.28 3.13h8.32l-.28 3.13H7.59l.28 3.13h7.2l-.32 3.55-2.75.76-2.75-.76-.18-1.98H6.12l.34 3.86L12 22.42l5.54-1.54 1.44-16.01z"/></svg>`
+                    icon: `<img src="assets/icons/css white.png" alt="CSS" class="stack-brand-icon stack-custom-icon" width="24" height="24" loading="lazy" />`
                 },
                 {
                     name: "JavaScript",
-                    icon: `<svg class="stack-brand-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15.5H9.5v-4H8v-1.5h3v5.5zm5.5 0h-4v-1.5h2.5v-1h-2v-3h3.5v1.5H15v1h1.5v3z"/></svg>`
+                    icon: `<img src="assets/icons/icons8-javascript-50white.png" alt="JavaScript" class="stack-brand-icon stack-custom-icon" width="24" height="24" loading="lazy" />`
                 },
                 {
                     name: "Vue.js",
-                    icon: `<svg class="stack-brand-icon" viewBox="0 0 24 24"><path d="M24 1.61H14.06L12 5.16 9.94 1.61H0L12 22.39ZM12 14.08 5.16 2.23H9.59L12 6.41l2.41-4.18h4.43Z"/></svg>`
+                    icon: `<img src="assets/icons/vuejs black.png" alt="Vue.js" class="stack-brand-icon stack-custom-icon" width="24" height="24" loading="lazy" />`
                 },
                 {
                     name: "Tailwind CSS",
-                    icon: `<svg class="stack-brand-icon" viewBox="0 0 24 24"><path d="M12.001 4.8c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624C13.666 10.618 15.027 12 18.001 12c3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C16.335 6.182 14.974 4.8 12.001 4.8zm-6 7.2c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624 1.177 1.194 2.538 2.576 5.512 2.576 3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C10.335 13.382 8.974 12 6.001 12z"/></svg>`
+                    icon: `<img src="assets/icons/tailwind-css white.png" alt="Tailwind CSS" class="stack-brand-icon stack-custom-icon" width="24" height="24" loading="lazy" />`
                 },
                 {
                     name: "Bootstrap",
-                    icon: `<svg class="stack-brand-icon" viewBox="0 0 24 24"><path d="M3 5.4C3 4.075 4.075 3 5.4 3h13.2C19.925 3 21 4.075 21 5.4v13.2c0 1.325-1.075 2.4-2.4 2.4H5.4A2.4 2.4 0 0 1 3 18.6V5.4zm6.65 3.3v6.6h3.41c1.47 0 2.44-.76 2.44-1.98 0-.87-.56-1.52-1.43-1.7v-.06c.72-.19 1.18-.8 1.18-1.56 0-1.12-.9-1.75-2.24-1.75H9.65zm1.54 1.25h1.72c.67 0 1.09.31 1.09.84 0 .56-.44.88-1.14.88h-1.67V9.95zm0 2.85h1.86c.78 0 1.24.34 1.24.94 0 .61-.48.96-1.28.96h-1.82v-1.9z"/></svg>`
+                    icon: `<img src="assets/icons/bootstrap white.png" alt="Bootstrap" class="stack-brand-icon stack-custom-icon" width="24" height="24" loading="lazy" />`
                 },
                 {
                     name: "Styled Components",
@@ -45,7 +45,7 @@ function initStackStandaloneController() {
                 },
                 {
                     name: "Figma",
-                    icon: `<svg class="stack-brand-icon" viewBox="0 0 24 24"><path d="M12 12a4 4 0 1 1 8 0 4 4 0 0 1-8 0z M4 20a4 4 0 0 1 4-4h4v4a4 4 0 1 1-8 0z M12 0v8h4a4 4 0 1 0 0-8h-4z M4 4a4 4 0 0 0 4 4h4V0H8a4 4 0 0 0-4 4z M4 12a4 4 0 0 0 4 4h4V8H8a4 4 0 0 0-4 4z"/></svg>`
+                    icon: `<img src="assets/icons/figma black.png" alt="Figma" class="stack-brand-icon stack-custom-icon" width="24" height="24" loading="lazy" />`
                 }
             ],
             emptyCount: 1
@@ -67,19 +67,19 @@ function initStackStandaloneController() {
                 },
                 {
                     name: "Python",
-                    icon: `<svg class="stack-brand-icon" viewBox="0 0 24 24"><path d="M11.91 2c-3.12 0-5.06 1.41-5.06 3.69v2.74h5.18V9.3H4.14C1.86 9.3 0 11.23 0 13.51s1.86 4.21 4.14 4.21h2.71v-2.73c0-2.28 1.94-3.69 5.06-3.69h5.06V8.56c0-2.28-1.94-3.69-5.06-3.69h-5v2.85h5V2zm-2.28 1.48c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm9.31 4.74c0 2.28-1.94 3.69-5.06 3.69H8.82v2.74h7.89c2.28 0 4.14-1.93 4.14-4.21S19 6.22 16.72 6.22h-2.71v2.73c0 2.28-1.94 3.69-5.06 3.69H3.89v2.74h5.05c3.12 0 5.06-1.41 5.06-3.69V8.95h-5v2.85h5v-3.58z"/></svg>`
+                    icon: `<img src="assets/icons/icons8-python-50white.png" alt="Python" class="stack-brand-icon stack-custom-icon" width="24" height="24" loading="lazy" />`
                 },
                 {
                     name: "Java",
-                    icon: `<svg class="stack-brand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1" /><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z" /><line x1="6" y1="2" x2="6" y2="4" /><line x1="10" y1="2" x2="10" y2="4" /><line x1="14" y1="2" x2="14" y2="4" /></svg>`
+                    icon: `<img src="assets/icons/icons8-java-50black.png" alt="Java" class="stack-brand-icon stack-custom-icon" width="24" height="24" loading="lazy" />`
                 },
                 {
                     name: "C++",
-                    icon: `<svg class="stack-brand-icon" viewBox="0 0 24 24"><path d="M22.394 6c-.167-.29-.398-.543-.652-.69L12.926.22c-.509-.294-1.34-.294-1.848 0L2.26 5.31c-.508.293-.923 1.013-.923 1.6v10.18c0 .294.104.62.271.91.167.29.398.543.652.69l8.816 5.09c.508.293 1.34.293 1.848 0l8.816-5.09c.254-.147.485-.4.652-.69.167-.29.27-.616.27-.91V6.91c.003-.294-.1-.62-.268-.91zM12 19.11c-3.92 0-7.109-3.19-7.11 0-3.92 3.19-7.11 7.11-7.11a7.133 7.133 0 016.156 3.553l-3.076 1.78a3.567 3.567 0 00-3.08-1.78A3.56 3.56 0 008.444 12 3.56 3.56 0 0012 15.555a3.57 3.57 0 003.08-1.778l3.078 1.78A7.135 7.135 0 0112 19.11zm7.11-6.715h-.79v.79h-.79v-.79h-.79v-.79h.79v-.79h.79v.79h.79zm2.962 0h-.79v.79h-.79v-.79h-.79v-.79h.79v-.79h.79v.79h.79z"/></svg>`
+                    icon: `<img src="assets/icons/c++ white.png" alt="C++" class="stack-brand-icon stack-custom-icon" width="24" height="24" loading="lazy" />`
                 },
                 {
                     name: "MySQL",
-                    icon: `<svg class="stack-brand-icon" viewBox="0 0 24 24"><path d="M16.405 5.501c-.347.804-.845 1.554-1.468 2.197.803-.347 1.554-.845 2.197-1.468-.243-.277-.487-.517-.729-.729zm2.463 3.655c-.569.643-1.242 1.189-1.986 1.614.947-.197 1.838-.598 2.614-1.168-.204-.158-.415-.306-.628-.446zM7.342 9.245C5.071 9.479 3.09 10.741 2 12.637c.722.569 1.564.986 2.477 1.214.47-.833 1.127-1.547 1.916-2.079-.319-.8-.671-1.636-1.051-2.527zm14.444 4.095c-.382-.446-.827-.838-1.319-1.165-.634.821-1.472 1.46-2.434 1.854.898.396 1.892.571 2.875.504.305-.383.593-.787.878-1.193zM12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm.052 17.525c-3.14 0-5.882-1.74-7.309-4.321.436-.08.877-.202 1.309-.368 1.194 2.115 3.447 3.541 6.05 3.541 3.86 0 7-3.14 7-7 0-.583-.075-1.147-.21-1.688.384-.251.745-.536 1.077-.852.41 1.042.633 2.174.633 3.54 0 5.247-4.278 9.148-8.55 9.148z"/></svg>`
+                    icon: `<img src="assets/icons/mysql white.png" alt="MySQL" class="stack-brand-icon stack-custom-icon" width="24" height="24" loading="lazy" />`
                 }
             ],
             emptyCount: 2

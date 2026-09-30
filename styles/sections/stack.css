@@ -577,7 +577,9 @@
         font-size: 0.94rem;
     }
 
-    .stack-svg-icon {
+    .stack-svg-icon,
+    .stack-svg-icon.stack-custom-icon,
+    img.stack-svg-icon {
         width: 18px;
         height: 18px;
     }
@@ -632,7 +634,9 @@
         font-size: 0.86rem;
     }
 
-    .stack-svg-icon {
+    .stack-svg-icon,
+    .stack-svg-icon.stack-custom-icon,
+    img.stack-svg-icon {
         width: 16px;
         height: 16px;
     }
@@ -796,6 +800,28 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.stack-brand-icon.stack-custom-icon,
+.stack-svg-icon.stack-custom-icon,
+img.stack-brand-icon,
+img.stack-svg-icon {
+    object-fit: contain;
+    filter: brightness(0);
+    transition: filter var(--transition-fast, 0.2s ease), transform var(--transition-fast, 0.2s ease);
+}
+
+.stack-svg-icon.stack-custom-icon,
+img.stack-svg-icon {
+    width: 20px;
+    height: 20px;
+}
+
+html.dark .stack-brand-icon.stack-custom-icon,
+html.dark .stack-svg-icon.stack-custom-icon,
+html.dark img.stack-brand-icon,
+html.dark img.stack-svg-icon {
+    filter: brightness(0) invert(1);
 }
 
 .stack-brand-name {
