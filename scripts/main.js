@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
 /* ==========================================================================
    05: PROJECT DATA & STANDALONE PAGE CONTROLLER (CHANHDAI EXACT REFERENCE)
    ========================================================================== */
-const projectOrder = ["gncp", "sneakrs", "dlails", "stym", "lostfound", "supermarket"];
+const projectOrder = ["gncp", "sneakrs", "dlails", "stym", "lostfound", "go-on-care"];
 
 const projectData = {
     gncp: {
@@ -147,31 +147,42 @@ const projectData = {
         img: "assets/images/projects/lostfound.png",
         externalLink: "https://github.com/tztn"
     },
-    supermarket: {
-        id: "supermarket",
-        title: "Supermarket POS & Inventory System",
-        badge: "C++20 / SYSTEMS",
-        lead: "A reliable point-of-sale console application for retail inventory management, logarithmic barcode binary search, and automated purchase auditing.",
-        story: "Developed to demonstrate robust low-level systems programming in C++20, emphasizing deterministic memory management, custom data structures, and binary file persistence.",
-        desc: "Performs real-time barcode lookups, calculates sales taxes and promotional discounts, manages stock replenishment thresholds, and formats ASCII receipts for thermal printing.",
-        architecture: "Written in ISO C++20 with custom dynamic array structures, robust binary file serialization, structured exception handling, and formatted CLI tables.",
-        contributions: [
-            "Implemented algorithmic barcode/SKU binary search ensuring low latency product queries.",
-            "Built calculation routines for tiered promotional discounts and itemized receipt generation.",
-            "Created automated binary backup routines for transaction history and stock depletion alerts.",
-            "Engineered interactive console menu UI with strict input sanitation and validation."
+    "go-on-care": {
+        id: "go-on-care",
+        title: "Go-onCare Healthcare Management System",
+        badge: "PYTHON / HEALTHCARE",
+        lead: "A healthcare management system designed for patient records, appointment scheduling, clinical queues, billing, and operational analytics.",
+        story: "Developed to streamline multi-role clinic operations with dedicated portal interfaces for Admin, Doctor, Nurse, Receptionist, HR, and Finance.",
+        desc: "Provides structured patient record management, automated clinical queue tracking, appointment booking, and centralized billing workflows backed by a relational database.",
+        architecture: [
+            "Role-based workflow architecture providing distinct access and permission boundaries for medical and administrative staff.",
+            "Clean modular application design with role-tailored forms and clinical record views.",
+            "Relational database schema engineered in MySQL for structured storage of patient histories, clinical notes, and billing ledgers."
         ],
-        date: "2024-09-15",
-        domain: "tztn.github.io/supermarket-pos",
-        domainSummary: "CLI Point of Sale application with binary serialization and inventory search.",
-        buildHash: "3b8417f",
-        categoryLabel: "C++20 / Systems",
-        deployedOn: "Native Windows / CLI",
-        tags: ["C++20", "Data Structures", "Binary I/O", "CLI Systems", "OOP"],
-        img: "assets/images/projects/supermarket.png",
-        externalLink: "https://github.com/tztn"
+        architectureSubtitle: "Python / Desktop & Local Systems",
+        contributions: [
+            "Built role-based access routines tailored for Doctors, Nurses, Receptionists, HR, and Admin staff.",
+            "Implemented patient queue tracking and scheduling management to reduce clinic wait times.",
+            "Created automated billing calculation modules and consultation record auditing.",
+            "Designed responsive data entry forms with input validation for accurate patient history logging."
+        ],
+        contributionsTitle: "Core Contributions",
+        contributionsSubtitle: "4 Key Deliverables",
+        date: "2026-03-15",
+        domain: "github.com/tztn/go-on-care",
+        domainSummary: "Healthcare management and clinical workflow system.",
+        buildHash: "8e24f91",
+        categoryLabel: "Python / Healthcare",
+        deployedOn: "Local Environment / Standalone",
+        status: "Completed & Verified",
+        tags: ["Python", "MySQL", "SQL"],
+        img: "assets/images/projects/go-on-care.png",
+        externalLink: "https://github.com/tztn/go-on-care"
     }
 };
+
+// Backwards-compatible alias for supermarket
+projectData.supermarket = projectData["go-on-care"];
 
 let currentActiveProjectId = null;
 
@@ -271,7 +282,7 @@ function initProjectDetailsController() {
                                         <div class="edu-meta-row font-mono">
                                             <span class="edu-meta-item">Technical Architecture</span>
                                             <span class="edu-meta-divider">|</span>
-                                            <span class="edu-meta-item">${data.categoryLabel}</span>
+                                            <span class="edu-meta-item">${data.architectureSubtitle || data.categoryLabel}</span>
                                         </div>
                                     </div>
                                     <button class="edu-toggle-btn" aria-label="Toggle details" aria-expanded="false">
@@ -284,7 +295,7 @@ function initProjectDetailsController() {
 
                                 <div class="edu-card-content">
                                     <ul class="edu-bullet-list">
-                                        <li>${data.architecture}</li>
+                                        ${Array.isArray(data.architecture) ? data.architecture.map(item => `<li>${item}</li>`).join('') : `<li>${data.architecture}</li>`}
                                     </ul>
                                 </div>
                             </div>
@@ -297,9 +308,9 @@ function initProjectDetailsController() {
                                     <div class="edu-title-group">
                                         <h3 class="edu-school-name">Key Implementations &amp; Highlights</h3>
                                         <div class="edu-meta-row font-mono">
-                                            <span class="edu-meta-item">Core Contributions</span>
+                                            <span class="edu-meta-item">${data.contributionsTitle || 'Core Contributions'}</span>
                                             <span class="edu-meta-divider">|</span>
-                                            <span class="edu-meta-item">${data.contributions.length} Key Deliverables</span>
+                                            <span class="edu-meta-item">${data.contributionsSubtitle || `${data.contributions.length} Key Deliverables`}</span>
                                         </div>
                                     </div>
                                     <button class="edu-toggle-btn" aria-label="Toggle details" aria-expanded="false">
@@ -358,7 +369,7 @@ function initProjectDetailsController() {
                         <div class="proj-spec-cell">
                             <span class="proj-spec-k font-mono">STATUS</span>
                             <div class="proj-spec-status font-mono">
-                                <span class="status-dot"></span> Active &amp; Verified
+                                <span class="status-dot"></span> ${data.status || 'Active &amp; Verified'}
                             </div>
                         </div>
                         <div class="proj-spec-cell proj-spec-cell-wide">
