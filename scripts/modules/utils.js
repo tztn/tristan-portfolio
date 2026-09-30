@@ -25,8 +25,8 @@ function initContactFeedback() {
 
     if (!contactForm) return;
 
-    // Endpoint for FormSubmit AJAX submission
-    const FORMSUBMIT_ENDPOINT = "https://formsubmit.co/ajax/agoilotristanray@gmail.com";
+    // Endpoint for Web3Forms API submission
+    const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
 
     // Form elements
     const nameInput = document.getElementById("form-name");
@@ -113,6 +113,22 @@ function initContactFeedback() {
     checkRateLimit();
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    let errorTimeout = null;
+
+    function clearFieldError(input, errorEl) {
+        if (input) input.classList.remove("has-error");
+        if (errorEl) errorEl.style.display = "none";
+    }
+
+    function clearAllErrors() {
+        if (errorTimeout) {
+            clearTimeout(errorTimeout);
+            errorTimeout = null;
+        }
+        clearFieldError(nameInput, errorName);
+        clearFieldError(emailInput, errorEmail);
+        clearFieldError(messageInput, errorMessage);
+    }
 
     function validateName() {
         if (!nameInput) return true;
@@ -122,8 +138,7 @@ function initContactFeedback() {
             if (errorName) errorName.style.display = "flex";
             return false;
         } else {
-            nameInput.classList.remove("has-error");
-            if (errorName) errorName.style.display = "none";
+            clearFieldError(nameInput, errorName);
             return true;
         }
     }
@@ -136,8 +151,7 @@ function initContactFeedback() {
             if (errorEmail) errorEmail.style.display = "flex";
             return false;
         } else {
-            emailInput.classList.remove("has-error");
-            if (errorEmail) errorEmail.style.display = "none";
+            clearFieldError(emailInput, errorEmail);
             return true;
         }
     }
@@ -145,68 +159,80 @@ function initContactFeedback() {
     function validateMessage() {
         if (!messageInput) return true;
         const val = messageInput.value.trim();
-        if (val.length < 10) {
+        if (val.length < 10 || val.length > 1000) {
             messageInput.classList.add("has-error");
             if (errorMessage) errorMessage.style.display = "flex";
             return false;
         } else {
-            messageInput.classList.remove("has-error");
-            if (errorMessage) errorMessage.style.display = "none";
+            clearFieldError(messageInput, errorMessage);
             return true;
         }
     }
 
-    // Real-time inline validation feedback
+    // Real-time clearing of error as user types valid input
     if (nameInput) {
         nameInput.addEventListener("input", () => {
-            if (nameInput.classList.contains("has-error")) validateName();
+            if (nameInput.value.trim().length >= 2) {
+                clearFieldError(nameInput, errorName);
+            }
         });
-        nameInput.addEventListener("blur", validateName);
     }
 
     if (emailInput) {
         emailInput.addEventListener("input", () => {
-            if (emailInput.classList.contains("has-error")) validateEmail();
+            if (emailRegex.test(emailInput.value.trim())) {
+                clearFieldError(emailInput, errorEmail);
+            }
         });
-        emailInput.addEventListener("blur", validateEmail);
     }
 
     if (messageInput) {
         messageInput.addEventListener("input", () => {
-            if (messageInput.classList.contains("has-error")) validateMessage();
+            const len = messageInput.value.trim().length;
+            if (len >= 10 && len <= 1000) {
+                clearFieldError(messageInput, errorMessage);
+            }
         });
-        messageInput.addEventListener("blur", validateMessage);
     }
 
     const idleBtnHtml = '<span>Send Message</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>';
+    let feedbackTimeout = null;
 
-    // Contact form submit handler
-    contactForm.addEventListener("submit", (e) => {
+    // Contact form submit handler (Official Web3Forms Integration)
+    contactForm.addEventListener("submit", async (e) => {
+        // a. Call e.preventDefault()
         e.preventDefault();
 
-        // 1. Check the honeypot field (_gotcha). If filled, silently abort without sending.
+        // b. Check the honeypot field (#form-gotcha). If filled, silently abort without sending.
         if (gotchaInput && gotchaInput.value.trim() !== "") {
             return;
         }
 
-        // 2. Validate inputs:
-        //    - Name: at least 2 characters.
-        //    - Email: standard valid email regex pattern.
-        //    - Message: at least 10 characters.
-        //    - If invalid, show inline errors, focus the first error, and abort.
+        // c. Run strict client-side validation
         const isNameValid = validateName();
         const isEmailValid = validateEmail();
         const isMessageValid = validateMessage();
 
+        // If validation fails, display relevant inline .field-error-msg spans and auto-hide after 4 seconds
         if (!isNameValid || !isEmailValid || !isMessageValid) {
             if (!isNameValid && nameInput) nameInput.focus();
             else if (!isEmailValid && emailInput) emailInput.focus();
             else if (!isMessageValid && messageInput) messageInput.focus();
+
+            // Auto-hide validation errors after a short amount of time (4 seconds) so they don't stay forever
+            if (errorTimeout) clearTimeout(errorTimeout);
+            errorTimeout = setTimeout(() => {
+                clearAllErrors();
+            }, 4000);
+
+            if (window.soundFX) window.soundFX.play("click");
             return;
         }
 
-        // 3. Enforce 24-hour rate limiting using localStorage: maximum 3 submissions per 24 hours.
-        //    If limit reached, show warning banner and abort.
+        // Clear any pending error timeout if valid
+        clearAllErrors();
+
+        // Rate limiting check (3 submissions per 24 hours)
         if (checkRateLimit()) {
             if (feedbackHud) {
                 feedbackHud.className = "form-feedback-hud font-mono feedback-error";
@@ -216,77 +242,92 @@ function initContactFeedback() {
             return;
         }
 
-        // 4. Disable submit button and set text to "Sending...".
+        // d. If validation passes:
+        // Disable the submit button and update button text/icon to show sending state
         if (submitBtn) {
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<span>Sending...</span>';
         }
+
+        // Clear any existing feedback text in #form-feedback-hud
         if (feedbackHud) {
             feedbackHud.style.display = "none";
             feedbackHud.className = "form-feedback-hud font-mono";
             feedbackHud.textContent = "";
+            if (feedbackTimeout) {
+                clearTimeout(feedbackTimeout);
+                feedbackTimeout = null;
+            }
         }
 
-        // 5. Send the fetch POST request
-        fetch(FORMSUBMIT_ENDPOINT, {
-            method: "POST",
-            headers: { 
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            },
-            body: JSON.stringify({
-                name: nameInput.value.trim(),
-                email: emailInput.value.trim(),
-                message: messageInput.value.trim(),
-                _subject: `New Portfolio Message from ${nameInput.value.trim()}`
-            })
-        })
-        .then(res => {
-            if (!res.ok) {
-                throw new Error("HTTP error " + res.status);
+        try {
+            // Collect formData and send a POST request to Web3Forms
+            const formData = new FormData(contactForm);
+            const jsonObject = Object.fromEntries(formData.entries());
+
+            const res = await fetch("https://api.web3forms.com/submit", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify(jsonObject)
+            });
+            const result = await res.json();
+
+            // Handle response
+            if (result.success) {
+                // Reset form inputs
+                contactForm.reset();
+
+                // Hide all error spans and error classes
+                if (nameInput) nameInput.classList.remove("has-error");
+                if (emailInput) emailInput.classList.remove("has-error");
+                if (messageInput) messageInput.classList.remove("has-error");
+                if (errorName) errorName.style.display = "none";
+                if (errorEmail) errorEmail.style.display = "none";
+                if (errorMessage) errorMessage.style.display = "none";
+
+                recordSubmissionSuccess();
+
+                // Show success feedback in #form-feedback-hud
+                if (feedbackHud) {
+                    feedbackHud.className = "form-feedback-hud font-mono feedback-success";
+                    feedbackHud.style.display = "block";
+                    feedbackHud.textContent = "[200 OK] Message dispatched successfully.";
+
+                    // Auto-hide the success message after 5 seconds
+                    feedbackTimeout = setTimeout(() => {
+                        feedbackHud.style.display = "none";
+                        feedbackHud.textContent = "";
+                    }, 5000);
+                }
+
+                if (window.soundFX) window.soundFX.play("success");
+            } else {
+                // Show failure feedback in #form-feedback-hud
+                if (feedbackHud) {
+                    feedbackHud.className = "form-feedback-hud font-mono feedback-error";
+                    feedbackHud.style.display = "block";
+                    feedbackHud.textContent = result.message || "Failed to send message. Please try again.";
+                }
+                if (window.soundFX) window.soundFX.play("click");
             }
-            return res.json();
-        })
-        .then(data => {
-            nameInput.value = "";
-            emailInput.value = "";
-            messageInput.value = "";
-            if (nameInput) nameInput.classList.remove("has-error");
-            if (emailInput) emailInput.classList.remove("has-error");
-            if (messageInput) messageInput.classList.remove("has-error");
-
-            // Record rate limit timestamp in localStorage
-            recordSubmissionSuccess();
-
-            // Display green monospace success banner:
-            // "✓ Message sent successfully. I'll get back to you soon."
-            if (feedbackHud) {
-                feedbackHud.className = "form-feedback-hud font-mono feedback-success";
-                feedbackHud.style.display = "block";
-                feedbackHud.textContent = "✓ Message sent successfully. I'll get back to you soon.";
-            }
-
-            if (window.soundFX) window.soundFX.play("success");
-        })
-        .catch(err => {
-            console.error("Submission error:", err);
-            // Display red monospace error banner:
-            // "✕ Failed to send message. Please email agoilotristanray@gmail.com directly."
+        } catch (err) {
+            console.error("Web3Forms submission error:", err);
             if (feedbackHud) {
                 feedbackHud.className = "form-feedback-hud font-mono feedback-error";
                 feedbackHud.style.display = "block";
-                feedbackHud.textContent = "✕ Failed to send message. Please email agoilotristanray@gmail.com directly.";
+                feedbackHud.textContent = "Failed to send message. Please try again.";
             }
-
             if (window.soundFX) window.soundFX.play("click");
-        })
-        .finally(() => {
-            // Reset submit button state back to active
+        } finally {
+            // In the finally block, re-enable the submit button and restore its original markup/text
             if (submitBtn) {
                 const isLimited = checkRateLimit();
                 submitBtn.disabled = isLimited;
                 submitBtn.innerHTML = idleBtnHtml;
             }
-        });
+        }
     });
 }
