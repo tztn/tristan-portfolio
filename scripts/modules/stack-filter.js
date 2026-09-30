@@ -75,7 +75,7 @@ function initStackStandaloneController() {
                 },
                 {
                     name: "C++",
-                    icon: `<img src="assets/icons/c++ white.png" alt="C++" class="stack-brand-icon stack-custom-icon" width="24" height="24" loading="lazy" />`
+                    icon: `<img src="assets/icons/cpp-white.png" alt="C++" class="stack-brand-icon stack-custom-icon" width="24" height="24" loading="lazy" />`
                 },
                 {
                     name: "MySQL",
