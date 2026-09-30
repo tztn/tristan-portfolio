@@ -1,98 +1,193 @@
 /* ==========================================================================
-   10: CONTACT PANEL
+   10: CONTACT PANEL (CHANHDAI CAD MATRIX REFERENCE DESIGN)
    ========================================================================== */
 
-.contact-card {
-    background: var(--bg-secondary);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 16px;
+.contact-grid-container {
+    width: 100%;
+    background-color: var(--bg-primary);
+    position: relative;
     display: flex;
     flex-direction: column;
-    gap: 14px;
 }
 
-.contact-direct-row {
+.contact-grid-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    width: 100%;
+    position: relative;
+    border-bottom: 1px solid var(--border);
+    box-sizing: border-box;
+}
+
+/* Full-bleed 200vw continuous horizontal architectural lines */
+.contact-grid-row::after {
+    content: "";
+    z-index: 0;
+    background-color: var(--line, var(--border));
+    width: 200vw;
+    height: 1px;
+    position: absolute;
+    bottom: -1px;
+    left: -100vw;
+    pointer-events: none;
+}
+
+/* Bottom boundary line is handled by .panel::after */
+.contact-grid-row:last-child {
+    border-bottom: none;
+}
+
+.contact-grid-row:last-child::after {
+    display: none;
+}
+
+.contact-grid-cell {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 24px 28px;
+    transition: background-color var(--transition-fast);
+    background-color: transparent;
+    position: relative;
+    box-sizing: border-box;
+}
+
+/* 2-Column Dividing Grid Vertical Border */
+.contact-grid-row .contact-grid-cell:first-child {
+    border-right: 1px solid var(--border);
+}
+
+.contact-grid-cell:hover {
+    background-color: var(--bg-card-hover, rgba(255, 255, 255, 0.03));
+}
+
+/* Top Area: Statement / Quote (Matching Education Body Typography) */
+.contact-cell-top {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-cell-quote {
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+/* Bottom Area: Author / Channel Identity Lockup */
+.contact-cell-meta {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    flex-wrap: wrap;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    padding: 8px 12px;
-    border-radius: 5px;
+    margin-top: 20px;
+    flex-shrink: 0;
 }
 
-.contact-email-text {
-    font-family: var(--font-mono);
-    font-size: 0.78rem;
+.contact-cell-info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+    flex: 1;
+}
+
+.contact-cell-name {
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
     font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.25;
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.contact-name-link {
+    transition: color var(--transition-fast);
+}
+
+.contact-name-link:hover {
+    color: var(--accent, #d4485d);
+}
+
+.contact-cell-role {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    line-height: 1.25;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+}
+
+.contact-role-link {
+    transition: color var(--transition-fast);
+}
+
+.contact-role-link:hover {
     color: var(--text-primary);
 }
 
+/* Copy Action Button in Direct Email Cell */
 .copy-email-btn {
     display: inline-flex;
     align-items: center;
     gap: 5px;
-    background: var(--bg-secondary);
-    border: 1px solid var(--border);
-    color: var(--text-primary);
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    font-weight: 700;
-    padding: 4px 8px;
-    border-radius: 4px;
+    background: transparent;
+    border: none;
+    padding: 0;
+    color: var(--text-muted);
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
     cursor: pointer;
-    transition: all var(--transition-fast);
+    transition: color var(--transition-fast);
 }
 
 .copy-email-btn:hover {
-    border-color: var(--border-hover);
+    color: var(--text-primary);
+}
+
+.contact-copy-tag {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    transition: color var(--transition-fast);
+}
+
+.copy-email-btn:hover .contact-copy-tag {
+    color: var(--text-primary);
+}
+
+.stack-mono-icon {
+    font-family: var(--font-mono);
+    color: var(--emerald, #10b981);
+    font-weight: 700;
+}
+
+/* ==========================================================================
+   CONTACT MESSAGE FORM (CELL 06)
+   ========================================================================== */
+
+.contact-cell-form {
+    padding: 20px 24px;
+    justify-content: flex-start;
 }
 
 .contact-form-grid {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    width: 100%;
 }
 
 .form-field-group {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 3px;
     width: 100%;
-}
-
-/* Contact Row Indices & Info Pills */
-#contact .stack-row-num {
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    font-weight: 600;
-}
-
-#contact .stack-pill-chip {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-family: var(--font-mono);
-    font-size: 0.8125rem;
-    font-weight: 400;
-    letter-spacing: normal;
-    line-height: 1.4;
-    color: var(--text-primary);
-    background-color: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 9999px;
-    padding: 4px 12px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
-    transition: all var(--transition-fast);
-}
-
-#contact .stack-pill-chip:hover {
-    border-color: var(--text-primary);
-    transform: translateY(-1px);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
 }
 
 .contact-input,
@@ -100,47 +195,57 @@
     width: 100%;
     background: var(--bg-card);
     border: 1px solid var(--border);
-    border-radius: 5px;
-    padding: 10px 14px;
+    border-radius: 6px;
+    padding: 9px 12px;
     font-family: var(--font-sans);
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     color: var(--text-primary);
     outline: none;
-    transition: border-color var(--transition-fast), background-color var(--transition-fast);
+    box-sizing: border-box;
+    transition: border-color var(--transition-fast), background-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 .contact-input::placeholder,
 .contact-textarea::placeholder {
     font-family: var(--font-sans);
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     color: var(--text-muted);
 }
 
 .contact-input:focus,
 .contact-textarea:focus {
     border-color: var(--text-primary);
+    background-color: var(--bg-primary);
+    box-shadow: 0 0 0 2px var(--border);
 }
 
 .contact-input.has-error,
 .contact-textarea.has-error {
     border-color: #ef4444 !important;
-    background-color: rgba(239, 68, 68, 0.03) !important;
+    background-color: rgba(239, 68, 68, 0.04) !important;
 }
 
 .field-error-msg {
     font-family: var(--font-mono);
-    font-size: 0.72rem;
+    font-size: 0.7rem;
     color: #ef4444;
-    font-weight: 600;
-    margin-top: 2px;
+    font-weight: 500;
+    margin-top: 1px;
     display: flex;
     align-items: center;
     gap: 4px;
 }
 
 .contact-textarea {
-    min-height: 90px;
+    min-height: 82px;
     resize: vertical;
+}
+
+.contact-form-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 2px;
 }
 
 .contact-submit-btn {
@@ -150,11 +255,11 @@
     gap: 8px;
     background: var(--text-primary);
     color: var(--bg-primary);
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    padding: 8px 16px;
     font-family: var(--font-sans);
-    font-size: 0.875rem;
+    font-size: 0.825rem;
     font-weight: 600;
     cursor: pointer;
     transition: opacity var(--transition-fast), transform var(--transition-fast);
@@ -171,14 +276,14 @@
     transform: none;
 }
 
-/* Feedback HUD & Status Banners */
+/* Feedback HUD & Status */
 .form-feedback-hud {
-    padding: 10px 14px;
+    padding: 8px 12px;
     background: var(--bg-secondary);
     border: 1px solid var(--border);
     border-radius: 6px;
     font-family: var(--font-mono);
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     line-height: 1.45;
     transition: all var(--transition-fast);
 }
@@ -197,10 +302,10 @@
 
 .form-rate-limit-notice {
     font-family: var(--font-mono);
-    font-size: 0.74rem;
+    font-size: 0.72rem;
     color: var(--text-muted);
-    padding: 8px 0 2px 0;
-    line-height: 1.5;
+    padding: 4px 0 0 0;
+    line-height: 1.4;
 }
 
 .form-rate-limit-notice a {
@@ -209,82 +314,59 @@
     text-underline-offset: 2px;
 }
 
+/* ==========================================================================
+   RESPONSIVE LAYOUT (MOBILE / TABLET)
+   ========================================================================== */
+
 @media (max-width: 640px) {
-    #contact .stack-table-row {
+    .contact-grid-row {
         grid-template-columns: 1fr;
     }
 
-    #contact .stack-row-header {
+    .contact-grid-row .contact-grid-cell:first-child {
         border-right: none;
         border-bottom: 1px solid var(--border);
-        padding: 10px 16px;
-        background-color: var(--bg-secondary);
     }
 
-    #contact .stack-row-pills {
-        padding: 14px 16px;
+    .contact-grid-row .contact-grid-cell:first-child::after {
+        content: "";
+        z-index: 0;
+        background-color: var(--line, var(--border));
+        width: 200vw;
+        height: 1px;
+        position: absolute;
+        bottom: -1px;
+        left: -100vw;
+        pointer-events: none;
     }
 
-    #contact .contact-form-grid {
-        max-width: 100% !important;
+    .contact-grid-cell {
+        padding: 20px 16px;
+    }
+
+    .contact-cell-quote {
+        font-size: 0.875rem;
+    }
+
+    .contact-cell-meta {
+        margin-top: 16px;
+    }
+
+    .contact-cell-form {
+        padding: 18px 16px;
     }
 
     .contact-input,
     .contact-textarea {
-        /* Prevents iOS Safari & Chrome from auto-zooming into inputs on mobile */
-        font-size: 16px !important;
-        padding: 12px 14px;
-    }
-
-    .contact-input::placeholder,
-    .contact-textarea::placeholder {
-        font-size: 15px;
+        font-size: 16px !important; /* Prevents mobile browser auto-zoom */
+        padding: 10px 12px;
     }
 
     .contact-submit-btn {
         width: 100%;
         justify-content: center;
-        padding: 12px 20px;
-        min-height: 44px;
-        font-size: 0.92rem;
-    }
-
-    .contact-email-text {
-        font-size: 0.75rem;
-        word-break: break-all;
-    }
-
-    .copy-email-btn {
-        padding: 6px 10px;
-        font-size: 0.72rem;
+        padding: 11px 16px;
+        min-height: 42px;
+        font-size: 0.875rem;
     }
 }
-
-@media (max-width: 480px) {
-    #contact .stack-row-header {
-        padding: 9px 12px;
-    }
-
-    #contact .stack-row-pills {
-        padding: 10px 12px;
-        gap: 6px;
-    }
-
-    #contact .stack-pill-chip {
-        padding: 4px 10px;
-        font-size: 0.75rem !important;
-        max-width: 100%;
-        word-break: break-word;
-    }
-
-    .contact-direct-row {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 8px;
-    }
-
-    .copy-email-btn {
-        justify-content: center;
-    }
-}
-

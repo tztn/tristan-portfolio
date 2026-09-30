@@ -861,19 +861,43 @@ html.dark .proj-standalone-media-wrap img {
 .proj-bottom-socials {
     display: flex;
     align-items: center;
-    gap: 16px;
-    font-family: var(--font-mono);
-    font-size: 0.74rem;
+    gap: 8px;
 }
 
-.proj-bottom-socials a {
-    color: var(--text-muted);
-    text-decoration: none;
-    transition: color var(--transition-fast);
-}
-
-.proj-bottom-socials a:hover {
+.proj-bottom-socials .social-btn-box {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
     color: var(--text-primary);
+    transition: all var(--transition-fast);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+    padding: 0;
+    cursor: pointer;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+.proj-bottom-socials .social-btn-box:hover {
+    color: var(--text-primary);
+    border-color: var(--text-primary);
+    background: var(--bg-card-hover, var(--bg-secondary));
+    transform: translateY(-2px);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+.proj-bottom-socials .social-btn-box:active {
+    transform: translateY(0);
+}
+
+.proj-bottom-socials .social-btn-box svg {
+    display: block;
+    width: 15px;
+    height: 15px;
 }
 
 /* Standalone Projects Callout Annotations */

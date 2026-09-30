@@ -21,7 +21,7 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="styles/main.css?v=2">
     <link rel="stylesheet" href="styles/header.css">
-    <link rel="stylesheet" href="styles/sections.css?v=8">
+    <link rel="stylesheet" href="styles/sections.css?v=15">
     <link rel="stylesheet" href="styles/components.css">
 
     <!-- Anti-FOUC Theme Initialization (Chanh Dai Instant Theme Sync) -->
@@ -1218,66 +1218,100 @@
                         <span class="sec-badge-tag">GET IN TOUCH</span>
                     </div>
 
-                    <div class="stack-table-rows">
-                        <!-- 01 Direct Communication -->
-                        <div class="stack-table-row">
-                            <div class="stack-row-header">
-                                <span class="stack-row-num font-mono">01</span>
-                                <span class="stack-row-label">Direct Reach</span>
+                    <div class="contact-grid-container">
+                        <!-- Row 01: Direct Reach -->
+                        <div class="contact-grid-row">
+                            <!-- Cell 01: Direct Email -->
+                            <div class="contact-grid-cell">
+                                <div class="contact-cell-top">
+                                    <p class="contact-cell-quote">Have an exciting project, freelance opportunity, or just want to chat tech? My inbox is always open.</p>
+                                </div>
+                                <div class="contact-cell-meta">
+                                    <div class="contact-cell-info">
+                                        <span class="contact-cell-name">agoilotristanray@gmail.com</span>
+                                        <div class="contact-cell-role">
+                                            <button type="button" class="copy-email-btn" id="copy-email-btn" title="Click to copy email address">
+                                                <span>Click to copy</span>
+                                                <span class="contact-copy-tag font-mono">[Copy]</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="stack-row-pills">
-                                <span class="stack-pill-chip" style="cursor: pointer;" id="copy-email-btn"
-                                    title="Click to copy email address">
-                                    <span class="stack-chip-icon"><svg viewBox="0 0 24 24" fill="none"
-                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                            stroke-linejoin="round">
-                                            <rect width="20" height="16" x="2" y="4" rx="2" />
-                                            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-                                        </svg></span>
-                                    <span>agoilotristanray@gmail.com</span>
-                                    <span class="font-mono"
-                                        style="font-size: 0.68rem; color: var(--text-muted); margin-left: 4px;">[Copy]</span>
-                                </span>
-                                <a href="https://github.com/tztn" target="_blank" rel="noopener noreferrer"
-                                    class="stack-pill-chip" title="View GitHub profile">
-                                    <span class="stack-chip-icon"><svg viewBox="0 0 24 24" fill="currentColor">
-                                            <path
-                                                d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z" />
-                                        </svg></span>
-                                    <span>GitHub @tztn</span>
-                                </a>
-                                <span class="stack-pill-chip">
-                                    <span class="stack-chip-icon"><svg viewBox="0 0 24 24" fill="none"
-                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                            stroke-linejoin="round">
-                                            <circle cx="12" cy="12" r="10" />
-                                            <line x1="2" y1="12" x2="22" y2="12" />
-                                            <path
-                                                d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-                                        </svg></span>
-                                    <span>Cavite, Philippines (PHT / UTC+8)</span>
-                                </span>
+
+                            <!-- Cell 02: GitHub -->
+                            <div class="contact-grid-cell">
+                                <div class="contact-cell-top">
+                                    <p class="contact-cell-quote">Explore open-source repositories, design systems, UI experiments, and front-end architectures.</p>
+                                </div>
+                                <div class="contact-cell-meta">
+                                    <div class="contact-cell-info">
+                                        <a href="https://github.com/tztn" target="_blank" rel="noopener noreferrer" class="contact-cell-name contact-name-link">Tristan Ray Agoilo</a>
+                                        <a href="https://github.com/tztn" target="_blank" rel="noopener noreferrer" class="contact-cell-role contact-role-link">
+                                            <span>GitHub @tztn</span>
+                                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                        <!-- 02 Send Message Form -->
-                        <div class="stack-table-row">
-                            <!-- Callout 9: "don't be shy" -->
-                            <div class="callout-annotation callout-right callout-contact" aria-hidden="true">
-                                <svg class="follow-arrow-svg" viewBox="0 0 44 24" fill="none">
-                                    <path d="M 40 6 C 26 5, 12 8, 6 18 M 14 15 L 6 18 L 8 10" stroke="currentColor"
-                                        stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                                <span class="font-hand follow-hand-text">don't be shy</span>
+                        <!-- Row 02: Social & Location -->
+                        <div class="contact-grid-row">
+                            <!-- Cell 03: Discord / Chat -->
+                            <div class="contact-grid-cell">
+                                <div class="contact-cell-top">
+                                    <p class="contact-cell-quote">Prefer real-time messaging? Reach out for design engineer discussions, quick feedback, or collaboration.</p>
+                                </div>
+                                <div class="contact-cell-meta">
+                                    <div class="contact-cell-info">
+                                        <span class="contact-cell-name">Discord Direct</span>
+                                        <span class="contact-cell-role">@tztn • Cavite, PH</span>
+                                    </div>
+                                </div>
                             </div>
 
-                            <div class="stack-row-header">
-                                <span class="stack-row-num font-mono">02</span>
-                                <span class="stack-row-label">Message Form</span>
+                            <!-- Cell 04: Location & Status -->
+                            <div class="contact-grid-cell">
+                                <div class="contact-cell-top">
+                                    <p class="contact-cell-quote">Based in Cavite, Philippines (GMT+8). Open to full-time engineering roles, freelance, and remote teams.</p>
+                                </div>
+                                <div class="contact-cell-meta">
+                                    <div class="contact-cell-info">
+                                        <span class="contact-cell-name">Cavite, Philippines</span>
+                                        <span class="contact-cell-role font-mono">PHT (UTC+8) • Open for Work</span>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="stack-row-pills" style="width: 100%;">
-                                <form class="contact-form-grid" id="contact-form" novalidate
-                                    style="width: 100%; max-width: 520px;">
+                        </div>
+
+                        <!-- Row 03: Form & Message -->
+                        <div class="contact-grid-row">
+                            <!-- Cell 05: Send Message Intro -->
+                            <div class="contact-grid-cell contact-cell-form-intro">
+                                <div class="contact-cell-top">
+                                    <p class="contact-cell-quote">Prefer sending a direct note right from your browser? Drop your message below — it forwards straight to my primary inbox.</p>
+                                </div>
+                                <div class="contact-cell-meta">
+                                    <div class="contact-cell-info">
+                                        <span class="contact-cell-name">Tristan Ray Agoilo</span>
+                                        <span class="contact-cell-role">Front-End Developer & UI Designer</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Cell 06: Send Message Form -->
+                            <div class="contact-grid-cell contact-cell-form">
+                                <!-- Callout 9: "don't be shy" -->
+                                <div class="callout-annotation callout-right callout-contact" aria-hidden="true">
+                                    <svg class="follow-arrow-svg" viewBox="0 0 44 24" fill="none">
+                                        <path d="M 40 6 C 26 5, 12 8, 6 18 M 14 15 L 6 18 L 8 10" stroke="currentColor"
+                                            stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                    <span class="font-hand follow-hand-text">don't be shy</span>
+                                </div>
+
+                                <form class="contact-form-grid" id="contact-form" novalidate>
                                     <!-- Honeypot anti-spam field -->
                                     <input type="text" name="_gotcha" id="form-gotcha" style="display: none !important;"
                                         tabindex="-1" autocomplete="off" aria-hidden="true">
@@ -1292,32 +1326,32 @@
                                         <input type="email" id="form-email" name="email" class="contact-input"
                                             placeholder="Your Email Address" required autocomplete="email">
                                         <span class="field-error-msg font-mono" id="error-email"
-                                            style="display: none;">Please provide a valid email address (e.g.,
-                                            name@domain.com).</span>
+                                            style="display: none;">Please provide a valid email address.</span>
                                     </div>
                                     <div class="form-field-group">
                                         <textarea id="form-message" name="message" class="contact-textarea"
                                             placeholder="Your Message or Project Details..." required
                                             maxlength="1000"></textarea>
                                         <span class="field-error-msg font-mono" id="error-message"
-                                            style="display: none;">Message must be between 10 and 1000
-                                            characters.</span>
+                                            style="display: none;">Message must be between 10 and 1000 characters.</span>
                                     </div>
 
                                     <div id="form-feedback-hud" class="form-feedback-hud font-mono"
                                         style="display: none;" role="status"></div>
 
-                                    <button type="submit" class="contact-submit-btn" id="form-submit-btn">
-                                        <span>Send Message</span>
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                            stroke-linejoin="round">
-                                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                                            <polyline points="12 5 19 12 12 19"></polyline>
-                                        </svg>
-                                    </button>
-                                    <div id="rate-limit-notice" class="form-rate-limit-notice font-mono"
-                                        style="display: none;"></div>
+                                    <div class="contact-form-footer">
+                                        <button type="submit" class="contact-submit-btn" id="form-submit-btn">
+                                            <span>Send Message</span>
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round">
+                                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                <polyline points="12 5 19 12 12 19"></polyline>
+                                            </svg>
+                                        </button>
+                                        <div id="rate-limit-notice" class="form-rate-limit-notice font-mono"
+                                            style="display: none;"></div>
+                                    </div>
                                 </form>
                             </div>
                         </div>
@@ -1328,16 +1362,17 @@
                      FOOTER (CAD STYLE)
                      ========================================================== -->
                 <footer class="app-footer">
-                    <div class="footer-time-widget">
-                        <span class="footer-time-dot"></span>
-                        <span>Cavite, PH &mdash; <span id="pht-footer-clock">--:--:--</span> (GMT+8)</span>
-                    </div>
-                    <div>&copy; 2026 Tristan Ray Agoilo. All rights reserved.</div>
-                    <button type="button" class="back-to-top-btn font-mono" id="back-to-top-btn">[ Back to Top &uarr;
-                        ]</button>
+                    <div class="footer-copyright">&copy; 2026 Tristan Ray Agoilo. All rights reserved.</div>
                 </footer>
             </main>
         </div>
+
+        <!-- Floating Back-to-Top Button (Fixed to bottom-right of screen) -->
+        <button type="button" class="floating-back-to-top-btn" id="back-to-top-btn" aria-label="Back to top" title="Back to top">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 19V5M5 12l7-7 7 7"/>
+            </svg>
+        </button>
 
         <!-- ==========================================================
              STANDALONE PROJECT DETAIL PAGE VIEW (CHANHDAI / SHADCN REFERENCE)
@@ -2019,11 +2054,11 @@
     <script src="scripts/soundcn.js?v=1.1"></script>
     <script src="scripts/theme.js?v=2"></script>
     <script src="scripts/vendor/lenis.min.js?v=1.1"></script>
-    <script src="scripts/navigation.js?v=1.1"></script>
+    <script src="scripts/navigation.js?v=1.2"></script>
     <script src="scripts/modules/utils.js?v=1.1"></script>
     <script src="scripts/modules/stack-filter.js?v=1.1"></script>
     <script src="scripts/modules/cmdk.js?v=1.1"></script>
-    <script src="scripts/main.js?v=1.1"></script>
+    <script src="scripts/main.js?v=1.2"></script>
 </body>
 
 </html>

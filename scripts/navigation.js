@@ -366,9 +366,29 @@
         }
         window.scrollToTop = scrollToTop;
 
+        // Floating Back-to-Top visibility controller (appears when scrolled deep down > 300px)
+        const floatingBtt = document.getElementById("back-to-top-btn");
+        function updateFloatingBttVisibility() {
+            if (!floatingBtt) return;
+            const scrollY = window.pageYOffset || document.documentElement.scrollTop || window.scrollY || 0;
+            if (scrollY > 300) {
+                floatingBtt.classList.add("visible");
+            } else {
+                floatingBtt.classList.remove("visible");
+            }
+        }
+
+        window.addEventListener("scroll", updateFloatingBttVisibility, { passive: true });
+        if (window.lenis) {
+            try {
+                window.lenis.on("scroll", updateFloatingBttVisibility);
+            } catch (err) {}
+        }
+        updateFloatingBttVisibility();
+
         // Delegate clicks for any back-to-top button
         document.addEventListener("click", (e) => {
-            const btt = e.target.closest(".standalone-btt-btn, .back-to-top-btn, #back-to-top-btn");
+            const btt = e.target.closest(".standalone-btt-btn, .back-to-top-btn, .floating-back-to-top-btn, #back-to-top-btn");
             if (btt) {
                 scrollToTop(e);
             }
