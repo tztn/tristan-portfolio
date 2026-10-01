@@ -334,6 +334,52 @@
     pointer-events: none;
 }
 
+/* ==========================================================================
+   @ncdai/shimmering-text (Chanh Dai Registry Component)
+   Smooth, light-sweeping shimmer animation for text.
+   ========================================================================== */
+.shimmering-text {
+    display: inline-flex;
+    align-items: baseline;
+    user-select: none;
+    -webkit-user-select: none;
+    --color: var(--muted-foreground, var(--text-secondary));
+    --shimmering-color: var(--foreground, var(--text-primary));
+    --cycle-duration: 2.8s;
+}
+
+.shimmering-char {
+    display: inline-block;
+    white-space: pre;
+    color: var(--color);
+    animation: shimmering-char-sweep var(--cycle-duration) cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    animation-delay: calc(var(--char-index, 0) * 0.042s);
+    will-change: color;
+}
+
+@keyframes shimmering-char-sweep {
+    0% {
+        color: var(--color);
+    }
+    14% {
+        color: var(--shimmering-color);
+    }
+    28%, 100% {
+        color: var(--color);
+    }
+}
+
+.shimmering-text.is-stopped .shimmering-char {
+    animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .shimmering-char {
+        animation: none !important;
+        color: var(--color) !important;
+    }
+}
+
 .hero-avatar-right {
     height: 150px;
     flex-shrink: 0;

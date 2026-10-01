@@ -748,8 +748,21 @@ function initDynamicGreeting() {
 }
 
 /* ==========================================================================
-   09C: HERO TEXT-FLIP ROTATION (@ncdai/text-flip INSPIRED 3D ROLL)
+   09C: HERO TEXT-FLIP ROTATION & @ncdai/shimmering-text INTEGRATION
    ========================================================================== */
+
+/**
+ * Generates DOM markup matching Chanh Dai's @ncdai/shimmering-text registry component.
+ * Produces character-by-character spans with staggered animation delay and accessible screen-reader text.
+ */
+function createShimmeringTextHtml(text) {
+    const chars = Array.from(text).map((char, i) => {
+        const charHtml = char === " " ? "&nbsp;" : (char === "<" ? "&lt;" : (char === ">" ? "&gt;" : (char === "&" ? "&amp;" : char)));
+        return `<span class="shimmering-char whitespace-pre" aria-hidden="true" style="--char-index: ${i};">${charHtml}</span>`;
+    }).join("");
+    return `<span class="shimmering-text select-none" style="--total-chars: ${text.length};">${chars}<span class="sr-only">${text}</span></span>`;
+}
+
 function initHeroTextFlip() {
     const container = document.getElementById("hero-flip-container");
     if (!container) return;
@@ -762,10 +775,20 @@ function initHeroTextFlip() {
 
     let currentIndex = 0;
     let isTransitioning = false;
-    const FLIP_INTERVAL = 3200; // 3.2s interval
+    let isHovered = false;
+    const FLIP_INTERVAL = 3800; // 3.8s interval allows shimmering sweep to cycle gracefully
+
+    // Ensure initial element is enriched with shimmering characters if not pre-rendered
+    const currentInner = container.querySelector(".flip-text-inner");
+    if (currentInner && !currentInner.querySelector(".shimmering-text")) {
+        currentInner.innerHTML = createShimmeringTextHtml(phrases[0]);
+    }
+
+    container.addEventListener("mouseenter", () => { isHovered = true; });
+    container.addEventListener("mouseleave", () => { isHovered = false; });
 
     function flipNext() {
-        if (isTransitioning) return;
+        if (isTransitioning || isHovered) return;
         if (document.hidden) return; // Pause when tab is in background
 
         const currentEl = container.querySelector(".flip-text-inner");
@@ -775,10 +798,10 @@ function initHeroTextFlip() {
         currentIndex = (currentIndex + 1) % phrases.length;
         const nextPhrase = phrases[currentIndex];
 
-        // Create the incoming phrase element
+        // Create the incoming phrase element with shimmering text
         const nextEl = document.createElement("span");
         nextEl.className = "flip-text-inner flip-text-entering";
-        nextEl.textContent = nextPhrase;
+        nextEl.innerHTML = createShimmeringTextHtml(nextPhrase);
         nextEl.setAttribute("aria-hidden", "true");
 
         container.appendChild(nextEl);
