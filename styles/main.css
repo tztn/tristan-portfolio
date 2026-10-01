@@ -93,6 +93,7 @@ html.dark {
 
 html {
     scroll-behavior: smooth;
+    scroll-padding-top: var(--header-height, 56px);
     font-size: 16px;
     background-color: var(--bg-primary);
     color: var(--text-primary);
@@ -154,7 +155,6 @@ textarea {
 #home,
 #projects,
 #stack,
-#about,
 #education,
 #contact,
 .panel {

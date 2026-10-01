@@ -126,12 +126,16 @@ function initCommandPalette() {
         closeCmdk();
 
         if (action === "navigate" && target) {
-            const el = document.querySelector(target);
-            if (el) {
-                if (window.lenis) {
-                    window.lenis.scrollTo(el, { offset: -24, duration: 1.15 });
-                } else {
-                    el.scrollIntoView({ behavior: "smooth" });
+            if (window.scrollToSection) {
+                window.scrollToSection(target, { duration: 1.05 });
+            } else {
+                const el = document.querySelector(target);
+                if (el) {
+                    if (window.lenis) {
+                        window.lenis.scrollTo(el, { offset: -56, duration: 1.05 });
+                    } else {
+                        el.scrollIntoView({ behavior: "smooth" });
+                    }
                 }
             }
         } else if (action === "project" && target) {

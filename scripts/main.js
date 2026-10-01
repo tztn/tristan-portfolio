@@ -920,11 +920,14 @@ function initScrollReveal() {
     const sections = document.querySelectorAll(".panel");
     if (!sections.length) return;
 
-    // Immediately mark sections visible in viewport on initial load
+    const currentHash = (window.location.hash || "").replace("#", "").toLowerCase();
+
+    // Immediately mark sections visible in viewport or target hash on initial load
     sections.forEach((panel, idx) => {
         const rect = panel.getBoundingClientRect();
         const inViewport = rect.top < window.innerHeight && rect.bottom > 0;
-        if (idx === 0 || inViewport) {
+        const isTargetHash = currentHash && panel.id && panel.id.toLowerCase() === currentHash;
+        if (idx === 0 || inViewport || isTargetHash) {
             panel.classList.add("revealed");
         }
         panel.classList.add("reveal-ready");
@@ -934,11 +937,16 @@ function initScrollReveal() {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add("revealed");
+                observer.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.08, rootMargin: "0px 0px -40px 0px" });
+    }, { threshold: 0.05, rootMargin: "0px 0px -20px 0px" });
 
-    sections.forEach(s => observer.observe(s));
+    sections.forEach(s => {
+        if (!s.classList.contains("revealed")) {
+            observer.observe(s);
+        }
+    });
 }
 
 /* ==========================================================================

@@ -5,11 +5,16 @@
 (function () {
     let lenis = null;
 
-    // 01: Initialize Lenis for 60fps Butter-Smooth Kinetic Momentum Scrolling
+    // 01: Set manual scroll restoration immediately so browser doesn't jump prematurely
+    if ("scrollRestoration" in history) {
+        history.scrollRestoration = "manual";
+    }
+
+    // 02: Initialize Lenis for 60fps Butter-Smooth Kinetic Momentum Scrolling
     if (typeof Lenis !== "undefined") {
         try {
             lenis = new Lenis({
-                duration: 1.15,
+                duration: 1.05,
                 easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
                 orientation: "vertical",
                 gestureOrientation: "vertical",
@@ -25,23 +30,12 @@
             }
             requestAnimationFrame(raf);
             window.lenis = lenis;
-
-            // Page Load / Refresh Normalization for Lenis
-            const initH = (window.location.hash || "").toLowerCase();
-            if (!initH || initH === "#" || initH === "#overview" || initH === "#home") {
-                if ("scrollRestoration" in history) {
-                    history.scrollRestoration = "manual";
-                }
-                lenis.scrollTo(0, { immediate: true });
-                window.scrollTo(0, 0);
-                document.documentElement.scrollTop = 0;
-                document.body.scrollTop = 0;
-            }
         } catch (err) {
             // Safe fallback to native smooth scroll
         }
     }
 
+    // 03: Standalone View Check
     function isStandaloneActive() {
         const standaloneWrappers = document.querySelectorAll(".project-standalone-wrapper");
         for (let i = 0; i < standaloneWrappers.length; i++) {
@@ -58,6 +52,7 @@
     }
     window.isStandaloneActive = isStandaloneActive;
 
+    // 04: Synchronize Navigation Link Hrefs
     function syncNavLinksHref(isStandalone) {
         const navLinks = document.querySelectorAll(".header-nav-link, .mobile-nav-link, .header-brand");
         navLinks.forEach((link) => {
@@ -76,6 +71,7 @@
     }
     window.syncNavLinksHref = syncNavLinksHref;
 
+    // 05: Update Nav Active States
     function updateNavActiveState(targetSectionOrView) {
         const navLinks = document.querySelectorAll(".header-nav-link, .mobile-nav-link");
         let activeKey = (targetSectionOrView || "").replace(/^#/, "").replace(/^\//, "").toLowerCase();
@@ -101,12 +97,131 @@
     }
     window.updateNavActiveState = updateNavActiveState;
 
+    // 06: Dynamic Header Height Offset Calculator
+    function getHeaderOffset() {
+        const header = document.querySelector(".top-header");
+        if (!header) return -56;
+        const rect = header.getBoundingClientRect();
+        return -Math.round(rect.height || 56);
+    }
+
+    // 07: Programmatic Scroll Lock to Prevent ScrollSpy Jitter During Navigation
+    let isProgrammaticScroll = false;
+    let programmaticScrollTimer = null;
+
+    function setProgrammaticScroll(targetKey, durationMs = 1000) {
+        isProgrammaticScroll = true;
+        updateNavActiveState(targetKey);
+        if (programmaticScrollTimer) clearTimeout(programmaticScrollTimer);
+        programmaticScrollTimer = setTimeout(() => {
+            isProgrammaticScroll = false;
+        }, durationMs + 60);
+    }
+
+    // 08: Unified Scroll-To-Section Engine
+    function scrollToSection(targetId, options = {}) {
+        const { immediate = false, duration = 1.0, updateHash = true, playSound = true } = options;
+        const cleanId = (targetId || "").replace(/^#/, "").replace("overview", "home");
+        const isHome = !cleanId || cleanId === "home" || cleanId === "overview";
+
+        // Close mobile drawer if open
+        const menuToggle = document.getElementById("mobile-menu-toggle");
+        const mobileDrawer = document.getElementById("mobile-drawer");
+        if (menuToggle) menuToggle.classList.remove("open");
+        if (mobileDrawer) mobileDrawer.classList.remove("open");
+        if (window.lenis && !immediate) window.lenis.start();
+
+        // Cleanly exit standalone mode if returning to main content
+        const wasStandalone = isStandaloneActive();
+        if (wasStandalone) {
+            const standaloneWrappers = document.querySelectorAll(".project-standalone-wrapper");
+            standaloneWrappers.forEach((w) => (w.style.display = "none"));
+            const mainWrapper = document.getElementById("main-content-wrapper");
+            if (mainWrapper) mainWrapper.style.display = "";
+
+            if (window.currentActiveProjectId !== undefined) {
+                window.currentActiveProjectId = null;
+            }
+            syncNavLinksHref(false);
+        }
+
+        if (playSound && !immediate && window.soundFX) {
+            window.soundFX.play("click");
+        }
+
+        // Lock ScrollSpy during programmatic glide
+        setProgrammaticScroll(isHome ? "home" : cleanId, immediate ? 0 : Math.round(duration * 1000));
+
+        if (updateHash && window.history && window.history.pushState) {
+            const newHash = isHome ? "#overview" : `#${cleanId}`;
+            if (window.location.hash !== newHash) {
+                window.history.pushState(null, "", newHash);
+            }
+        }
+
+        if (isHome) {
+            if (window.lenis) {
+                window.lenis.scrollTo(0, { immediate, duration });
+            } else {
+                window.scrollTo({ top: 0, left: 0, behavior: immediate ? "auto" : "smooth" });
+                document.documentElement.scrollTop = 0;
+                document.body.scrollTop = 0;
+            }
+            return;
+        }
+
+        const targetEl = document.getElementById(cleanId);
+        if (!targetEl) {
+            if (window.lenis) {
+                window.lenis.scrollTo(0, { immediate, duration });
+            } else {
+                window.scrollTo({ top: 0, left: 0, behavior: immediate ? "auto" : "smooth" });
+            }
+            return;
+        }
+
+        // Immediately ensure target panel is marked revealed so vertical transform does not alter offset calculation
+        targetEl.classList.add("revealed");
+
+        const offset = getHeaderOffset();
+
+        if (window.lenis) {
+            try { window.lenis.resize(); } catch (err) {}
+            window.lenis.scrollTo(targetEl, {
+                offset: offset,
+                immediate: immediate,
+                duration: duration
+            });
+        } else {
+            const targetRect = targetEl.getBoundingClientRect();
+            const currentY = window.pageYOffset || document.documentElement.scrollTop || 0;
+            const targetY = targetRect.top + currentY + offset;
+            window.scrollTo({
+                top: targetY,
+                left: 0,
+                behavior: immediate ? "auto" : "smooth"
+            });
+        }
+    }
+    window.scrollToSection = scrollToSection;
+
+    // 09: Discrete Back-to-Top Controller
+    function scrollToTop(e) {
+        if (e) {
+            try { e.preventDefault(); } catch (err) {}
+            try { e.stopPropagation(); } catch (err) {}
+        }
+        scrollToSection("home", { duration: 0.9, playSound: true });
+    }
+    window.scrollToTop = scrollToTop;
+
+    // 10: Navigation Initialization
     function initNavigation() {
         const menuToggle = document.getElementById("mobile-menu-toggle");
         const mobileDrawer = document.getElementById("mobile-drawer");
         const navLinks = document.querySelectorAll(".header-nav-link, .mobile-nav-link, .header-brand");
 
-        /* 02: Mobile Drawer Toggle */
+        // Mobile drawer toggle handlers
         function toggleMobileMenu() {
             const isOpen = mobileDrawer && mobileDrawer.classList.contains("open");
             if (isOpen) {
@@ -145,12 +260,12 @@
         });
 
         document.addEventListener("keydown", (e) => {
-            if (e.key === "Escape") {
+            if (e.key === "Escape" && mobileDrawer && mobileDrawer.classList.contains("open")) {
                 closeMobileMenu();
             }
         });
 
-        /* 03: Standalone Aware Nav Link Gliding */
+        // Nav Links Click Gliding
         navLinks.forEach((link) => {
             const rawHref = link.getAttribute("href") || "";
             const hashIndex = rawHref.indexOf("#");
@@ -165,159 +280,37 @@
 
                 const isBrand = link.classList.contains("header-brand");
                 const targetSection = (isBrand || baseHref === "#overview" || baseHref === "#home") ? "home" : baseHref.replace("#", "");
-                const isOverviewTarget = (targetSection === "home" || targetSection === "overview" || isBrand);
 
-                // Prevent default anchor jump so browser's native jump doesn't conflict with Lenis
                 e.preventDefault();
-                closeMobileMenu();
-
-                const mainWrapper = document.getElementById("main-content-wrapper");
-                const wasStandalone = isStandaloneActive();
-
-                if (wasStandalone) {
-                    // Cleanly hide standalone views and restore main overview
-                    const standaloneWrappers = document.querySelectorAll(".project-standalone-wrapper");
-                    standaloneWrappers.forEach((w) => (w.style.display = "none"));
-                    if (mainWrapper) mainWrapper.style.display = "";
-
-                    if (window.currentActiveProjectId !== undefined) {
-                        window.currentActiveProjectId = null;
-                    }
-
-                    syncNavLinksHref(false);
-
-                    if (window.soundFX) {
-                        window.soundFX.play("click");
-                    }
-
-                    if (window.history && window.history.pushState) {
-                        window.history.pushState(null, "", isOverviewTarget ? "#overview" : baseHref);
-                    }
-
-                    updateNavActiveState(targetSection);
-
-                    if (window.lenis) {
-                        try { window.lenis.resize(); } catch (err) {}
-                    }
-
-                    requestAnimationFrame(() => {
-                        if (window.lenis) {
-                            try { window.lenis.resize(); } catch (err) {}
-                        }
-                        requestAnimationFrame(() => {
-                            if (isOverviewTarget) {
-                                // Explicitly scroll to absolute 0
-                                if (window.lenis) {
-                                    window.lenis.scrollTo(0, { duration: 1.0 });
-                                } else {
-                                    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-                                }
-                            } else {
-                                const targetEl = document.getElementById(targetSection);
-                                if (targetEl) {
-                                    if (window.lenis) {
-                                        window.lenis.scrollTo(targetEl, { offset: -56, duration: 1.0 });
-                                    } else {
-                                        targetEl.scrollIntoView({ behavior: "smooth" });
-                                    }
-                                } else {
-                                    if (window.lenis) {
-                                        window.lenis.scrollTo(0, { duration: 1.0 });
-                                    } else {
-                                        window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-                                    }
-                                }
-                            }
-                        });
-                    });
-                } else {
-                    // Standard in-page navigation
-                    if (window.soundFX) {
-                        window.soundFX.play("click");
-                    }
-
-                    if (isOverviewTarget) {
-                        // Explicitly scroll to absolute 0
-                        if (window.lenis) {
-                            window.lenis.scrollTo(0, { duration: 1.0 });
-                        } else {
-                            window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-                        }
-
-                        if (window.history && window.history.pushState) {
-                            window.history.pushState(null, "", "#overview");
-                        }
-                        updateNavActiveState("home");
-                    } else {
-                        const targetEl = document.getElementById(targetSection);
-                        if (targetEl) {
-                            if (window.lenis) {
-                                window.lenis.scrollTo(targetEl, {
-                                    offset: -56,
-                                    duration: 1.0
-                                });
-                            } else {
-                                targetEl.scrollIntoView({ behavior: "smooth" });
-                            }
-
-                            if (window.history && window.history.pushState) {
-                                window.history.pushState(null, "", baseHref);
-                            }
-                            updateNavActiveState(targetSection);
-                        }
-                    }
-                }
+                scrollToSection(targetSection, { duration: 1.0, updateHash: true, playSound: true });
             });
         });
 
-        /* 04: Scroll Spy & Page Load Normalization */
+        // 11: ScrollSpy Observer
         const panels = document.querySelectorAll(".panel");
-
-        const initialHash = (window.location.hash || "").toLowerCase();
-        if (!initialHash || initialHash === "#" || initialHash === "#overview" || initialHash === "#home") {
-            if ("scrollRestoration" in history) {
-                history.scrollRestoration = "manual";
-            }
-            if (lenis) {
-                lenis.scrollTo(0, { immediate: true });
-            }
-            window.scrollTo(0, 0);
-            document.documentElement.scrollTop = 0;
-            document.body.scrollTop = 0;
-            updateNavActiveState("home");
-        } else if (initialHash.startsWith("#project/") || initialHash === "#projects-dir" || initialHash === "#projects-view" || initialHash === "#stack-dir" || initialHash === "#stack-view") {
-            handleHashSync();
-        } else {
-            setTimeout(() => {
-                try {
-                    const target = document.querySelector(window.location.hash);
-                    if (target) {
-                        if (lenis) {
-                            lenis.scrollTo(target, { offset: -56, duration: 1.0 });
-                        } else {
-                            target.scrollIntoView({ behavior: "smooth" });
-                        }
-                    }
-                } catch (e) {
-                    // Ignore invalid selector syntax in hash
-                }
-            }, 100);
-        }
 
         const observerOptions = {
             root: null,
-            rootMargin: "-20% 0px -65% 0px",
+            rootMargin: "-12% 0px -45% 0px",
             threshold: 0
         };
 
         const panelObserver = new IntersectionObserver((entries) => {
-            // Do not override active highlight when user is inside a standalone view
-            if (isStandaloneActive()) return;
+            if (isStandaloneActive() || isProgrammaticScroll) return;
 
-            // If user is scrolled near top, keep Overview active
             const currentY = window.pageYOffset || document.documentElement.scrollTop || 0;
-            if (currentY < 60) {
+
+            // Overview/Home top threshold
+            if (currentY < 70) {
                 updateNavActiveState("home");
+                return;
+            }
+
+            // Bottom of document threshold: automatically select last section (Contact)
+            const scrollBottom = window.innerHeight + currentY;
+            const docHeight = document.documentElement.scrollHeight;
+            if (scrollBottom >= docHeight - 40) {
+                updateNavActiveState("contact");
                 return;
             }
 
@@ -331,44 +324,11 @@
 
         panels.forEach((p) => panelObserver.observe(p));
 
-        /* 05: Back to Top Controllers (Discrete Inline & Floating past 400px) */
-        function scrollToTop(e) {
-            if (e) {
-                try { e.preventDefault(); } catch (err) {}
-                try { e.stopPropagation(); } catch (err) {}
-            }
-            if (window.soundFX) {
-                window.soundFX.play("click");
-            } else if (window.soundcn && window.soundcn.playClickSoft) {
-                window.soundcn.playClickSoft();
-            }
-
-            // 1. Force Lenis scroll synchronization
-            if (window.lenis) {
-                try {
-                    window.lenis.start();
-                    window.lenis.resize();
-                    const currentY = window.pageYOffset || document.documentElement.scrollTop || window.scrollY || 0;
-                    window.lenis.targetScroll = currentY;
-                    window.lenis.animatedScroll = currentY;
-                    window.lenis.scrollTo(0, { duration: 0.9, force: true });
-                } catch (err) {}
-            }
-
-            // 2. Always trigger native scroll smoothly as guaranteed mechanism
-            try {
-                window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-                document.documentElement.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-                document.body.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-            } catch (err) {
-                window.scrollTo(0, 0);
-            }
-        }
-        window.scrollToTop = scrollToTop;
-
-        // Floating Back-to-Top visibility controller (appears when scrolled deep down > 300px)
+        // 12: Throttled Floating Back-to-Top Button Visibility
         const floatingBtt = document.getElementById("back-to-top-btn");
-        function updateFloatingBttVisibility() {
+        let bttTicking = false;
+
+        function updateFloatingBtt() {
             if (!floatingBtt) return;
             const scrollY = window.pageYOffset || document.documentElement.scrollTop || window.scrollY || 0;
             if (scrollY > 300) {
@@ -376,17 +336,20 @@
             } else {
                 floatingBtt.classList.remove("visible");
             }
+            bttTicking = false;
         }
 
-        window.addEventListener("scroll", updateFloatingBttVisibility, { passive: true });
-        if (window.lenis) {
-            try {
-                window.lenis.on("scroll", updateFloatingBttVisibility);
-            } catch (err) {}
+        function onScrollBtt() {
+            if (!bttTicking) {
+                bttTicking = true;
+                requestAnimationFrame(updateFloatingBtt);
+            }
         }
-        updateFloatingBttVisibility();
 
-        // Delegate clicks for any back-to-top button
+        window.addEventListener("scroll", onScrollBtt, { passive: true });
+        updateFloatingBtt();
+
+        // Click delegation for Back to Top buttons
         document.addEventListener("click", (e) => {
             const btt = e.target.closest(".standalone-btt-btn, .back-to-top-btn, .floating-back-to-top-btn, #back-to-top-btn");
             if (btt) {
@@ -394,8 +357,46 @@
             }
         });
 
-        /* 06: Hash & Standalone State Synchronizer */
-        function handleHashSync() {
+        // 13: Direct URL Hash Visits & Page Load Alignment Normalizer
+        const initialHash = (window.location.hash || "").toLowerCase();
+        if (!initialHash || initialHash === "#" || initialHash === "#overview" || initialHash === "#home") {
+            window.scrollTo(0, 0);
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
+            if (lenis) lenis.scrollTo(0, { immediate: true });
+            updateNavActiveState("home");
+        } else if (initialHash.startsWith("#project/") || initialHash === "#projects-dir" || initialHash === "#projects-view" || initialHash === "#stack-dir" || initialHash === "#stack-view") {
+            // Standalone view handling handled by controllers
+            const isStandalone = true;
+            syncNavLinksHref(isStandalone);
+            if (initialHash.startsWith("#project/") || initialHash === "#projects-dir" || initialHash === "#projects-view") {
+                updateNavActiveState("projects");
+            } else {
+                updateNavActiveState("stack");
+            }
+        } else {
+            // In-page section target: align cleanly on frame ready
+            const targetSection = initialHash.replace("#", "");
+            updateNavActiveState(targetSection);
+            requestAnimationFrame(() => {
+                scrollToSection(targetSection, { immediate: true, updateHash: false, playSound: false });
+            });
+        }
+
+        // Secondary normalization when images, fonts and external assets finish loading
+        window.addEventListener("load", () => {
+            if (lenis) {
+                try { lenis.resize(); } catch (e) {}
+            }
+            const hash = (window.location.hash || "").toLowerCase();
+            if (hash && hash !== "#" && hash !== "#overview" && hash !== "#home" && !hash.startsWith("#project/") && hash !== "#projects-dir" && hash !== "#stack-dir") {
+                const target = hash.replace("#", "");
+                scrollToSection(target, { immediate: true, updateHash: false, playSound: false });
+            }
+        });
+
+        // 14: Hash Change & History Navigation (Back / Forward)
+        function handleHashSync(event) {
             const hash = window.location.hash || "";
             const isStandalone = isStandaloneActive();
             syncNavLinksHref(isStandalone);
@@ -406,13 +407,21 @@
                 updateNavActiveState("stack");
             } else if (!isStandalone) {
                 const clean = hash.replace("#", "");
-                if (clean) updateNavActiveState(clean);
+                if (clean) {
+                    updateNavActiveState(clean);
+                } else {
+                    updateNavActiveState("home");
+                }
+
+                // If popstate (browser back/forward button clicked), smoothly glide to destination section
+                if (event && event.type === "popstate") {
+                    scrollToSection(clean || "home", { immediate: false, duration: 0.8, updateHash: false, playSound: false });
+                }
             }
         }
 
         window.addEventListener("hashchange", handleHashSync);
         window.addEventListener("popstate", handleHashSync);
-        handleHashSync();
     }
 
     if (document.readyState === "loading") {
