@@ -1182,97 +1182,252 @@ html.dark img.stack-svg-icon {
 }
 
 @media (max-width: 680px) {
+    /* Maintain crisp 3-Column CAD Matrix Grid across mobile/tablet */
     .stack-matrix-guide-lines {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
+    .stack-guide-col:nth-child(1),
     .stack-guide-col:nth-child(2) {
-        border-right: none;
-    }
-
-    .stack-matrix-row {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .stack-spacer-matrix-row {
-        height: 40px;
-        min-height: 40px;
-    }
-
-    .stack-spacer-col:last-child {
-        display: none;
-    }
-
-    .stack-subnav-center {
-        display: none;
-    }
-
-    .stack-hero-col-main {
-        grid-column: span 2;
-        border-right: none;
-    }
-
-    .stack-hero-col-side {
-        display: none;
-    }
-
-    .stack-cat-header-row .stack-cat-empty-cell:last-child {
-        display: none;
-    }
-
-    .stack-matrix-row>*:nth-child(1) {
         border-right: 1px solid var(--border);
     }
 
-    .stack-matrix-row>*:nth-child(2) {
+    .stack-guide-col:nth-child(3) {
         border-right: none;
-    }
-}
-
-@media (max-width: 480px) {
-    .stack-matrix-guide-lines {
-        display: none;
     }
 
     .stack-matrix-row {
-        grid-template-columns: 1fr;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
+    .stack-matrix-row>*:nth-child(1),
+    .stack-matrix-row>*:nth-child(2) {
+        border-right: 1px solid var(--border);
+    }
+
+    .stack-matrix-row>*:nth-child(3) {
+        border-right: none;
+    }
+
+    /* Container Spacing */
+    .stack-standalone-wrapper .standalone-container {
+        padding-top: 0 !important;
+    }
+
+    /* Architectural Spacer Row */
     .stack-spacer-matrix-row {
-        height: 32px;
-        min-height: 32px;
+        height: 24px;
+        min-height: 24px;
     }
 
+    /* Sub-Navigation Row */
     .stack-subnav-matrix-row {
-        grid-template-columns: 1fr;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0.6rem 1rem;
+        min-height: 44px;
     }
 
-    .stack-subnav-col {
-        padding: 0;
-    }
-
-    .stack-matrix-row>* {
+    .stack-subnav-left {
+        grid-column: span 3;
+        padding: 0.5rem 1rem;
         border-right: none !important;
     }
 
+    .stack-subnav-center,
+    .stack-subnav-right {
+        display: none;
+    }
+
+    .stack-subnav-matrix-row .proj-back-btn {
+        font-size: 0.8rem;
+        gap: 6px;
+    }
+
+    /* Hero Area Row */
+    .stack-hero-matrix-row {
+        min-height: auto;
+    }
+
     .stack-hero-col-main {
-        grid-column: span 1;
-        padding: 2rem 1.25rem 1.75rem 1.25rem;
+        grid-column: span 3;
+        border-right: none !important;
+        padding: 2rem 1.25rem 1.6rem 1.25rem;
     }
 
     .stack-hero-col-side {
         display: none;
+    }
+
+    .stack-hero-eyebrow {
+        font-size: 0.75rem;
+        margin-bottom: 0.45rem;
+    }
+
+    .stack-hero-heading {
+        font-size: clamp(1.85rem, 6.5vw, 2.4rem);
+        margin: 0 0 0.65rem 0;
+        line-height: 1.15;
+    }
+
+    .stack-hero-sub {
+        font-size: 0.88rem;
+        line-height: 1.55;
+    }
+
+    /* Category Header Row */
+    .stack-cat-header-row {
+        min-height: 38px;
+    }
+
+    .stack-cat-title-cell {
+        grid-column: span 3;
+        border-right: none !important;
+        padding: 0.55rem 1.15rem;
+        font-size: 0.78rem;
+        letter-spacing: 0.02em;
     }
 
     .stack-cat-empty-cell {
         display: none;
     }
 
+    /* Item Cells */
+    .stack-item-cell {
+        min-height: 68px;
+        padding: 0.65rem 0.45rem;
+    }
+
     .stack-empty-cell {
-        display: none !important;
+        display: block !important;
+        background-color: transparent;
+        pointer-events: none;
+    }
+
+    /* Brand Lockup inside Grid Cell */
+    .stack-brand-lockup {
+        gap: 8px;
+        max-width: 100%;
+        padding: 0 4px;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .stack-brand-icon,
+    img.stack-brand-icon,
+    img.stack-custom-icon,
+    .stack-svg-icon {
+        width: 20px;
+        height: 20px;
+        flex-shrink: 0;
+    }
+
+    .stack-brand-name {
+        font-size: 0.84rem;
+        font-weight: 600;
+        line-height: 1.2;
+        text-align: left;
+        letter-spacing: -0.01em;
+        word-break: normal;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Spacer Row */
+    .stack-spacer-matrix-row {
+        height: 18px;
+        min-height: 18px;
+    }
+
+    /* Subnav */
+    .stack-subnav-matrix-row {
+        min-height: 42px;
+    }
+
+    .stack-subnav-left {
+        padding: 0.45rem 0.85rem;
+    }
+
+    .stack-subnav-matrix-row .proj-back-btn {
+        font-size: 0.76rem;
+        gap: 5px;
+    }
+
+    /* Hero */
+    .stack-hero-col-main {
+        padding: 1.65rem 0.95rem 1.35rem 0.95rem;
+    }
+
+    .stack-hero-eyebrow {
+        font-size: 0.72rem;
+        margin-bottom: 0.4rem;
+    }
+
+    .stack-hero-heading {
+        font-size: clamp(1.75rem, 6.2vw, 2.15rem);
+        margin-bottom: 0.55rem;
+    }
+
+    .stack-hero-sub {
+        font-size: 0.82rem;
+        line-height: 1.5;
+    }
+
+    /* Category Header */
+    .stack-cat-header-row {
+        min-height: 36px;
+    }
+
+    .stack-cat-title-cell {
+        padding: 0.45rem 0.95rem;
+        font-size: 0.74rem;
+    }
+
+    /* Item Cells */
+    .stack-item-cell {
+        min-height: 60px;
+        padding: 0.5rem 0.25rem;
+    }
+
+    .stack-brand-lockup {
+        gap: 6px;
+        padding: 0 2px;
+    }
+
+    .stack-brand-icon,
+    img.stack-brand-icon,
+    img.stack-custom-icon,
+    .stack-svg-icon {
+        width: 18px;
+        height: 18px;
+    }
+
+    .stack-brand-name {
+        font-size: 0.75rem;
+        line-height: 1.15;
+    }
+}
+
+@media (max-width: 360px) {
+    .stack-item-cell {
+        min-height: 54px;
+        padding: 0.4rem 0.15rem;
+    }
+
+    .stack-brand-lockup {
+        gap: 4px;
+        padding: 0;
+    }
+
+    .stack-brand-icon,
+    img.stack-brand-icon,
+    img.stack-custom-icon,
+    .stack-svg-icon {
+        width: 16px;
+        height: 16px;
+    }
+
+    .stack-brand-name {
+        font-size: 0.7rem;
+        line-height: 1.1;
     }
 }
