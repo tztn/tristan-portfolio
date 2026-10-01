@@ -67,14 +67,16 @@ const projectData = {
             "Designed typography scale utilizing Geist font family with high-contrast display weights."
         ],
         date: "2026-07-21",
-        domain: "tztn.github.io/sneakrs",
+        domain: "figma.com/design/sneakrs",
         domainSummary: "Streetwear storefront concept with Figma auto-layout 5.0 tokens.",
         buildHash: "65327da",
         categoryLabel: "Figma / UI Design",
         deployedOn: "Figma Community",
+        linkType: "FIGMA PROTOTYPE",
+        linkLabel: "Figma Design",
         tags: ["Figma", "Design Tokens", "Auto-Layout 5.0", "UI/UX", "Interactive Prototype"],
         img: "assets/images/projects/sneakrs-figma.png",
-        externalLink: "https://www.figma.com/@tristanray"
+        externalLink: "https://www.figma.com/design/TtzDl0lTbHSKuFOdQaV4gu/LAB-1-MIDTERM-AGOILO---MANAOG-?node-id=0-1&t=FgONzEAq25mtd8Ij-1"
     },
     dlails: {
         id: "dlails",
