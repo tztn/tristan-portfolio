@@ -51,26 +51,47 @@
         }
 
         // Determine exact center coordinates of the toggle icon
-        let x = window.innerWidth - 36;
-        let y = 28;
-
-        const toggleBtn = document.getElementById('theme-toggle-desktop') || document.querySelector('.header-theme-toggle');
-        if (toggleBtn) {
-            const rect = toggleBtn.getBoundingClientRect();
-            x = Math.round(rect.left + rect.width / 2);
-            y = Math.round(rect.top + rect.height / 2);
-        } else if (event && event.clientX && event.clientY) {
-            x = Math.round(event.clientX);
-            y = Math.round(event.clientY);
+        let targetBtn = (event && event.currentTarget && event.currentTarget.getBoundingClientRect) ? event.currentTarget : null;
+        if (!targetBtn && event && event.target && event.target.closest) {
+            targetBtn = event.target.closest('#theme-toggle-desktop, .header-theme-toggle, [data-action="toggle-theme"]');
+        }
+        if (!targetBtn) {
+            targetBtn = document.getElementById('theme-toggle-desktop') || document.querySelector('.header-theme-toggle');
         }
 
-        document.documentElement.style.setProperty('--toggle-x', `${x}px`);
-        document.documentElement.style.setProperty('--toggle-y', `${y}px`);
+        let x, y;
+        if (targetBtn) {
+            const rect = targetBtn.getBoundingClientRect();
+            x = Math.round(rect.left + rect.width / 2);
+            y = Math.round(rect.top + rect.height / 2);
+        } else if (event && typeof event.clientX === 'number' && typeof event.clientY === 'number' && (event.clientX !== 0 || event.clientY !== 0)) {
+            x = Math.round(event.clientX);
+            y = Math.round(event.clientY);
+        } else {
+            x = Math.round(window.innerWidth - 36);
+            y = 28;
+        }
 
-        const endRadius = Math.hypot(
+        // Calculate end radius and circle blur expansion bounds
+        const maxDist = Math.hypot(
             Math.max(x, window.innerWidth - x),
             Math.max(y, window.innerHeight - y)
         );
+        const endSize = Math.ceil(maxDist * 2.8);
+        const halfSize = Math.ceil(endSize / 2);
+        const endPosX = x - halfSize;
+        const endPosY = y - halfSize;
+
+        // Set CSS variables on root BEFORE starting the view transition for instant hardware-accelerated start
+        const root = document.documentElement;
+        root.style.setProperty('--toggle-x', `${x}px`);
+        root.style.setProperty('--toggle-y', `${y}px`);
+        root.style.setProperty('--mask-end-size', `${endSize}px`);
+        root.style.setProperty('--mask-end-pos-x', `${endPosX}px`);
+        root.style.setProperty('--mask-end-pos-y', `${endPosY}px`);
+
+        // Suppress conflicting CSS color/background transitions during the snapshot
+        root.classList.add('theme-transitioning-vt');
 
         // Trigger native CSS View Transition using @ncdai/theme-toggle-effect-circle-blur starting at icon
         try {
@@ -78,37 +99,11 @@
                 applyNextTheme();
             });
 
-            transition.ready.then(() => {
-                const endSize = Math.ceil(endRadius * 2.8);
-                const halfEnd = Math.ceil(endSize / 2);
-                document.documentElement.animate(
-                    {
-                        maskPosition: [
-                            `${x}px ${y}px`,
-                            `${x - halfEnd}px ${y - halfEnd}px`
-                        ],
-                        maskSize: [
-                            `0px 0px`,
-                            `${endSize}px ${endSize}px`
-                        ],
-                        WebkitMaskPosition: [
-                            `${x}px ${y}px`,
-                            `${x - halfEnd}px ${y - halfEnd}px`
-                        ],
-                        WebkitMaskSize: [
-                            `0px 0px`,
-                            `${endSize}px ${endSize}px`
-                        ]
-                    },
-                    {
-                        duration: 850,
-                        easing: 'linear(0 0%, 0.1684 2.66%, 0.3165 5.49%, 0.446 8.52%, 0.5581 11.78%, 0.6535 15.29%, 0.7341 19.11%, 0.8011 23.3%, 0.8557 27.93%, 0.8962 32.68%, 0.9283 38.01%, 0.9529 44.08%, 0.9711 51.14%, 0.9833 59.06%, 0.9915 68.74%, 1 100%)',
-                        pseudoElement: '::view-transition-new(root)',
-                        fill: 'both'
-                    }
-                );
-            }).catch(() => {});
+            transition.finished.finally(() => {
+                root.classList.remove('theme-transitioning-vt');
+            });
         } catch (e) {
+            root.classList.remove('theme-transitioning-vt');
             applyNextTheme();
         }
     }

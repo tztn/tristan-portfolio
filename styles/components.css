@@ -366,3 +366,30 @@ svg {
         color: var(--color) !important;
     }
 }
+
+/* Annotation Callout Shimmering Text Enhancements */
+.follow-hand-text .shimmering-text,
+.callout-annotation .shimmering-text {
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    letter-spacing: inherit;
+    --color: var(--text-secondary);
+    --shimmering-color: var(--text-primary);
+    --cycle-duration: 2.8s;
+}
+
+.follow-hand-text .shimmering-char,
+.callout-annotation .shimmering-char {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    vertical-align: baseline;
+}
+
+html.dark .follow-hand-text .shimmering-text,
+html.dark .callout-annotation .shimmering-text {
+    --color: var(--text-secondary, #a1a1aa);
+    --shimmering-color: var(--text-primary, #ffffff);
+}

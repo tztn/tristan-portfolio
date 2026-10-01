@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initContactFeedback();
     initScrollReveal();
     initEducationAccordion();
+    initAnnotationShimmer();
 });
 
 /* ==========================================================================
@@ -249,7 +250,7 @@ function initProjectDetailsController() {
                             <path d="M 40 6 C 26 5, 12 8, 6 18 M 14 15 L 6 18 L 8 10" stroke="currentColor"
                                 stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
-                        <span class="font-hand follow-hand-text">project deep-dive</span>
+                        <span class="font-hand follow-hand-text">${createShimmeringTextHtml("project deep-dive")}</span>
                     </div>
                 </div>
 
@@ -334,7 +335,7 @@ function initProjectDetailsController() {
                 <!-- Bottom CAD Engineering Specs Matrix -->
                 <div class="proj-spec-table-container">
                     <div class="callout-annotation callout-left callout-project-specs" aria-hidden="true">
-                        <span class="font-hand follow-hand-text">technical specs</span>
+                        <span class="font-hand follow-hand-text">${createShimmeringTextHtml("technical specs")}</span>
                         <svg class="follow-arrow-svg" viewBox="0 0 44 24" fill="none">
                             <path d="M 4 6 C 18 5, 32 8, 38 18 M 30 15 L 38 18 L 36 10" stroke="currentColor"
                                 stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
@@ -761,6 +762,21 @@ function createShimmeringTextHtml(text) {
         return `<span class="shimmering-char whitespace-pre" aria-hidden="true" style="--char-index: ${i};">${charHtml}</span>`;
     }).join("");
     return `<span class="shimmering-text select-none" style="--total-chars: ${text.length};">${chars}<span class="sr-only">${text}</span></span>`;
+}
+
+/**
+ * Initializes shimmering text animation on all annotation elements across the portfolio.
+ * Ensures any statically or dynamically rendered marginal annotations feature the @ncdai/shimmering-text sweep.
+ */
+function initAnnotationShimmer() {
+    const targets = document.querySelectorAll('.follow-hand-text, .callout-annotation [class*="hand"]');
+    targets.forEach(el => {
+        if (el.querySelector('.shimmering-text')) return;
+        const text = el.textContent.trim();
+        if (text) {
+            el.innerHTML = createShimmeringTextHtml(text);
+        }
+    });
 }
 
 function initHeroTextFlip() {
