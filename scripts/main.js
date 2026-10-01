@@ -40,7 +40,7 @@ const projectData = {
             "Engineered secure student document submission workflow for high school and college transferees.",
             "Optimized cross-device navigation and mobile viewport accessibility across desktop, tablet, and phones."
         ],
-        date: "2025-09-16",
+        date: "2026-07-17",
         domain: "gncp-main.site.je/school-website",
         domainSummary: "Online enrollment & academic admissions portal for Go-On National College.",
         buildHash: "8e3b1c4",
@@ -66,7 +66,7 @@ const projectData = {
             "Built interactive cart drawer with quantity counters and spring-animated checkout progress.",
             "Designed typography scale utilizing Geist font family with high-contrast display weights."
         ],
-        date: "2025-06-21",
+        date: "2026-07-21",
         domain: "tztn.github.io/sneakrs",
         domainSummary: "Streetwear storefront concept with Figma auto-layout 5.0 tokens.",
         buildHash: "65327da",
@@ -90,7 +90,7 @@ const projectData = {
             "Engineered searchable audit log system with priority level filtering and student ID search.",
             "Optimized SQL queries for fast lookup across 10,000+ attendance records."
         ],
-        date: "2025-03-27",
+        date: "2026-03-12",
         domain: "tztn.github.io/dlails",
         domainSummary: "Desktop computer lab management & technician incident logging system.",
         buildHash: "f9241b8",
@@ -114,7 +114,7 @@ const projectData = {
             "Designed fluid responsive hero showcase carousel with smooth touch gesture support.",
             "Engineered modular badge tagging system for discounts, DLCs, and system requirements."
         ],
-        date: "2025-01-04",
+        date: "2025-05-08",
         domain: "tztn.github.io/stym",
         domainSummary: "Responsive digital gaming storefront with client-side catalog search.",
         buildHash: "a4819ce",
@@ -138,7 +138,7 @@ const projectData = {
             "Implemented administrative dashboard for claim approvals and audit trail logging.",
             "Structured relational database tables with foreign key constraints ensuring data integrity."
         ],
-        date: "2024-11-18",
+        date: "2025-09-11",
         domain: "tztn.github.io/ncst-lost-found",
         domainSummary: "Campus web portal for lost item tracking and claim verification.",
         buildHash: "c7193de",
